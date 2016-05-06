@@ -17,6 +17,7 @@
     * [Lain Tour](usermanual/tour.md)
     * [SDK/CLI](usermanual/sdkandcli.md)
     * [config && build](usermanual/configandbuild.md)
+    * [registry](usermanual/registry.md)
     * [private registry](usermanual/privateregistry.md)
     * [web load balancer](usermanual/webrouter.md)
     * [service](usermanual/service.md)
