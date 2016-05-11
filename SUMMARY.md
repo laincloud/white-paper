@@ -25,7 +25,6 @@
     * [log](usermanual/log.md)
     * [backup](usermanual/backup.md)
     * [secret && app config](usermanual/secret.md)
-    * [ci](usermanual/ci.md)
 * [AdminManual](adminmanual/README.md)
     * [ProductionInstallation](adminmanual/install.md)
     * [maintain](adminmanual/maintain/README.md)
