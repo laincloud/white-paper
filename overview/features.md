@@ -1,4 +1,4 @@
-# features
+# Features
 
 ### 基于配置文件定义应用
 

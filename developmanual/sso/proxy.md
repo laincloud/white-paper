@@ -1,3 +1,7 @@
+# sso nginx proxy 
+
+## 使用方法
+
 按照如下过程部署 proxy:
 
 1. 修改 conf 目录下的 config.yaml, 目前不支持修改该文件名

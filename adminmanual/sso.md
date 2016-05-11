@@ -3,7 +3,46 @@
 sso 支持 HA，由于每个 sso 的 container 是无状态的，
 唯一的 proc 为 web 类型，所以如果 container 挂掉，只需要重启即可。 
 
-## sso 的注册
+## sso 的依赖
+
+sso 依赖一个 mysql 数据库，和一个 smtp 服务。虽然 SMTP 是可选的，但是若没有 SMTP，
+每一个新注册的用户都需要 DBA 帮忙才能激活用户。
+
+### sso 启动时的一些重要参数
+
+- domain: 指接受的注册用户的邮箱后缀
+- from: 激活、修改密码邮件等 sso 发送的邮件的发件人
+- mysql: 存储所用的 mysql 数据库的 DSN
+- site: sso 的网址
+- smtp: sso 依赖的 smtp 的地址
+- web: sso 后台服务的端口
+- sentry: LAIN 的 sentry 的 DSN，可选
+- debug: 指是否输出 debug 信息
+
+sso 启动时，可以利用 LAIN 的秘密文件配置方法配置敏感信息，
+然后在 run.sh 中利用 source 命令得到相关变量的具体值。 
+
+注: lvault 服务器端不依赖 sso,  
+可以利用 lvault 将 sso 的配置写入。
+而 lvault 的 web 页面依赖 sso，在当前版本下，
+我们推荐用命令行方式配置 secret files.
+
+在 sso 部署之前，需要创建一个空的 mysql 数据库，然后将其 DSN 作为启动参数传入。
+如果要用已有的 sso 的数据库，即 sso 涉及域名变化时，由于 sso 本身作为自己的一个 client, 所以需要手动去数据库里面更改 app 表中相关 sso 的几个 app 的 redirect_uri, 主要包括
+SSO，SSO-Site，以及可能的关于 swagger-ui client.
+
+### sso 的 swagger-ui 的 auth server 配置
+sso 网站上的 API 文档的链接指向一个 swagger-ui，
+这个 swagger-ui 的使用需要一个 oauth2 的认证，即 swagger-ui 本身作为 sso 的一个 client，sso 的管理员根据自己 sso 的域名，需要修改如下项的默认值.
+
+```
+sso/apidoc/index.html:53:              appName: "swagger-example.com",
+sso/apidoc/swagger.json:10:    "host": "sso.example.com",
+sso/apidoc/swagger.json:513:            "authorizationUrl": "https://sso.example.com/oauth2/auth",
+sso/apidoc/swagger.json:514:            "tokenUrl": "https://sso.example.com/oauth2/token",
+```
+
+## sso 的用户（End User）注册
 
 sso 的用户注册需要邮箱激活。问题是很多同学收不到邮件。
 那么这时候可能会需要 SA 帮忙激活一下。步骤如下：

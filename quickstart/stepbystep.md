@@ -33,7 +33,6 @@ lain.yaml 主要规定/描述了如下几件事情
 
 App 和 Proc，分别对应于完整应用和微服务，就形成了 Lain 上应用的骨架。
 
-点击 [这里](/developmanual/concepts/README.md) 了解更多
 
 ### 开始创建应用
 
@@ -41,7 +40,7 @@ App 和 Proc，分别对应于完整应用和微服务，就形成了 Lain 上�
 
 先给应用取个名字，在 lain 集群中，每个应用的名字是全局 unique 的，字符集要求是  小写字母以及数字，非连续 "-" 符号，且开头不能为数字，比如起名为 anti-gfw
 
-appname 一旦注册到 Lain 集群，且这个集群开启了 auth，那么这个 appname 就会被你占据和管理，除非你讲别人加入这个 app 的管理组，否则任何人不能控制该 app。
+appname 一旦注册到 Lain 集群，且这个集群开启了 auth，那么这个 appname 就会被你占据和管理，除非你把别人加入这个 app 的管理组，否则任何人不能控制该 app。
 
 ### 挑选技术栈
 
@@ -109,7 +108,7 @@ build 阶段完成构建，亦即编译工作。由于 build 阶段使用的镜�
 
 ```
 release: # 可以不写，如果不写，就把build阶段生成的image打上release的标签
-    dest_base: registry.lain.bdp.cc/centos:1.0.1   # release image基于的base image，如果不写，就把script执行完生成的中间结果image直接作为release image
+    dest_base: centos:1.0.1   # release image基于的base image，如果不写，就把script执行完生成的中间结果image直接作为release image
     copy:     # 指定把script运行结束后的中间结果image的路径src拷贝到dest_base中的dest中, src 可以是绝对路径或者是相对于/lain/app的路径，拷贝之前，dest image中会自动创建/lain/app空目åease的标签
         - src: /lain/app/entry.sh
           dest: /lain/app/entry.sh
@@ -142,11 +141,11 @@ logs 字段用来声明一个日志文件列表，注意这里的文件列表只
 ```
 appname: anti-gfw
 build:
-    base: registry.lain.bdp.cc/centos-golang-nodejs-python:2.0.1
+    base: centos-golang-nodejs-python:2.0.1
     script:
         - go build -o watcher
 release:
-  dest_base: registry.lain.bdp.cc/centos:1.0.1
+  dest_base: centos:1.0.1
   copy:
     - src: /lain/app/entry.sh
       dest: /lain/app/entry.sh
@@ -164,13 +163,15 @@ notify:
  
 #### 本地调试 proc
 
-lain in vagrant 虚拟机自身的配置中，可以定义多个 lain 集群，或者说环境。
+[lain-box](https://github.com/laincloud/lain-box) 用来在本地启动一个可用的 lain in vagrant 环境。
 
 - 查看目前配置 `lain config show`
-- 保存 dev 配置  `lain config save dev domain yxapp.xyz`
+- 保存 local 配置  `lain config save local domain lain.local`
 
-在 lain in vagrant 虚拟机中，进入 gfw-watcher 代码目录
+vagrant ssh 进入虚拟机中，进入 gfw-watcher 代码目录
 
+- lain dashboard local     
+- lain reposit local      # 往 local 环境注册本 app
 - lain prepare
 - lain build
 - lain run gfw-watcher
@@ -192,8 +193,8 @@ eeffbc704a4f        anti-gfw:release    "/lain/app/entry.sh"   3 seconds ago    
 
 >上述 lain build 成功之后
 
-- lain tag dev
-- lain push dev
-- lain deploy dev
+- lain tag local
+- lain push local
+- lain deploy local
 
-部署的过程是一个异步的过程，在 `lain deploy dev` 之后可以使用 `lain ps dev` 查询部署结果
+部署的过程是一个异步的过程，在 `lain deploy local ` 之后可以使用 `lain ps local` 查询部署结果

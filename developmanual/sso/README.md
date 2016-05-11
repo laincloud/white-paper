@@ -53,10 +53,10 @@ sso 的管理员：sso admins 组里所包含的用户；拥有删除 sso 的用
 利用标准的 oauth2 workflow 即可.
 
 1. login with sso code flow
-参见 console 或 lvault.
+参见 [ sso 用户文档](../../usermanual/sso/sso.md#Authentication code flow)
 
 1. login with sso implict flow
-一般来说，用于 User Agent 为浏览器的情形，参见文档[](loginwithsso.md)
+一般来说，用于 User Agent 为浏览器的情形，参见[ sso 用户文档](../../usermanual/sso/sso.md#利用 implicit flow 认证)
 
 1. sso nginx proxy
-参见文档 [](proxy.md)
+参见文档 [nginx-proxy](proxy.html)

@@ -71,23 +71,24 @@ sudo ssh-copy-id -i /root/.ssh/lain.pub root@192.168.77.22
 在管理节点运行:
 
 ```sh
-sudo ./add-node -q node2:192.168.77.22
+lainctl node add -p /path/to/playbooks node2:192.168.77.22
 ```
 
 即可将 192.168.77.22 加入到 lain 集群中，命名为 node2 。
 
-add-node 脚本支持同时加入多个节点。
 
 ## 删除节点
 
 系统做以下事情：
 
-1. 把该节点上的应用迁移到其它节点；
-1. 从集群中将该节点摘除；
-1. 通知该节点停止 lain 相关服务。
+1. 确保该节点不是正在工作的 etcd memeber；
+2. 确保该节点不是正在工作的 swarm manager；
+3. 从集群中将该节点摘除。
 
-在管理节点运行:  # TODO 完善 remove-node 文档
+在管理节点运行:
 
+```sh
+lainctl node remove -p /path/to/playbooks node2
 ```
-lainctl remove-node
-```
+
+即可移除 node2 这个节点。

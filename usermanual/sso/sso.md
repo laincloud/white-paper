@@ -2,8 +2,15 @@
 
 sso 是 lain 的单点登录系统，为 lain 的应用管理用户, 提供用户注册、身份认证等系列功能.
 
-sso 的用户分为两个层次，需要利用 sso 登录的用户，和需要 sso 管理自己的应用的用户.
+sso 的用户分为两个层次，需要利用 sso 登录的用户(end user)，和需要 sso 管理自己的应用的用户.
 后者需要了解更多关于 oauth2 和 openid connect 的知识.
+
+## sso 启动依赖及在 Lain 上的部署
+sso 启动需要一个 MYSQL 数据库和一个 SMTP 服务器，由于前者涉及到密码。所以 sso 的配置推荐使用 LAIN 上的 secret files 机制。
+
+要部署 sso，首先需要了解 sso 启动依赖的参数, 见 adminmanual.
+
+写入 secret files 的详细方法见 LAIN 的秘密文件配置系统。
 
 ## 用户注册
 提供用户名、邮箱、自定义的密码即可.

@@ -1,4 +1,4 @@
-# arch
+# Architecture
 
 ### 物理视图
 
@@ -46,6 +46,5 @@
 - [webrouter](http://laingit.bdp.cc/lain/webrouter/blob/master/README.md)
 - [lainlet](http://laingit.bdp.cc/yunfei/lainlet/blob/freshmeat/README.md)
 - [rebellion](http://laingit.bdp.cc/lain/rebellion/blob/master/README.md)
-- networkd
-- hagrid
+- [networkd](http://github.com/laincloud/networkd/blob/master/README.md)
 - [jenkins](http://laingit.bdp.cc/lain/jenkins/blob/master/README.md)
