@@ -39,3 +39,13 @@ ansible-playbook -i /vagrant/playbooks/cluster -e role=etcd  /vagrant/playbooks/
 etcdctl rm /lain/nodes/etcd-members/node2:192.168.77.22:22
 ansible-playbook -i /vagrant/playbooks/cluster -e role=etcd  /vagrant/playbooks/role.yaml
 ```
+
+### cluster unhealth
+
+如果 etcd 集群的 member 所在机器发生了宕机或其他异常(如磁盘空间不足)。会导致 etcd member 不能正常工作。
+
+修复的方法通常是，将故障节点从 etcd cluster 中移除，再作为一个新节点动态的加入到集群中。
+
+具体的操作方法，请参考 [etcd 官方文档](https://github.com/coreos/etcd/blob/master/Documentation/v2/runtime-configuration.md)
+
+在对 etcd 集群进行修改时，为避免出现操作错误导致整个集群不可恢复。建议提前做一次备份，具体的操作方法参考 [Backing up the datastore](https://github.com/coreos/etcd/blob/master/Documentation/v2/admin_guide.md#backing-up-the-datastore)。这样如果在操作过程中出现了整个集群无可用而且无法恢复的情况，可利用备份重建一个新集群。

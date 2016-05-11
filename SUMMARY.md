@@ -18,7 +18,6 @@
     * [SDK/CLI](usermanual/sdkandcli.md)
     * [config && build](usermanual/configandbuild.md)
     * [private registry](usermanual/privateregistry.md)
-    * [web load balancer](usermanual/webrouter.md)
     * [service](usermanual/service.md)
     * [resource](usermanual/resource.md)
     * [sso && auth](usermanual/sso/sso.md)
