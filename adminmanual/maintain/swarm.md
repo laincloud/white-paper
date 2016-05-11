@@ -29,4 +29,11 @@ ansible-playbook -i /vagrant/playbooks/cluster -e role=swarm  /vagrant/playbooks
 ```
 
 ## swarm agent
-todo
+
+swarm agent 的功能很简单，就是在 etcd 上注册自己好能让 swarm manager 发现。由 systemd 管理。
+
+```sh
+systemctl status swarm-agent
+```
+
+如果无法启动，检查 etcd 是否运行正常，可通过 `etcdctl` 命令测试。

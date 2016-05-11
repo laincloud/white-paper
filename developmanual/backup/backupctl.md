@@ -10,33 +10,6 @@ backup controller的定位是为了结合Lain扩充backupd的功能。如从lain
 
 controller的实现很简单，一个goroutine通过watch lainlet获取最新的备份任务。然后把任务发送给指定的backupd。backupd执行完任务后再讲结果post回给controller。controller使用嵌入式数据库将任务执行记录存放到本地，并对外提供查询功能。
 
-![design](img/backupctl-design.png)
-
-
-## 编译和运行
-
-### 编译
-
-**需要环境: go1.5+**
-```sh
-go build -o backupctl
-```
-
-### 运行
-**需要环境: lainlet**
-```sh
-./backupctl -h #查看运行参数
-
-# 例子
-./backupctl -addr :9002 -lainlet 127.0.0.1:9001 -backendport 9002 -advertise 192.168.77.1:9001 -datadir /data/backupctl -backupdir /data/backupctl.bak
-
-# -addr:        设置controller的http服务监听地址 
-# -lainlet:     设置lainlet访问地址
-# -backendport: 设定backupd的端口号
-# -advertise:   设定controller服务的访问地址, backupd通过这个地址来汇报结果
-# -datadir:     任务记录的DB存储目录
-# -backupdir:   任务记录的DB的备份目录，controller是只是通过API来对自己的DB进行备份的
-```
 
 ## API
 
