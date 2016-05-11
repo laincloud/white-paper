@@ -13,7 +13,7 @@
     * [Lain App Step By Step](quickstart/stepbystep.md)
 * [UserManual](usermanual/README.md)
     * [App Developing WorkFlow](usermanual/workflow.md)
-    * [lain in vagrant](usermanual/liv.md)
+    * [lain box](usermanual/lainbox.md)
     * [Lain Tour](usermanual/tour.md)
     * [SDK/CLI](usermanual/sdkandcli.md)
     * [config && build](usermanual/configandbuild.md)
