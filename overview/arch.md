@@ -34,15 +34,15 @@
 ### 各子系统
 
 - SDN
-- [console](http://laingit.bdp.cc/panli7/console/blob/new_secret_files/README.md) URL ToBeUpdate
-- [deploy](http://laingit.bdp.cc/yunfei/deployd/blob/freshmeat/README.md)
-- [tinydns](http://laingit.bdp.cc/lain/tinydns/blob/master/README.md)
-- [hedwig](http://laingit.bdp.cc/lain/hedwig/blob/docs/README.md)
-- [backupctl](http://laingit.bdp.cc/yunfei/backupctl/blob/freshmeat/README.md) && [backupd](http://laingit.bdp.cc/yunfei/backupd/blob/freshmeat/README.md)
-- [lvault](http://laingit.bdp.cc/chaoyiwang/lvault-v2/blob/master/docs/introduction.md) URL ToBeUpdate
-- [sso](http://laingit.bdp.cc/lain/sso/blob/master/docs/introduction.md)
-- [registry](http://laingit.bdp.cc/lain/registry/blob/master/README.md)
-- [webrouter](http://laingit.bdp.cc/lain/webrouter/blob/master/README.md)
-- [lainlet](http://laingit.bdp.cc/yunfei/lainlet/blob/freshmeat/README.md)
-- [rebellion](http://laingit.bdp.cc/lain/rebellion/blob/master/README.md)
-- [networkd](http://github.com/laincloud/networkd/blob/master/README.md)
+- [console](https://github.com/laincloud/console)
+- [deploy](https://github.com/laincloud/deployd)
+- [tinydns](https://github.com/laincloud/tinydns)
+- [backupctl](https://github.com/laincloud/backupd)
+- [lvault](https://github.com/laincloud/lvault)
+- [sso](https://github.com/laincloud/sso)
+- [registry](https://github.com/laincloud/registry)
+- [webrouter](https://github.com/laincloud/webrouter)
+- [lainlet](https://github.com/laincloud/lainlet)
+- [rebellion](https://github.com/laincloud/rebellion)
+- [networkd](https://github.com/laincloud/networkd)
+- [hedwig](https://github.com/laincloud/hedwig)

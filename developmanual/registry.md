@@ -7,7 +7,7 @@ Lain Registry 组件在官方 Registry 版本的基础上进行了 Lain 化。�
 
 ## 组件顶层设计
 
-Lain Registry 仓库地址为： `http://laingit.bdp.cc/lain/registry.git`
+Lain Registry 仓库地址为： `https://github.com/laincloud/registry`
 
 Lain Registry 的组件架构图如下所示：
 
