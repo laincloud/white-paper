@@ -205,4 +205,3 @@ nginx 需要编译入 [lua\_nginx\_module](https://github.com/openresty/lua-ngin
 	2. App 信任该 header，检查用户，进行授权
 
 该功能还未开发完善，也没有在 Lain 上部署.
-可以参考 [demo](http://laingit.bdp.cc/chaoyiwang/proxy-example.git)

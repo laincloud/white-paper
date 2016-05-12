@@ -56,7 +56,7 @@ redis sentinel是对redis主要是维护一组或多组redis主从信息，并�
 
 
 ## 4.redis-service-sm 使用demo（python版）
-见[代码](http://laingit.bdp.cc/wenbinmeng/redis-demo.git)
+见[代码](https://github.com/laincloud/redis-service-sm)
 
 ### 4.1编写lain.yaml
 和lain service相关文档见[地址](http://docs.lain.bdp.cc/user/service/)
