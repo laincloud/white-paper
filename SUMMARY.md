@@ -40,7 +40,6 @@
         * [networkd](adminmanual/maintain/networkd.md)
     * [OnDuty](adminmanual/onduty.md)
     * [lainctl](adminmanual/lainctl.md)
-    * [ansible](adminmanual/ansible.md)
     * [recovery](adminmanual/recovery.md)
     * [debug](adminmanual/debug.md)
 	* [sso](adminmanual/sso.md)
