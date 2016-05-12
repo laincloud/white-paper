@@ -42,9 +42,7 @@
 - [lvault](http://laingit.bdp.cc/chaoyiwang/lvault-v2/blob/master/docs/introduction.md) URL ToBeUpdate
 - [sso](http://laingit.bdp.cc/lain/sso/blob/master/docs/introduction.md)
 - [registry](http://laingit.bdp.cc/lain/registry/blob/master/README.md)
-- [kibana && kafka , es](http://laingit.bdp.cc/zhuofuxu/libana/blob/master/docs/libana.md)
 - [webrouter](http://laingit.bdp.cc/lain/webrouter/blob/master/README.md)
 - [lainlet](http://laingit.bdp.cc/yunfei/lainlet/blob/freshmeat/README.md)
 - [rebellion](http://laingit.bdp.cc/lain/rebellion/blob/master/README.md)
 - [networkd](http://github.com/laincloud/networkd/blob/master/README.md)
-- [jenkins](http://laingit.bdp.cc/lain/jenkins/blob/master/README.md)
