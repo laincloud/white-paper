@@ -257,15 +257,20 @@ CLI 的配置管理
 `lain secret {show,add,delete} ...`
 
 `lain secret show PHASE procname`
+
 显示当前应用对应 proc 的所有配置。
+
 - procname 为在 lain.yaml 中定义的 proc 的名字，procname 在 app 中是唯一的。
 
-`lain secret add PHASE procname path content`
+`lain secret add [-h] [-c CONTENT] [-f FILE] phase procname path`
+
 为当前应用的对应 proc 增加路径为 path，内容为 content 的秘密配置文件.
+
 - path 为秘密配置文件绝对路径，即已 `/` 开头的路径
 - content 为秘密配置文件的内容.
 
 `lain secret delete PHASE procname path`
+
 删除当前应用和 proc 的对应路径下的秘密配置文件。
 
 ### login

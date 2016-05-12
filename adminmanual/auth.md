@@ -3,7 +3,8 @@
 
 LAIN 上的认证（authentication）和授权（authorization） 
 构成了 LAIN 安全的重要组成部分，
-我们将其统称为 auth，LAIN 的 auth 涉及了 LAIN 上的很多组件。
+我们将其统称为 auth，
+安装时默认是不开启的。
 
 LAIN 的认证／授权涉及了 sso，console，lainctl，lain-cli 等几个组件，
 这个文档介绍了如何开启 auth，和如何加强 auth 的安全性。
@@ -12,7 +13,9 @@ LAIN 的认证／授权涉及了 sso，console，lainctl，lain-cli 等几个组
 
 ### Precondition
 
-LAIN 中所有的关于 auth 的最终认证后端都为 sso，因此首先需要先部署好 sso，具体部署方法见 sso 文档。
+LAIN 中所有的关于 auth 的最终认证后端都为 sso，
+而默认安装的组件中，没有 sso，而 sso 是 auth 的基础，
+因此首先需要先部署好 sso，具体部署方法见 sso 文档。
 
 在 sso 部署后会初始化两个组：admins 与 lain，其中都包含一个 sso 初始用户 admin。
 其中 admins 是 sso 的管理员组，lain 是 LAIN 上所有应用的管理员组。

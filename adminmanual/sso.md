@@ -36,11 +36,12 @@ sso 网站上的 API 文档的链接指向一个 swagger-ui，
 这个 swagger-ui 的使用需要一个 oauth2 的认证，即 swagger-ui 本身作为 sso 的一个 client，sso 的管理员根据自己 sso 的域名，需要修改如下项的默认值.
 
 ```
-sso/apidoc/index.html:53:              appName: "swagger-example.com",
 sso/apidoc/swagger.json:10:    "host": "sso.example.com",
 sso/apidoc/swagger.json:513:            "authorizationUrl": "https://sso.example.com/oauth2/auth",
 sso/apidoc/swagger.json:514:            "tokenUrl": "https://sso.example.com/oauth2/token",
 ```
+
+并且，为 swagger-ui 注册应用，并修改 apidoc/index.html 中的 appName，clientId，clientSecret 等值.
 
 ## sso 的用户（End User）注册
 
