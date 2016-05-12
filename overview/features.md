@@ -132,10 +132,7 @@
 
 ### 可选的系列预置应用
 
-- [mysql-service](http://laingit.bdp.cc/lain/mysql-service/blob/master/README.md)
-- [mysql-resource](http://laingit.bdp.cc/lain/mysql-resource/blob/master/README.md)
-- [redis-service](http://laingit.bdp.cc/wenbinmeng/redis-service/blob/master/docs/redis-service.md)
-- [redis-service-sm](http://laingit.bdp.cc/wenbinmeng/redis-service-sm/blob/master/docs/redis-service-sm.md)
-- [redis-resource-sm](http://laingit.bdp.cc/wenbinmeng/redis-resource-sm/blob/master/redis-resource-sm.md)
-- [kafka-elk](http://laingit.bdp.cc/zhuofuxu/libana/blob/master/docs/libana.md)
+- [mysql-service](https://github.com/laincloud/mysql-service)
+- [mysql-resource](https://github.com/laincloud/mysql-resouece)
+- [redis-service-sm](https://github.com/laincloud/redis-service-sm)
 - etc.
