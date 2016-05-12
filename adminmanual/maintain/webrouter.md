@@ -1,14 +1,15 @@
 # Webrouter
 
-webrouter是所有lain app的入口，包括layer1层的registry和console等。基于Tengine实现。
+webrouter 是所有 lain app 的入口，包括 layer1 层的 registry 和 console 等。基于 Tengine 实现。
 
 ## Scale
 
-webrouter可以启多个instance来实现High Avaliable。 由于webrouter的特殊身份，无法像普通的lain app简单的scale，而且其在scale过程中所有的web类型的lain app都可能会出现短暂的无法访问。
+webrouter 可以启多个 instance 来实现 High Avaliable。 由于 webrouter 的特殊身份，无法像普通的 lain app 简单的 scale，而且其在 scale 过程中所有的 web 类型的 lain app 都可能会出现短暂的无法访问。
 
-因 swarm 是动态决定一个 container 部署到哪台机器，而 webrouter 在启动之前是需要配置文件存在的。因此我们需要确保集群的所有 node 上有一份 webrouter 的配置，以确保 swarm 无论在哪台机器上启动 webrouter ，能都能正常工作。
+因 swarm 是动态决定一个 container 部署到哪台机器，而 webrouter 在启动之前是需要配置文件存在的。因此我们需要确保集群的所有 node 上有一份 webrouter 的配置，进而确保 swarm 无论在哪台机器上启动 webrouter ，能都能正常工作。
 
-或者，我们可以通过 `docker -H swarm.lain:2376 info` 查看各个节点的资源使用情况，预测下 webrouter 会被部署到哪个节点上。
+或者，也可以通过 `docker -H swarm.lain:2376 info` 查看各个节点的资源使用情况，预测下 webrouter 会被部署到哪个节点上。
+
 
 具体操作步骤如下:
 
@@ -18,6 +19,7 @@ webrouter可以启多个instance来实现High Avaliable。 由于webrouter的特
    mkdir -p /data/lain/volumes/webrouter/webrouter.worker.worker/2/
    rsync -az --password-file  /tmp/pass rsync://lain@BOOTSTRAP_NODE/lain_volume/webrouter/webrouter.worker.worker/1/ /data/lain/volumes/webrouter/webrouter.worker.worker/2/
    ```
+   **注**: *以上命令中的目录的中的数字，实为 instance number。此处为 2；假如我们扩容到 3 个，则还需要为 3 号实例准备一份同样数据。*
 
 2. 利用swarm，在所有node上pull webrouter image，确保每个节点上都有webrouter image
    ```sh
@@ -27,6 +29,8 @@ webrouter可以启多个instance来实现High Avaliable。 由于webrouter的特
    ```sh
    lain scale -n NUMBER PHASE worker
    ```
+
+*所以，webrouter 会的 HA 建议尽可能早做，如果集群的规模扩大，scale 起来也可能会麻烦些。*
 
 ## 故障排除
 

@@ -5,7 +5,7 @@ backup目前仅支持MooseFS这一种后端存储，所以，在使用backupd前
 ## 初始化
 
 ```
-ansible-playbook -i /vagrant/playbooks/cluster -e "role=backupd" /vagrant/playbooks/role.yaml
+ansible-playbook -i playbooks/cluster -e "role=backupd" playbooks/role.yaml
 ```
 
 初始化backupd后，再add-node添加节点，新node都会自动启动backupd服务。

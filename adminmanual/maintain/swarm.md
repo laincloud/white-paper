@@ -21,11 +21,11 @@ etcdctl get /docker/swarm/leader
 
 # 增加一个manager
 etcdctl set /lain/nodes/swarm-managers/node2:192.168.77.22:22 192.168.77.22
-ansible-playbook -i /vagrant/playbooks/cluster -e role=swarm  /vagrant/playbooks/role.yaml
+ansible-playbook -i playbooks/cluster -e role=swarm  playbooks/role.yaml
 
 # 删除一个manager
 etcdctl rm /lain/nodes/swarm-managers/node2:192.168.77.22:22
-ansible-playbook -i /vagrant/playbooks/cluster -e role=swarm  /vagrant/playbooks/role.yaml
+ansible-playbook -i playbooks/cluster -e role=swarm  playbooks/role.yaml
 ```
 
 ## swarm agent

@@ -30,14 +30,14 @@ Lain支持手动修改各个node上etcd的mode，即把一个etcd-proxy变成etc
 ### proxy 变 member
 ```bash
 etcdctl set /lain/nodes/etcd-members/node2:192.168.77.22:22 192.168.77.22
-ansible-playbook -i /vagrant/playbooks/cluster -e role=etcd  /vagrant/playbooks/role.yaml
+ansible-playbook -i playbooks/cluster -e role=etcd  playbooks/role.yaml
 ```
 
 ### member 变 proxy
 
 ```bash
 etcdctl rm /lain/nodes/etcd-members/node2:192.168.77.22:22
-ansible-playbook -i /vagrant/playbooks/cluster -e role=etcd  /vagrant/playbooks/role.yaml
+ansible-playbook -i playbooks/cluster -e role=etcd  playbooks/role.yaml
 ```
 
 ### cluster unhealth

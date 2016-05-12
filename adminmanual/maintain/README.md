@@ -15,7 +15,7 @@ etcdctl set /lain/config/dnshijack/<domain.com> '<ip>'
 有多个需要劫持的地址则设则多次，设置完之后可以通过运行如下脚本会将相应配置放于`/etc/dnsmasq.d/proxy.conf`中：
 
 ```bash
-ansible-playbook -i /vagrant/playbooks/cluster -e "role=dns-hijack" /vagrant/playbooks/role.yaml
+ansible-playbook -i playbooks/cluster -e "role=dns-hijack" playbooks/role.yaml
 ```
 
 **注意:** 每次运行该脚本会将原有配置中内容覆盖掉，因此如果发生变动请务必记得修改etcd中的值，不要直接修改配置文件
@@ -26,7 +26,7 @@ ansible-playbook -i /vagrant/playbooks/cluster -e "role=dns-hijack" /vagrant/pla
 目前 Lain 中 swarm manager 使用的是伪HA策略，当 swarm 集群 出现主节点更换的情况下，需要管理员手动切换 swarm.lain 对应的 ip，可以使用如下命令：
 
 ```bash
-ansible-playbook -i /vagrant/playbooks/cluster -e "role=swarm-hijack" /vagrant/playbooks/role.yaml
+ansible-playbook -i playbooks/cluster -e "role=swarm-hijack" playbooks/role.yaml
 ```
 
 此命令会将 etcd 中 `/lain/config/swarm_manager_ip` 的 value 刷成 swarm.lain 对应的ip
@@ -51,7 +51,7 @@ clean-node 脚本支持同时清理多个节点， 使用 `--all` 参数可以�
 目前syslog 产生的日志文件（默认是`/var/log/messages`）较大，可能会导致对应目录容量吃紧，此脚本可以将 rsyslog 的日志文件存储位置到指定的其它地方去：
 
 ```bash
-ansible-playbook -i /vagrant/playbooks/cluster -e "role=rsyslog-relocate" -e "syslog_messages_location=/data/log/messages" /vagrant/playbooks/role.yaml
+ansible-playbook -i playbooks/cluster -e "role=rsyslog-relocate" -e "syslog_messages_location=/data/log/messages" playbooks/role.yaml
 ```
 
 **注意:** `syslog_messages_location`为迁移后日志文件的地址，不设置的话，地址不变
@@ -62,7 +62,7 @@ ansible-playbook -i /vagrant/playbooks/cluster -e "role=rsyslog-relocate" -e "sy
 如果 lain 某个节点出现了重启的情况（如断电了），需要有机制将 node 重新变成可调度状态。可执行以下命令：
 
 ```bash
-ansible-playbook -i /vagrant/playbooks/cluster -e "rsync_secrets=`cat /etc/rsyncd.secrets`" /vagrant/playbooks/site.yaml
+ansible-playbook -i playbooks/cluster -e "rsync_secrets=`cat /etc/rsyncd.secrets`" playbooks/site.yaml
 ```
 
 脚本运行完毕后可以通过运行 `docker -H :2376 ps | grep calico` 监测对应节点是否启动
