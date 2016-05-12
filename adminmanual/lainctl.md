@@ -7,6 +7,8 @@ lainctl 需要运行在 lain master 节点上，因为它要可能需要使用an
 
 ## 安装
 
+lain 集群在 bootstrap 后时会自动安装 lainctl。手动安装或更新的方式:
+
 ```sh
 git clone --depth=1 https://github.com/laincloud/lainctl.git
 cd lainctl
