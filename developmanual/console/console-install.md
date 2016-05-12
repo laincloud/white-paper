@@ -1,6 +1,6 @@
 # console 部署文档
 
->在 Lain 的机制下对 console 进行编译部署
+>在 LAIN 的机制下对 console 进行编译部署
 
 ## Precondition
 
@@ -10,11 +10,11 @@
 
 ### 1. local dev/test env @ lain-box
 
->`Target` : 基于 Lain 的机制提供一个方便的可重建的 docker 化的本地开发和测试环境
->`REF` : 建议阅读 [Docker Docs](https://docs.docker.com/)  [Docker —— 从入门到实践](http://yeasy.gitbooks.io/docker_practice/content/)  [Lain Docs](https://github.com/laincloud/white-paper)
+>`Target` : 基于 LAIN 的机制提供一个方便的可重建的 docker 化的本地开发和测试环境
+>`REF` : 建议阅读 [Docker Docs](https://docs.docker.com/)  [Docker —— 从入门到实践](http://yeasy.gitbooks.io/docker_practice/content/)  [LAIN White Paper](https://laincloud.gitbooks.io/white-paper/content/)
 >`lain-box` 是基于 `vagrant` / `virtualbox` 的 一个虚拟机开发环境，其启动的虚拟机是一个集成了 `docker` 和 `laincli` 等工具的 `centos7.2` ，作为 `docker daemon` 的宿主系统
 
-#### 1.1. lain 环境预备
+#### 1.1. LAIN 环境预备
 
 - 宿主机（咱们一般都是 mac book 对吧）上代码目录（假设在 `/code/`） `cd /code/ && git clone https://github.com/laincloud/lain-box.git`
 - 宿主机 `cd /code/lain-box`
@@ -31,8 +31,6 @@
 
 #### 1.3. local build 和 开发过程
 
->如出现任何问题，请联系 `lain 开发组`
-
 - 虚拟机 `lain update`
 - 虚拟机 `lain config save local domain lain.local`
 - 虚拟机/宿主机 do some coding && commit
@@ -40,14 +38,14 @@
 - `git push`   代码提交推送
 - `gitlab mergerequest`  代码审核
 - `merge to master` 合入
-
+- 虚拟机 `lain tag local && lain deploy local` 作为 LAIN 的开发者可以部署到本地的 LAIN 集群进行测试
 
 #### 1.4. local debug server
 
 >前提是先提供本地测试数据库并修改配置使应用连接本地数据库
 
 - 虚拟机 `lain build` 用测试配置构建应用
-- [TODO] 虚拟机 `lain run web` 会按照 `lain.yaml` 中 `web proc` 描述 serve 在指定端口，即可通过 http://192.168.10.24:8188 访问本地测试服务
-    - console 本地运行需要仔细阅读 `apps/settings.py` 里面对于各环境变量的获取及其默认值，运行时应注入这些环境变量（暂时 lain cli 还未支持 coming soon）
+- 虚拟机 `lain run web` 会按照 `lain.yaml` 中 `web proc` 描述 serve 在指定端口，即可通过 http://192.168.10.24:8000 访问本地测试服务
+    - console 本地运行需要仔细阅读 `commons/settings.py` 里面对于各环境变量的获取及其默认值，运行时应注入这些环境变量
 - 虚拟机 mkvirtualenv console ; pip install -r pip-req.txt ; python manage.py runserver 0.0.0.0:18000，即可通过 http://192.168.10.24:18000 访问本地测试服务
     - console 本地运行需要仔细阅读 `commons/settings.py` 里面对于各环境变量的获取及其默认值，运行时应预置这些环境变量

@@ -1,25 +1,25 @@
-# Lain Console
+# LAIN Console
 
 ## 基本介绍
-Lain Console 组件属于 lain 集群的 layer1 组件，是 sa/op/dev/testing 使用 lain 的控制台。Lain Console 使用 Django 搭建，主要提供的功能包括：
+LAIN Console 组件属于 LAIN 集群的 layer1 组件，是 sa/op/dev/testing 使用 LAIN 的控制台。LAIN Console 使用 Django 搭建，主要提供的功能包括：
 
-- Lain App 管理（注册、部署、更新、扩容等）
+- LAIN App 管理（注册、部署、更新、扩容等）
 
 - 权限管理，限制 user 对 app 的操作权限，同时也提供 lain registry 的 auth 服务
 
 
 ## 架构介绍
 
-Lain Console 仓库地址为： `https://github.com/laincloud/console.git`
+LAIN Console 仓库地址为： `https://github.com/laincloud/console.git`
 
-Lain Console 的架构图如下所示：
+LAIN Console 的架构图如下所示：
 
-![console 整体架构](docs/console.png)
+![console 整体架构](img/console.png)
 
 主要包括的模块为：
 
 - console：对外提供 Restful API，主要包括 /repos/, /apps/, /maintainers/, /roles/, /authorize/ 等API；
-    
+
 - apis: 主要逻辑模块，lain 中提供的 app、service、resource 等部署方式由该模块进行组装，同时调用 authrize、deploys、configs 等相应模块完成操作；
 
 - authorize：认证模块，封装了对 SSO 的操作接口，提供权限管理功能；
@@ -32,11 +32,11 @@ Lain Console 的架构图如下所示：
 
 - external bin：包括 calicoctl 以及 rfpctl，calicoctl 用于提供 calico profile 设置，rfpctl 用于构建 config image；
 
-Lain Console 的 API 可以在[这里](docs/API.md)查看
+LAIN Console 的 API 可以在[这里](console-api.md)查看
 
 ## 工作流程
 
-Console 组件属于 Lain 中与其他组件结合非常紧密的一个组件，与其相关的组件包括 Lain Registry, Lain Deployd, Lain SSO, Lain lvault。Console 的部署文档可以在[这里](docs/LAIN.md)查看
+Console 组件属于 LAIN 中与其他组件结合非常紧密的一个组件，与其相关的组件包括 LAIN Registry, LAIN Deployd, LAIN SSO, LAIN lvault。Console 的部署文档可以在[这里](console-install.md)查看
 
 Console 使用 etcd 作为存储后端，apps 的部署信息及版本信息全部存储在 `/lain/console/apps/` 目录下；
 
@@ -56,4 +56,4 @@ Console 使用 etcd 作为存储后端，apps 的部署信息及版本信息全�
 
 ## Auth 设置
 
-Lain Console 组件中关于 auth 的使用可以在[这里](docs/AUTH.md)查看
+LAIN Console 组件中关于 auth 的使用可以在[这里](console-auth.md)查看

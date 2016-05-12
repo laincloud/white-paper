@@ -9,7 +9,7 @@ curl /api/v1/repos/ -H "Content-Type: application/json" -d '{"appname":"hello"}'
 ```
 
 2. `GET`
->获取当前所有已注册未部署 App 信息以及状态
+>获取当前所有已注册 App 信息
 ```sh
 curl /api/v1/repos/
 ```
@@ -17,7 +17,7 @@ curl /api/v1/repos/
 ### `/api/v1/repos/:appName/`
 
 1. `GET`
->获取已注册 App 的信息以及状态
+>获取已注册 App 的信息
 ```sh
 curl /api/v1/repos/:appName/
 ```
@@ -124,9 +124,9 @@ curl /api/v1/apps/:appName/procs/:procName
 ```
 
 2. `PATCH`
->scale proc
+>scale proc，或者修改占用 cpu, memory 数，
 ```sh
-curl -X PATCH /api/v1/apps/:appName/procs/:procName/ -H "Content-Type: application/json" -d '{"num_instances":2}'
+curl -X PATCH /api/v1/apps/:appName/procs/:procName/ -H "Content-Type: application/json" -d '{"num_instances":2, "cpu":1, "memory":"64M"}'
 ```
 
 3. `DELETE`
