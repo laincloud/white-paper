@@ -107,8 +107,7 @@
 ### 集群管理 CLI
 
 - 使用开源的 [ansible](https://github.com/ansible/ansible) 开发集群管理运维工具包
-- 再次封装 ansible 调用为简单的 CLI 使得操作更方便
-- 是集群的运维管理的主要入口
+- 再次封装 ansible 调用为简单的 [CLI](../adminmanual/lainctl.html) 使得操作更方便，包括增加节点，移除节点，迁移应用，集群健康检查等。
 
 ### 规范化的开发 workflow
 
