@@ -41,7 +41,7 @@ python setup.py install
   - `--p/--playbooks`: ansible playbooks 目录路径
   - `-d/--docker-device`: 初始化 `devicemapper` 的磁盘。若不指定，docker 使用 loopback device 作为存储启动。
   - `-q/--quiet`: 安静模式，不需要登录。
-  - `-c/--cid`: 参考 [sso 手册](../usermanual/sso.html#应用注册)
+  - `-c/--cid`: 参考 [sso 手册](../usermanual/sso.html#应用注册)， 下同。
   - `-s/--secret`:
   - `-r/--redirect-uri`:
   - `-u/--sso-url`:
