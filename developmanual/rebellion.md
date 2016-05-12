@@ -1,11 +1,11 @@
 # Rebellion
 ## 1. 功能说明
 ### 1.1 基本功能
-Rebellion是lain中负责管理日志数据的layer0组件, 以host模式运行在docker上。但Rebellion并不是单进程的容器，而是由supervisord管理的多进程容器。Rebellion主要包括两个部分：
+Rebellion是LAIN中负责管理日志数据的layer0组件, 以host模式运行在docker上。但Rebellion并不是单进程的容器，而是由supervisord管理的多进程容器。Rebellion主要包括两个部分：
 - Hekad程序：负责接受日志输入、处理并发送。
 - Rebellion程序：负责在启动时生成Hekad的配置文件。并监听lainlet，当集群配置更新或应用更新时，及时更新Hekad的配置文件并重启Hekad。
 
-> hekalain的代码仓库 http://laingit.bdp.cc/lain/hekalain.git
+> hekalain的代码仓库 http://github.com/laincloud/hekalain.git
 
 > heka的官方文档地址 http://hekad.readthedocs.org/en/v0.10.0/
 
@@ -29,13 +29,11 @@ Rebellion目前主要处理三类日志流：
 ## 2. 编译运行环境
 
 ### 2.1 编译方式
-运行项目中的build.sh即可完成一键发布，前提是jenkins上应该已经有发布的hekalain。
+运行项目中的build.sh即可完成一键发布。
 
 > Dockerfile是编译时运行的文件
 
 > Dockerfile.release是发布时运行的文件
-
-Jenkins上面已经配置好了本工程的自动构建(lain-rebellion\_\_release\_\_)，构建时会执行build.sh脚本。构建成功后会上传image至docker.bdp.cc:5002。版本更新时，务必更新build.sh和main.go里面的版本号，该版本号对应了image的tag。
 
 ### 2.2 运行方式
 Rebellion的运行是以Host模式运行的Container，目前已经作为Service在boostrap时就已经部署并运行了。
@@ -73,7 +71,7 @@ type StaticHandler interface {
 
   并在NewRebellion中注册该实现的结构体。StaticallyHandle()实现时需要自己调用renderTemplate()函数进行模板渲染。
 
-  > 示例: [CommonConfHandler](http://laingit.bdp.cc/lain/rebellion/blob/master/core/common.go)
+  > 示例: [CommonConfHandler](https://github.com/laincloud/rebellion/blob/master/core/common.go)
 
 - 动态渲染：动态渲染是指在Rebellion启动后会根据情况多次渲染。这类渲染的配置一般都和集群或应用配置相关。如果需要增加动态渲染的功能，在写好模板的基础上，在core中实现```DynamicHandler```接口。该接口定义如下：
 
@@ -85,4 +83,4 @@ type DynamicHandler interface {
 
   并在NewRebellion中注册该实现的结构体。DynamicallyHandle()实现时需要自己调用renderTemplate()函数进行模板渲染，并通过给channel发送任意的int值通知rebellion重启hekad，以使新配置生效。动态渲染的冷却时间是3秒。
 
-  > 示例: [WebrouterConfHandler](http://laingit.bdp.cc/lain/rebellion/blob/master/core/webrouter.go)
+  > 示例: [WebrouterConfHandler](https://github.com/laincloud/rebellion/blob/master/core/webrouter.go)
