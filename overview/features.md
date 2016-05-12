@@ -124,11 +124,6 @@
 - 支援在 lain.yaml 中显式声明 volume 备份需求和策略，以及设定备份策略的 hooks
 - 支援指定备份恢复
 
-### 可选的持续集成组件（ jenkins ）
-
-- 采用开源的 [jenkins](https://github.com/jenkinsci/jenkins) 和 [jenkins job builder](http://docs.openstack.org/infra/jenkins-job-builder/) 封装 ci 组件
-- 支援 ci job 的 创建，构建触发和进度查看，结果查询
-
 ### 可选的集群日志查询组件 （ kafka + elasticsearch + kibana ）
 
 - 采用开源的 [kakfa](https://github.com/apache/kafka)  , [elasticsearch](https://github.com/elastic/elasticsearch) , [kibana](https://github.com/elastic/kibana) 搭建外部依赖的 kafka 集群和 elasticsearch 集群，封装集群可选组件 libana
