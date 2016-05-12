@@ -95,6 +95,12 @@ portal.portal-echo
 
 如未定义 `allow_clients` ，则其值默认为 `**`。
 
+
 ## Resource
 
 如果一个应用希望能够有独享的 service ，除了部署一个 service ，将其 `allow_clients` 设定为自己外，还可以使用 [Resource](resource.md) 机制实现自动复用。
+
+
+## 注意事项
+
+由于 LAIN 中暂时不支持 proc 的别名定义机制，因此在定义 `use_services` 或 `use_resources` 时，使用的 services 和 resources 的 proc 不能存在相同的 procname，否则使用 lain-cli 进行 build 时会报错，部署后 portal 的访问也有可能出现问题。
