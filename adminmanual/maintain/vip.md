@@ -78,7 +78,7 @@
 
 ## 维护
 
-配置好的 VIP 可以在 etcd 查到对应的 lock, 例如: /lain/networkd/vips/192.168.77.254.lock
+配置好的 VIP 可以在 etcd 查到对应的 lock, 例如: `/lain/networkd/vips/192.168.77.254.lock`
 
 ## 应用配置
 
