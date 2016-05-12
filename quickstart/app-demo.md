@@ -27,8 +27,10 @@ lain config save local domain lain.local
 
 
 ## 部署 demo 应用
-这里，我们将部署三个示例应用，由于这三个应用有逻辑关系，建议按照下列顺序部署. 
-更多背景知识可见 [service](../usermanual/service.html), [resource](../usermanual/resource.html).
+这里，我们将部署三个示例应用，由于 client 依赖 resource 和 service，
+这一点可以在 client 的 [lain.yaml](https://github.com/laincloud/demo-ipaddr-client/blob/master/lain.yaml) 中看到,
+所以需要在 resouce 和 service 部署之后，最后部署. 
+更多背景知识可见 [service](../usermanual/service.html), [resource](../usermanual/resource.html), 两者的主要作用是进行访问控制，即保证资源的安全性.
 
 ### 下载示例代码
 
@@ -43,15 +45,15 @@ git clone https://github.com/laincloud/demo-ipaddr-client.git
 
 ```
 cd /home/vagrant/demo-ipaddr-resource
-lain dashboard local
-lain reposit local
-lain build
-lain tag local
-lain push local
-lain deploy local
+lain dashboard local # 看当前 local 集群有哪些应用
+lain reposit local # 注册应用
+lain build # 构建应用
+lain tag local # 将构建好的镜像打上 tag，时间戳＋commit id
+lain push local # 将构建好的镜像 push 到本地集群
+lain deploy local # 部署应用
 ```
 
-resource 是没有实例的, 所以不需要 lain ps local
+resource 是没有实例的, 如果执行 `lain ps local`, 可以看到并没有容器列表.
 
 ### 部署 ipaddr-service
 
@@ -63,14 +65,16 @@ lain build
 lain tag local
 lain push local
 lain deploy local
-lain ps local
-lain scale -n 2 local webc
+lain ps local #查看应用当前的部署信息
+lain scale -n 2 local webc # 将 web proc 扩容为 2 个
 lain ps local
 ```
 
 这时候可以看到，ipaddr-service 的 proc list 已经有实例了，但是还没有 portal.
 
 ### 部署 ipaddr-client
+
+部署过 service 后，即可部署
 
 ```
 cd /home/vagrant/demo-ipaddr-client
@@ -80,8 +84,8 @@ lain build
 lain tag local
 lain push local
 lain deploy local
-lain ps local
-lain scale -n 2 local web
+lain ps local # 这里需要看一下实用的 sevice 和 resource 是否已部署好
+lain scale -n 2 local web # 等待上一步部署结束，就可以扩容
 lain ps local
 ```
 
@@ -106,4 +110,13 @@ tinydns                         app                   1462424821-15ab41349dce81d
 ipaddr-resource                 resource              1462784153-944220ca13e9aae08412875990686e18b71bff9e           healthy
 ```
 
+可以按照如下方式，进一步测试部署是否成功和集群的功能是否正常.
+```
+curl ipaddr-client.ipaddr-resource.resource.lain.local  # 期望返回 resource calico ip
+curl ipaddr-service.lain.local  # 期望返回  service calico ip
+lain scale -t resource.ipaddr-resource.ipaddr-client -n 2 local web  # 给 resource instance 扩容
+```
+
+这时，我们将 client, service, resource 都扩容了，
+可以 `curl ipaddr-client.lain.local`, 多次请求既可以看到 resource / service / client 的 ip 轮流变化的情况.
 
