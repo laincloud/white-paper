@@ -95,10 +95,10 @@
 - 使用开源的 [vagrant](https://github.com/mitchellh/vagrant) ，免费的 [centos](https://www.centos.org/) 和 [virtualbox](https://www.virtualbox.org/) 组织统一的本地化开发环境
 - 甚至支援本地使用上述工具链 bootstrap 出一个  lain 本地集群
 
-### 应用部署运维 API 以及相应的 CLI/UI 客户端
+### 应用部署运维 API 以及相应的 CLI 客户端
 
 - 应用的构建，发布，部署，运维 都由集群的各组件提供 API
-- 使用 lain SDK/CLI 以及 集群控制器UI组件 再次封装上述 API ，给用户提供良好的操作界面
+- 使用 lain SDK/CLI 再次封装上述 API ，给用户提供良好的操作界面
 - 集成集群的统一认证，进行用户管理和权限隔离
 
 ![](img/lain-overview-cli.png)
