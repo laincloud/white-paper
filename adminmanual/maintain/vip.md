@@ -1,5 +1,7 @@
 # Virtual IP
 
+需要对外暴露服务的 app，需要设置 VIP。集群外可以通过 VIP 访问对应 app 的服务。
+
 ## 配置 IP
 
 在 etcd 的 `/lain/config/vips/` 创建一个名为 `VIP` 键，比如 `192.168.77.254` ，其值为一个 JSON 对象（为了方便阅读加了空格和缩进）：
@@ -78,7 +80,7 @@
 
 ## 维护
 
-配置好的 VIP 可以在 etcd 查到对应的 lock, 例如: /lain/networkd/vips/192.168.77.254.lock
+配置好的 VIP 可以在 etcd 查到对应的 lock, 例如: `/lain/networkd/vips/192.168.77.254.lock`
 
 ## 应用配置
 

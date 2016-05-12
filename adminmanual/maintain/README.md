@@ -62,15 +62,13 @@ ansible-playbook -i playbooks/cluster -e "role=rsyslog-relocate" -e "syslog_mess
 如果 lain 某个节点出现了重启的情况（如断电了），需要有机制将 node 重新变成可调度状态。可执行以下命令：
 
 ```bash
-ansible-playbook -i playbooks/cluster -e "rsync_secrets=`cat /etc/rsyncd.secrets`" playbooks/site.yaml
+ansible-playbook -i /vagrant/playbooks/cluster /vagrant/playbooks/site.yaml
 ```
 
 脚本运行完毕后可以通过运行 `docker -H :2376 ps | grep calico` 监测对应节点是否启动
 
-如果 deploy 同样处在该节点且 deploy 不可用，则需使用`docker -H :2377 start deploy.web.web.v0-i1-d0` 拉起容器，此后即等待该节点相关容器被 deploy 拉起即可。
+如果 deployd 同样处在该节点且 deployd 不可用，则需使用`systemctl start deployd` 拉起容器，此后即等待该节点相关容器被 deploy 拉起即可。
 
 如果脚本不能将集群状态恢复，可以进行手动修复，参考[系统恢复](recovery.html)
 
 **注意:** 如果该节点包含 registry ，则 ansible 脚本不能成功运行，需要参考[系统恢复](recovery.html)进行手动修复，或者在将 registry 拉起之后再运行脚本
-
-
