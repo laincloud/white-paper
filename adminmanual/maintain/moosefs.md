@@ -34,7 +34,7 @@ etcdctl set /lain/nodes/moosefs-metalogger/node2:192.168.77.22:22 node2:192.168.
 ### 2. 执行ansible
 
 ```sh
-ansible-playbook -i /vagrant/playbooks/cluster -e "role=moosefs-build" /vagrant/playbooks/role.yaml
+ansible-playbook -i playbooks/cluster -e "role=moosefs-build" playbooks/role.yaml
 ```
 
 该命令会根据etcd中的配置，在指定的节点上启动moosefs server.
@@ -45,7 +45,7 @@ ansible-playbook -i /vagrant/playbooks/cluster -e "role=moosefs-build" /vagrant/
 有了 MooseFS Service 后，使用以下命令,将`/mfs`挂载到MooseFS。 此后再通过`add-node`新增节点，新节点的`/mfs`也会被自动挂载上
 
 ```sh
-ansible-playbook -i /vagrant/playbooks/cluster -e "role=moosefs" /vagrant/playbooks/role.yaml
+ansible-playbook -i playbooks/cluster -e "role=moosefs" playbooks/role.yaml
 ```
 
 ## Register On MooseFS
@@ -58,7 +58,7 @@ bootstrap完后，Registry默认是使用local filesystem作为backend，这也�
 
 
 ```bash
-ansible-playbook -i /vagrant/playbooks/cluster -e "role=registry-moosefs" /vagrant/playbooks/role.yaml
+ansible-playbook -i playbooks/cluster -e "role=registry-moosefs" playbooks/role.yaml
 ```
 
 **注1:** 该操作执行过程中，Registry是无法对外提供服务的。因为我们需要将已有的数据拷贝到MooseFS上，这需要花一些时间。

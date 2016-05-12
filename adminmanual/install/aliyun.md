@@ -1,41 +1,37 @@
+# 在阿里云上安装 Lain
 
-# 在阿里云上安装Lain
+## 机器选型
 
-## bootstrap
+- 网络类型使用*专有网络*
+  - 专有网络创建:
+
+    TODO
+
+- 安全组创建
+
+  TODO
+
+- 修改 hostname。如 `hostname lain-01`(重新登录)
+
+## Bootstrap
 
 ```sh
 # @lain-01
-
-# 修改 hostname
-hostname lain-01 # 修改后需退出重新登录ssh，才可看到效果。
-
 git clone git@github.com/laincloud/lain.git lain
-
 cd lain
-
 # DOMAIN 默认值是 lain.local
 ./bootstrap -r registry.aliyuncs.com/laincloud --ipip --domain DOMAIN
 ```
 
-## add node
+## Add node (optional)
 
 ```sh
-# 同 lain-01 一样修改下 新节点的 hostname
-
 # @lain-01
 lainctl node add -p playbooks -q lain-02:NODEIP
 ```
 
-## 导入外网流量
+## Scale webrouter
 
-aliyun 控制台开启 elb 实例
+参见 [webrouter scale](../maintain/webrouter.html#scale)
 
-随便华北 A或者B区开一个外网 负载均衡
-
-配置端口监听以及后端服务器
-
-## scale webrouter
-
-参见 [webrouter scale](../maintain/webrouter.html)
-
-webrouter 扩容后，集群有两个外界入口，可使用阿里云的 ELB 引入外部流量。并将自己的域名解析到 ELB 上。
+webrouter 扩容后，集群有两个外界入口(80 和 443 端口)，可使用阿里云的 ELB 引入外部流量。并将自己的域名解析到 ELB 上。

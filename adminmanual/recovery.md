@@ -41,7 +41,7 @@
 - master/member node
     - `etcdctl member list`
     - `etcdctl cluster-health`
-- proxy node 
+- proxy node
     - 确认是 proxy 节点
         - `systemctl stop etcd`
         - `rm -rf /var/etcd/$(hostname)`
@@ -85,9 +85,9 @@
 
 - `ansible -i ~/lain/playbooks/cluster all -m shell -a 'docker ps |grep calico'`
 - `ansible -i ~/lain/playbooks/cluster all -m shell -a 'docker start calico-node'`
-- `ansible -i ~/lain/playbooks/cluster all -m shell -a 'docker -H :2377 ps |grep calico'`
+- `ansible -i ~/lain/playbooks/cluster all -m shell -a 'docker ps |grep calico'`
 - 出现问题可以手动删除容器之后重新部署
-- docker -H :2377 ps 查看状态
+- docker ps 查看状态
 
 ### swarm
 
@@ -104,13 +104,23 @@
 - `ansible -i ~/lain/playbooks/cluster all -m shell -a 'systemctl restart networkd'`
 - `ansible -i ~/lain/playbooks/cluster all -m shell -a 'systemctl status networkd'`
 
-### tinydns- `ansible -i ~/lain/playbooks/cluster all -m shell -a 'docker ps -a|grep tinydns'`- `docker -H :2377 start tinydns.worker.worker`- `etcdctl get /lain/config/vips/10.106.170.203` (需要一个查询 app vip 的工具?)- VIP `ip addr show dev eth0`
+### tinydns
 
-1. deployd- `ansible -i ~/lain/playbooks/cluster all -m shell -a 'docker ps -a|grep deploy'`- `docker -H :2377 start deploy.web.web.v0-i1-d0`- `docker exec deploy.web.web.v0-i1-d0 ip addr`- `etcdctl get /lain/deployd/leader`- 等待 deployd 拉起剩余组件(需要查看 deploy 的工具?)
+- `ansible -i ~/lain/playbooks/cluster all -m shell -a 'docker ps -a|grep tinydns'`
+- `docker start tinydns.worker.worker`
+- `etcdctl get /lain/config/vips/10.106.170.203`
+- VIP `ip addr show dev eth0`
 
-1. lvault 解锁- 运行两次 unseal.sh 脚本- `sh ~/unseal.sh yxapp.xyz`
+### deployd
 
-1. 检查git/wiki是否运行正常- http://gitlab.yxapp.xyz- http://wiki.yxapp.xyz
+- `etcdctl ls /lain/nodes/deployd` 查看 deployd 运行在哪个节点。
+- 登录到节点上 `systemctl start deployd`
 
-1. 恢复 rebellion- `ansible -i ~/lain/playbooks/cluster all -m shell -a 'docker start rebellion.service'`
+### lvault
+
+- 解锁lvault, 运行两次 unseal.sh 脚本: `sh ~/unseal.sh DOMAIN`
+
+### rebellion
+
+- `ansible -i ~/lain/playbooks/cluster all -m shell -a 'systemctl start rebellion.service'`
 
