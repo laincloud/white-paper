@@ -200,7 +200,7 @@ nginx 需要编译入 [lua\_nginx\_module](https://github.com/openresty/lua-ngin
 1. GET /resource with cookie
  	1. 按照第一步的方法检查 cookie `sso`
  	2. 若通过检查，则解析 id_token 的 user_info 的 email 值作为 remote-user header
- 	3. **若 config.yaml 中，该页面对应 groups 为 true, 则调用 sso 的 api?, 用 id_token 换 groups 信息** 
+ 	3. ~~若 config.yaml 中，该页面对应 groups 为 true, 则调用 sso 的 api?, 用 id_token 换 groups 信息~~
 	1. GET /resource with REMOTE\_USER header and User\_Groups header
 	2. App 信任该 header，检查用户，进行授权
 
