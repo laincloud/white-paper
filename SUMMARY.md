@@ -75,6 +75,4 @@
 * [OutOfBox](outofbox/README.md)
     * [mysql-service](outofbox/mysql-service.md)
     * [mysql-resource](outofbox/mysql-resource.md)
-    * [redis-service](outofbox/redis-service.md)
     * [redis-service-sm](outofbox/redis-service-sm.md)
-    * [redis-resource-sm](outofbox/redis-resource-sm.md)
