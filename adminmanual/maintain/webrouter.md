@@ -6,13 +6,24 @@ webrouter是所有lain app的入口，包括layer1层的registry和console等。
 
 webrouter可以启多个instance来实现High Avaliable。 由于webrouter的特殊身份，无法像普通的lain app简单的scale，而且其在scale过程中所有的web类型的lain app都可能会出现短暂的无法访问。
 
+因 swarm 是动态决定一个 container 部署到哪台机器，而 webrouter 在启动之前是需要配置文件存在的。因此我们需要确保集群的所有 node 上有一份 webrouter 的配置，以确保 swarm 无论在哪台机器上启动 webrouter ，能都能正常工作。
+
+或者，我们可以通过 `docker -H swarm.lain:2376 info` 查看各个节点的资源使用情况，预测下 webrouter 会被部署到哪个节点上。
+
 具体操作步骤如下:
 
-1. 利用swarm，在所有node上pull webrouter image，确保每个节点上都有webrouter image
+1. 在所有 node 上执行:
+   ```sh
+   cat /etc/rsyncd.secrets  | cut -d ':' -f 2 > /tmp/pass && chmod 600 /tmp/pass
+   mkdir -p /data/lain/volumes/webrouter/webrouter.worker.worker/2/
+   rsync -az --password-file  /tmp/pass rsync://lain@BOOTSTRAP_NODE/lain_volume/webrouter/webrouter.worker.worker/1/ /data/lain/volumes/webrouter/webrouter.worker.worker/2/
+   ```
+
+2. 利用swarm，在所有node上pull webrouter image，确保每个节点上都有webrouter image
    ```sh
    docker -H swarm.lain:2376 pull registry.DOMAIN/webrouter:VERSION
    ```
-2. 使用laincli扩充instance数量(在webrouter项目目录下)
+3. 使用laincli扩充instance数量(在webrouter项目目录下)
    ```sh
    lain scale -n NUMBER PHASE worker
    ```
