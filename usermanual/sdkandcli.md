@@ -250,7 +250,7 @@ CLI 的配置管理
 
 `lain backup SUB_COMMAND ...`
 
-备份命令。请参考 [backup命令手册](backup.md#lain-backup命令手册)
+备份命令。请参考 [backup命令手册](backup.html#lain-backup命令手册)
 
 ### secret
 
@@ -282,7 +282,7 @@ CLI 的配置管理
 - `-r/--redirect-uri`:
 
 lain login 时，默认会使用 sso 为 laincli 初始化的一个应用的 client id 和 client secret 等，
-这些可以按照参数传入自己注册的应用的参数，更多相关知识可以参考 [sso 用户手册](sso/sso.md#应用注册)
+这些可以按照参数传入自己注册的应用的参数，更多相关知识可以参考 [sso 用户手册](sso/sso.html#应用注册)
 
 lain login 即登录指定的 sso，得到 access_token, access_token 会过期，过期后需要重新登录或者 [refresh](#refresh)
 

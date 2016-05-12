@@ -35,16 +35,16 @@ python setup.py install
   查看一个集群节点的详细信息
 
 - **add**
-  
+
   `lainctl node add -p PLAYBOOKS [-P SSH_PORT] [-d DOCKER_DEVICE] [-c CID] [-s SECRET] [-r REDIRECT_URI] [-u SSO_URL] [-q] NDOE_NAME:NODE_IP [NODE_NAME:NODE_IP ...]`
 
   - `--p/--playbooks`: ansible playbooks 目录路径
   - `-d/--docker-device`: 初始化 `devicemapper` 的磁盘。若不指定，docker 使用 loopback device 作为存储启动。
-  - `-c/--cid`: TODO
-  - `-s/--secret`: TODO
-  - `-r/--redirect-uri`: TODO
-  - `-u/--sso-url`: TODO
   - `-q/--quiet`: 安静模式，不需要登录。
+  - `-c/--cid`: 参考 [sso 手册](../usermanual/sso.html#应用注册)， 下同。
+  - `-s/--secret`:
+  - `-r/--redirect-uri`:
+  - `-u/--sso-url`:
 
   为集群增加一个节点。在这之前需要确保当前机器到新 node 的 ssh 自动认证是通过的，可通过下面命令完成:
 
