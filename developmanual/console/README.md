@@ -53,7 +53,3 @@ Console 使用 etcd 作为存储后端，apps 的部署信息及版本信息全�
 1. 从 lvault 上获取相应信息生成 config image，并进行相应 image 的组装（配置了 secret file 的情况下）
 
 1. 调用 Deployd 进行部署
-
-## Auth 设置
-
-LAIN Console 组件中关于 auth 的使用可以在[这里](console-auth.md)查看
