@@ -9,7 +9,6 @@
 ```
 appname: {APP_NAME}  # 全局唯一的应用名
 
-
 build:               # 描述如何构建应用 build image 
   base: {BASE_IMAGE} # 一个已存在的 docker image ，包含编译环境和默认的配置     
   prepare:           # 描述如何构建应用 prepare image
@@ -19,18 +18,15 @@ build:               # 描述如何构建应用 build image
   script:           # 定义构建 build image 时需要的 script
     - {BUILD_SCRIPT}
 
-
 release:                        # 描述如何构建应用 release image，可选
   dest_base: {DEST_BASE_IMAGE}  # release image 基于的 base image
   copy:                         # 定义将哪些内容 copy 到 release 镜像中
     - src: {SRC_FILE/SRC_FOLDER}
       dest: {DEST_FILE/DEST_FOLDER}
 
-
 test:               # 描述如何构建应用 test image
   script:           # 定义构建 test image 时需要的 script
     - {TEST_SCRIPT}
-
 
 proc.{PROC_NAME}:       # 定义一个 proc, 定义 web 时，可以只用 web 表示 web.web
   type: worker          # 默认为 worker，还包括 oneshot, web, portal
@@ -62,11 +58,9 @@ proc.{PROC_NAME}:       # 定义一个 proc, 定义 web 时，可以只用 web �
     - secret.dat 
   stateful: true                # 表示在升级 proc 时不改变容器的节点位置
 
-
 use_services:       # 指出需要使用 service
   {SERVICE_NAME}:   # 标明 service app name
     - {PROC_NAME}   # 指出要使用的 service proc，这个 proc 已经定义了相应的 portal
-
 
 use_resources:      # 指出需要使用 resource
   {RESOURCE_NAME}:  # 依赖的 resource app name
