@@ -39,6 +39,7 @@
         * [console](adminmanual/maintain/console.md)
         * [registry](adminmanual/maintain/registry.md)
         * [vip](adminmanual/maintain/vip.md)
+        * [nip](adminmanual/maintain/nip.md)
         * [dns](adminmanual/maintain/dns.md)
         * [deployd](adminmanual/maintain/deployd.md)
         * [webrouter](adminmanual/maintain/webrouter.md)
