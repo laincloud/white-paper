@@ -29,7 +29,7 @@ test:                           # 描述如何构建应用 test image
     - {TEST_SCRIPT}
 
 proc.{PROC_NAME}:           # 定义一个 proc, 定义 web 时，可以只用 web 表示 web.web
-  type: worker              # 默认为 worker，还包括 oneshot, web, portal
+  type: worker              # 默认为 worker，还包括 web, portal
   image: {PROC_IMAGE}       # 默认为 app image，也可以进行自定义
   cmd: {PROC_CMD}           # 启动 proc 时定义的命令
   num_instances: 1          # 部署时 proc 的个数，默认为 1
