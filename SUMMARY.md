@@ -30,6 +30,7 @@
         * [AliYun](adminmanual/install/aliyun.md)
         * [QingCloud](adminmanual/install/qingcloud.md)
         * [AWS](adminmanual/install/aws.md)
+    * [HA](adminmanual/ha.md)
     * [maintain](adminmanual/maintain/README.md)
         * [backup](adminmanual/maintain/backup.md)
         * [etcd](adminmanual/maintain/etcd.md)
