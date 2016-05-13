@@ -43,6 +43,20 @@ CLI 的诸多命令中，大多数都会有一个 PHASE 参数，PHASE 是一个
 
 检查应用配置是否合法，即该应用的`lain.yaml`的正确性。
 
+### prepare
+
+`lain prepare`
+
+为了加速编译构建 prepare image，将依赖一次性装好，
+可以在 `lain.yaml` 中 build 下添加 prepare，
+规定版本号和脚本.
+
+### prepare-update
+
+`lain prepare-update`
+
+在已有的 prepare 镜像的基础上，更新 prepare 镜像。
+
 ### build
 
 `lain build [--push] [--release]`
