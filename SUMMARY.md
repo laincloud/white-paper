@@ -58,7 +58,6 @@
     * [console](developmanual/console/README.md)
         * [install](developmanual/console/console-install.md)
         * [api](developmanual/console/console-api.md)
-        * [auth](developmanual/console/console-auth.md)
     * [deploy](developmanual/deploy.md)
     * [tinydns](developmanual/tinydns.md)
     * [hedwig](developmanual/hedwig.md)
