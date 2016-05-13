@@ -80,4 +80,6 @@ Resource App 部署时不会执行容器创建，只会在 LAIN 中进行记录�
 
 ## 注意事项
 
-由于 LAIN 中暂时不支持 proc 的别名定义机制，因此在定义 `use_services` 或 `use_resources` 时，使用的 services 和 resources 的 proc 不能存在相同的 procname，否则使用 lain-cli 进行 build 时会报错，部署后 portal 的访问也有可能出现问题。
+- 由于 LAIN 中暂时不支持 proc 的别名定义机制，因此在定义 `use_services` 或 `use_resources` 时，使用的 services 和 resources 的 proc 不能存在相同的 procname，否则使用 lain-cli 进行 build 时会报错，部署后 portal 的访问也有可能出现问题。
+
+- resource 可以依赖于某个 service，但是不能再依赖于另外的 resource。但是不推荐 resource 依赖 service 的这种设计，建议 resource 设计为可以公共使用的基础资源；

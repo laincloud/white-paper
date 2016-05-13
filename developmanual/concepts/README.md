@@ -38,10 +38,5 @@ app 会保证在集群中运行 `num_instances`（默认为1）个 `docker run {
 
 ## service provider
 
-`portal` 类型的 proc ，用于对 cluster 内其它 app 提供服务。详见 [Service](service.md) 。
+`portal` 类型的 proc ，用于对 cluster 内其它 app 提供服务。详见 [Service && Resource](service.md) 。
 
-## webrouter app
-
-cluster 部署时，会有一个 webrouter app 在运行，其监听在集群的 vip 上。
-
-如果一个 app 定义了 proc type 为 `web` 的 proc ，则其部署时，系统会自动通知 webrouter app 相关信息，让其修改配置，以使对 `{APP_DOMAIN}.{CLUSTER_DOMAIN}` 的 web 访问可以 proxy 到正确的 proc 上。
