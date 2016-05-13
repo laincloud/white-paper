@@ -46,7 +46,7 @@ proc.{PROC_NAME}:       # 定义一个 proc, 定义 web 时，可以只用 web �
     - /var/log
     - /etc/nginx/nginx.conf:
         backup:                 # 定义备份策略
-          schedule: "* 23 * * *" 
+          schedule: "0 23 * * *"# 依次为 分，时，日，月，周，同 crontab 
           expire: "10d"         # 过期时间,数字+单位, 如10d表示10天, 10h表示10小时, 3m表示3分钟
           pre_run: {PRE_HOOK}   # pre hook, 备份执行前调用
           post_run: {POST_HOOK} # post hook, 备份结束后调用
@@ -57,6 +57,8 @@ proc.{PROC_NAME}:       # 定义一个 proc, 定义 web 时，可以只用 web �
     - /secrets/hello            # 定义文件路径，为相对路径时前面会加上 `/lain/app/`
     - secret.dat 
   stateful: true                # 表示在升级 proc 时不改变容器的节点位置
+  setup_timeout: 0              # 单位为秒，proc 多 instance 升级时，设置升级前一个 proc 后隔多少秒升级后一个应用，用于保障服务不中断
+  kill_timeout:  10             # 单位为秒，下线 proc 容器时强制删除的时间，即 docker stop timeout 时间
 
 use_services:       # 指出需要使用 service
   {SERVICE_NAME}:   # 标明 service app name
