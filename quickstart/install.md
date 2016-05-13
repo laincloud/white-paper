@@ -56,7 +56,8 @@ vagrant up node2
 * NTP 服务保证节点间时间一致
 * 需要能访问到可用的 yum 源（包括 epel）
 * 能够连接到互联网
-* 多节点之间能够互相 ssh
+* 各节点之间能够互相 ssh
+* 各节点 hostname 不同
 * 各个节点位于同一个路由器之内
 
 ### 初始化
@@ -71,6 +72,7 @@ sudo ./bootstrap -r registry.aliyuncs.com/laincloud --vip={{ vip }}
 
 #### 添加更多节点
 ```
+# 需要输入 root 密码
 sudo lainctl node add -p playbooks -q {{ hostname }}:{{ hostname }} 
 ```
 
@@ -80,7 +82,8 @@ sudo lainctl node add -p playbooks -q {{ hostname }}:{{ hostname }}
 * NTP 服务保证节点间时间一致
 * 需要能访问到可用的 yum 源（包括 epel）
 * 能够连接到互联网
-* 多节点之间能够互相 ssh
+* 各节点之间能够互相 ssh
+* 各节点 hostname 不同
 * 各个节点位于同一个 VPC （或虚拟路由器）之内
 
 ### 初始化
@@ -101,5 +104,11 @@ sudo ./bootstrap -r registry.aliyuncs.com/laincloud --ipip
 #### 添加更多节点
 
 ```
+# 需要输入 root 密码
 sudo lainctl node add -p playbooks -q {{ hostname }}:{{ hostname }} 
 ```
+
+## FAQ
+
+### add-node ssh-copy-id 失败
+如果出现 ssh-copy-id  失败，可能需要把 `node1:/root/.ssh/lain.pub` 内容放到 `node2:/root/.ssh/authorized_keys`里，新增一行。当然原因可能是多样的，最有可能就是 lain-02 的 `/root/.ssh` 目录或者目录中的文件权限不对
