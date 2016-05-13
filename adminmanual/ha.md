@@ -13,7 +13,7 @@
 
 ## 2. webrouter HA
 
-见 [webrouter](/adminmanual/maintain/webrouter.html) 的 scale 一节
+见 [webrouter](maintain/webrouter.html) 的 scale 一节
 
 ## 3. tinydns HA
 
