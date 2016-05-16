@@ -43,6 +43,8 @@ CLI 的诸多命令中，大多数都会有一个 PHASE 参数，PHASE 是一个
 
 检查应用配置是否合法，即该应用的`lain.yaml`的正确性。
 
+*注：当使用 resource 机制时，lain validate 的检查可能并不确切，可以根据情况忽略掉*
+
 ### prepare
 
 `lain prepare`
@@ -86,7 +88,7 @@ build 出的结果只存在于本地机器，需要 push 到集群中，才可�
 
 `lain check PHASE`
 
-检查该应用在集群中的最新版本和本地最新版本是否一致。
+检查该应用在集群中是否存在最新版本的 release 以及 meta image。
 
 ### deploy
 
@@ -281,7 +283,7 @@ CLI 的配置管理
 为当前应用的对应 proc 增加路径为 path，内容为 content 的秘密配置文件.
 
 - path 为秘密配置文件绝对路径，即已 `/` 开头的路径
-- content 为秘密配置文件的内容.
+- content 可以通过 `-c` 直接指定，也可以使用 `-f` 指定某个文件
 
 `lain secret delete PHASE procname path`
 
