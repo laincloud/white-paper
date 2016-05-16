@@ -68,12 +68,12 @@ openid 的含义见 openid connect 协议，如果 scope 包含 openid, 则用�
 - 客户端
 	- 首先使用申请到的 "client id", "redirect uri" 以及其他参数跳转到 SSO 登陆页面， url 构造的 python 代码如下所示：
         ```
-        url = 'https://sso.yxapp.xyz/oauth2/auth' + '?' + urlencode({'client_id': client_id, 'response_type': 'code', 'scope': 'write:group', 'redirect_uri': redirect_uri, 'state': '*****',})
+        url = 'https://sso.xyz/oauth2/auth' + '?' + urlencode({'client_id': client_id, 'response_type': 'code', 'scope': 'write:group', 'redirect_uri': redirect_uri, 'state': '*****',})
         ```
     - 用户在SSO登陆界面登陆后会跳转到 redirect uri 并在链接末尾附带一个 code 参数
     - 客户端需截取 code 参数后附带 "client id", "client secret", "redirect uri" 等其他参数向 sso 请求 access_token，相关 url 构造的 python 代码如下所示：
         ```
-        url = 'https://sso.yxapp.xyz/oauth2/token' + '?' + urlencode({'client_id': client_id, 'grant_type': 'authorization_code', 'client_secret': client_secret, 'code': code, 'redirect_uri': redirect_uri})
+        url = 'https://sso.xyz/oauth2/token' + '?' + urlencode({'client_id': client_id, 'grant_type': 'authorization_code', 'client_secret': client_secret, 'code': code, 'redirect_uri': redirect_uri})
         ```
     - SSO 验证成功后会返回一个 http Response，status 为 201 则表明登录成功，其中 JSON 串中会包含 access_token
 
@@ -81,7 +81,7 @@ openid 的含义见 openid connect 协议，如果 scope 包含 openid, 则用�
 ### 注意事项
 
 ```
-如果应用包含前端与服务器端，则 client_secret 最好包含于服务器端，同时，服务器端在接到附带 access-token 的 http 请求时，应该先向 SSO 验证 access_token 的正确性（通过调用 https://sso.yxapp.syz/api/me/，在header中加上  "{'Authorization' : 'Bearer ' + access_token"}），再执行相应权限操作。
+如果应用包含前端与服务器端，则 client_secret 最好包含于服务器端，同时，服务器端在接到附带 access-token 的 http 请求时，应该先向 SSO 验证 access_token 的正确性（通过调用 https://sso.syz/api/me/，在header中加上  "{'Authorization' : 'Bearer ' + access_token"}），再执行相应权限操作。
 ```
 
 ## Implicit flow
@@ -100,12 +100,12 @@ connect 的身份认证服务器。
 * 在卡片“自助服务”下，点击“我的应用管理”，注册该应用及其回调 URL
 * 用 implicit flow 进行认证
 
-下面，假设 *LAIN_DOMAIN* 为 **lain.bdp.cc**, 结合一个例子详细说明第三步的使用方法。只需要简单的 4 步即可完成。
+下面，假设 *LAIN_DOMAIN* 为 **lain.cc**, 结合一个例子详细说明第三步的使用方法。只需要简单的 4 步即可完成。
 
 * 首先，需要引用 openid connect 的客户端 js 库
  
 ```html
-<script src="https://sso.lain.bdp.cc/assets/oidc/oidc.js"></script>
+<script src="https://sso.lain.cc/assets/oidc/oidc.js"></script>
 ```  
 
 * 其次，配置 client，在 loginwithsso 按钮的响应函数中添加类似如下的代码，设置 client info，主要包括 client\_id, redirect\_uri; 另外，设置 sso 的配置，并保存在浏览器的 session 中： 
@@ -117,7 +117,7 @@ connect 的身份认证服务器。
     };
     OIDC.setClientInfo(clientInfo);
 
-    var providerInfo = OIDC.discover("https://sso.lain.bdp.cc")
+    var providerInfo = OIDC.discover("https://sso.lain.cc")
     OIDC.setProviderInfo(providerInfo);
     
     // 将配置存到浏览器 session 中 

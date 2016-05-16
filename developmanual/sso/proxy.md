@@ -14,10 +14,10 @@
 我们结合如下的 config.yaml 示例来解释每一项配置的作用.
 
 ```yaml
-issuer: "https://sso.lain.bdp.cc"
+issuer: "https://sso.lain.com"
 upstream: "http://127.0.0.1:8002"
 oauth2_client:
-  redirect_uri: "http://openresty-test.yxapp.xyz/authorize"
+  redirect_uri: "http://example.com/authorize"
   id: "23"
   secret: "wpux1dtOdBzN6flwQpaFCQ"
   csrf_cookie_name: "csrfunknown"
@@ -33,7 +33,7 @@ location:
     match: "~ /hello"
 ```
 
-- issuer: 必选。另外，我们通过这个配置推断出 sso 的其他配置，如 [这里](https://sso.yxapp.in/.well-known/openid-configuration) 所输出的配置。但我们在 lua 中并没有访问该 api, 当 sso 的相关配置改变时，请同时修改改 nginx proxy 相关的 lua 代码。
+- issuer: 必选。另外，我们通过这个配置推断出 sso 的其他配置，如 (https://example.com/.well-known/openid-configuration) 所输出的配置。但我们在 lua 中并没有访问该 api, 当 sso 的相关配置改变时，请同时修改改 nginx proxy 相关的 lua 代码。
 - upstream: 必选。由于哪些页面需要 sso 认证是可以配置的，不需要认证的页面直接会被代理至 upstream.
 - oauth2_client: 该对象是指 oauth2 中所定义的 client, 需要 app maintainer 提前在对应 sso 中注册。csrf_cookie_name 是 app 定义的一个 cookie 名字，用来预防 csrf 攻击。需要说明的是，该对象下的4个属性中，id 和 secret 是必选的，当不设置 redirect_uri 时，相当于 ```redirect_uri = ${scheme}://${http_host}/_sso/```；csrf_cookie_name 的默认值为 sso_csrf.
 - location: 对应于 nginx 配置的 location. 该对象下是一个列表，每个列表规定了 2 种配置定义，其中，只有 match 是必写的.
@@ -43,7 +43,7 @@ location:
 ### eg：生成一个只有 /hello\* 不需要登录的 nginx conf
 
 ```yaml
-issuer: "https://sso.lain.bdp.cc"
+issuer: "https://sso.com"
 upstream: "http://127.0.0.1:8002"
 oauth2_client:
   id: "24"
@@ -81,7 +81,7 @@ location:
 ### eg: 生成一个只有 /finance 需要登录的 conf
 
 ```yaml
-issuer: "https://sso.lain.bdp.cc"
+issuer: "https://sso.com"
 upstream: "http://127.0.0.1:8002"
 oauth2_client:
   id: "24"
