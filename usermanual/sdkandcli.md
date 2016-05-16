@@ -62,7 +62,7 @@ CLI 的诸多命令中，大多数都会有一个 PHASE 参数，PHASE 是一个
 `lain build [--push] [--release]`
 
 - `--push`: 自动打tag并push到集群中。相当于 `lain build && lain tag PHASE && lain push PHASE`，而 PHASE 的值是全局配置 `private_docker_registry` 的值，可使用 `lain config show` 查看。默认关闭。
-- `--release`: TODO
+- `--release`: 如果本地已经存在 `{appname}:build` image，则以此镜像为基础构建 release image。
 
 构建应用
 
