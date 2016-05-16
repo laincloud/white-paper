@@ -156,7 +156,7 @@ root        21  0.0  0.0  15564  1164 ?        R+   08:19   0:00 ps axu
 `lain deploy  local [-v meta-version]`  
 >部署应用的指定版本，注意这个版本必须是之前 lain release 过的版本
 
->例如 在 testapp 的目录下执行  lain deploy yxapp -v "1448593783-4254886fabb4390cfcc1e3c7544a28f721e3e923" ，会发起 yxapp 集群上 testapp 应用的更新到指定版本
+>例如 在 testapp 的目录下执行  lain deploy local -v "1448593783-4254886fabb4390cfcc1e3c7544a28f721e3e923" ，会发起 local 集群上 testapp 应用的更新到指定版本
 
 `lain scale local $procname -n / -c / -m `
 >会调用对应的 lain 集群 console 的 api ，设置本应用的某个proc的实例个数，cpu个数，内存分配量（容器是会全部重建的）
@@ -164,10 +164,6 @@ root        21  0.0  0.0  15564  1164 ?        R+   08:19   0:00 ps axu
 >例如 在 testapp 的目录下执行  lain scale local web -n 2 ，会发起 local 集群上 testapp 应用 web 这个 proc 保持 2个后端容器进程的命令
 
 >例如 在 testapp 的目录下执行  lain scale local web -m 600M ，会发起 local 集群上 testapp 应用 web 这个 proc 每个容器进程分配内存设置为 600M 的命令
-
-######console ui
->console ui 提供对自己有管理权限的 app 的 web 管理界面
->需要登入，并拥有这个应用的管理权限
 
 线上日志查询/线上debug
 `lain enter`
@@ -183,13 +179,13 @@ root        21  0.0  0.0  15564  1164 ?        R+   08:19   0:00 ps axu
 Lain 提供了开箱即用的监控告警系统，[hedwig](https://github.com/laincloud/hedwig)
 ######默认监控项
 每一个 proc 启动会由 lain 集群自动开启 cpu/mem/network 的相关监控
-举例： appname 为 hello 的应用里定义一个 类型为 web，名字为 web1 的 proc （一般写为 web.web1 ），则在hello这个应用部署到某个集群之后（假设为 yxapp 集群），可以在所在集群的监控系统中自动生成监控
+举例： appname 为 hello 的应用里定义一个 类型为 web，名字为 web1 的 proc （一般写为 web.web1 ），则在hello这个应用部署到某个集群之后（假设为 local 集群），可以在所在集群的监控系统中自动生成监控
 
 监控系统 grafana 地址: `hedwig-grafana.lain.local`
 
 每一个 web 可访问的 域名（mountpoint）会由 lain 集群自动开启 QPM/RST/EPM 的相关监控
->举例： appname 为 hello 的应用里定义一个 类型为 web， 名字为 web 的proc （一般写为 web ），写了一个 mountpoint ，hello.abc.com ，则在hello这个应用部署到某个集群之后（假设为 yxapp 集群），对应监控系统会生成2个域名的 QPM/RST/EPM 监控
+>举例： appname 为 hello 的应用里定义一个 类型为 web， 名字为 web 的proc （一般写为 web ），写了一个 mountpoint ，hello.abc.com ，则在hello这个应用部署到某个集群之后（假设为 local 集群），对应监控系统会生成2个域名的 QPM/RST/EPM 监控
 
->hello.yxapp.in ，这个域名是集群里默认给的域名
+>hello.local.in ，这个域名是集群里默认给的域名
 >
 >hello.abc.com ，这个域名是写了 mountpoint 的结果
