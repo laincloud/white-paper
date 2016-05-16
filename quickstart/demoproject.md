@@ -22,7 +22,7 @@ cd /vagrant && sh demo_images.sh
 >在bootstrap结束后，部署其他app时可以选择是否将sso验证服务打开，在集群中通过设置相应的etcd值能够达到此目的
 ```
 # 打开验证服务，此时需要在下面所有需要认证服务的操作的curl命令后加入 '-H "access-token: ********"'
-etcdctl set /lain/config/auth/console '{"type": "lain-sso", "url": "http://sso.lain.bdp.cc"}'
+etcdctl set /lain/config/auth/console '{"type": "lain-sso", "url": "http://sso.lain.local"}'
 # 关闭验证服务，此时，直接按后续步骤即可完成操作
 etcdctl rm /lain/config/auth
 ```
