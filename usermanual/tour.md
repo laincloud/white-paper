@@ -5,19 +5,19 @@
 建议的开发环境是使用虚拟机方案 [lain-box](https://github.com/laincloud/lain-box) ，使用 vagrant + virtualbox ，在自己的电脑上启动一个 centos7.1 的虚拟机，作为主力开发环境
 具体使用方法见 [lain-box](https://github.com/laincloud/lain-box)  的 readme 或简单参见如下:
 
-宿主机上代码目录（假设在 `/code/`） 
+宿主机上代码目录（假设在 `/code/`）
 ```
 cd /code/ && git clone https://github.com/laincloud/lain-box.git
 cd /code/lain-box
-vim config.yaml 
+vim config.yaml
 ```
-按照其中的说明修改想要在宿主机和虚拟机之间映射的目录，建议将宿主机的 `hello` 目录（假设在 `/code/hello`）映射到虚拟机里的 `/apps/hello`，即写成 
+按照其中的说明修改想要在宿主机和虚拟机之间映射的目录，建议将宿主机的 `hello` 目录（假设在 `/code/hello`）映射到虚拟机里的 `/apps/hello`，即写成
 ```
 	hello: /code/hello
 ```
 然后启动虚拟机
 ```
-vagrant up 
+vagrant up
 vagrant ssh
 ```
 在虚拟机中配置 Lain 集群
@@ -35,7 +35,7 @@ lain config save-global private_docker_registry registry.lain.local
 * [Docker 从入门到实践](https://yeasy.gitbooks.io/docker_practice/content/)
 
 
-###### 分析项目，创建 lain.yaml 
+###### 分析项目，创建 lain.yaml
 首先根据项目的编译和发布情况，选择构建和发布的基准镜像（也就是 build.base 和 release.dest_base ），推荐  [centos-lain 镜像](https://github.com/laincloud/centos-lain)
 
  根据项目的线上运行启动方式，撰写镜像里的启动脚本（entry.sh）
@@ -65,7 +65,7 @@ lain 里面常用的方案是，entry.sh 里从 LAIN_DOMAIN 这个环境变量�
 根据运行时需要保存到磁盘的数据，包括落地的日志，撰写 proc.[persistent_dirs|volumes]
 >目前这些数据会从宿主机映射进去
 
-根据运行时需要响应的内外网域名/子路径，撰写 proc.mountpoint 
+根据运行时需要响应的内外网域名/子路径，撰写 proc.mountpoint
 
 根据运行时程序响应的端口，撰写 proc.port
 >运行时程序响应的端口，会作为 loadbalancer（包括  webrouter， portal）必须的信息，传递给他们
@@ -78,7 +78,7 @@ lain 里面常用的方案是，entry.sh 里从 LAIN_DOMAIN 这个环境变量�
 > 例如 hello 的项目都可以使用 #hello 频道
 其他
 
-#####本地构建测试   [Lain CLI](https://github.com/laincloud/lain-cli) 
+#####本地构建测试   [Lain CLI](https://github.com/laincloud/lain-cli)
 `lain dashboard local`
 `lain reposit local`
 > 注册本 app 到 lain 集群
@@ -148,7 +148,7 @@ root        21  0.0  0.0  15564  1164 ?        R+   08:19   0:00 ps axu
 
 前提是需要 在 CLI 进行登录，并拥有 这个应用的 管理权限
 `lain login local`   
->用在  https://sso.prod.bdp.cc 注册的用户名密码进行登录
+>用在  https://sso.lain.local 注册的用户名密码进行登录
 
 `lain deploy local`  
 >会调用对应的 lain 集群 console 的 api ，升级本应用到目前最新的镜像版本。
@@ -158,7 +158,7 @@ root        21  0.0  0.0  15564  1164 ?        R+   08:19   0:00 ps axu
 
 >例如 在 testapp 的目录下执行  lain deploy yxapp -v "1448593783-4254886fabb4390cfcc1e3c7544a28f721e3e923" ，会发起 yxapp 集群上 testapp 应用的更新到指定版本
 
-`lain scale local $procname -n / -c / -m ` 
+`lain scale local $procname -n / -c / -m `
 >会调用对应的 lain 集群 console 的 api ，设置本应用的某个proc的实例个数，cpu个数，内存分配量（容器是会全部重建的）
 >
 >例如 在 testapp 的目录下执行  lain scale local web -n 2 ，会发起 local 集群上 testapp 应用 web 这个 proc 保持 2个后端容器进程的命令
