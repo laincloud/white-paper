@@ -91,10 +91,9 @@ portal.portal-echo
 
 对于服务提供者而言，只有 appname 与该服务的 `allow_clients` 定义匹配（使用 [bash globstar](https://www.gnu.org/software/bash/manual/bash.html#The-Shopt-Builtin) 通配符语法，可以用 `**` 匹配子目录）的 app 才能访问该服务。
 
-`allow_clients` 的值可以是一个 list，此时能够匹配上 list 中任意一个元素的 app 即可访问该服务。
-
 如未定义 `allow_clients` ，则其值默认为 `**`。
 
+**注意：** `allow_clients` 目前只实现了 `**` 功能，具体指定只允许某些 app 的访问尚未实现
 
 ## Resource
 
