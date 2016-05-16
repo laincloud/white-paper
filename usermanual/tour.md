@@ -186,6 +186,6 @@ Lain 提供了开箱即用的监控告警系统，[hedwig](https://github.com/la
 每一个 web 可访问的 域名（mountpoint）会由 lain 集群自动开启 QPM/RST/EPM 的相关监控
 >举例： appname 为 hello 的应用里定义一个 类型为 web， 名字为 web 的proc （一般写为 web ），写了一个 mountpoint ，hello.abc.com ，则在hello这个应用部署到某个集群之后（假设为 local 集群），对应监控系统会生成2个域名的 QPM/RST/EPM 监控
 
->hello.local.in ，这个域名是集群里默认给的域名
+>hello.lain.local ，这个域名是集群里默认给的域名
 >
 >hello.abc.com ，这个域名是写了 mountpoint 的结果
