@@ -70,14 +70,14 @@ deployd没有把确实的container拉起来，可能是:
 
 ### console
 
-能够进入 `http://console.DOMAIN/archon/` 查看 app 运行状态说明 console 运行正常
+使用 `curl http://console.DOMAIN/api/v1/apps/` 查看 app 运行状态说明 console 运行正常
 
 可能出现的问题是：
 
-- console 页面不能显示
+- 页面不能展示数据
     - dns 解析出问题，可能是 networkd 或者 webrouter 出现状态，进集群查看 iptables 规则
-- console 页面不能展示数据
     - deployd 出现问题，可尝试重启 deployd
+
 - console 注册 app 显示 `sso server error`
     - 说明 sso 中已存在相应 group，但是 console 中并未纪录存在此 app，出现了数据不一致情况： 一般是测试时候 开启了 auth 容易出现此问题，确认无影响后可以将 sso 中对应 group 手动删除
 
@@ -94,11 +94,6 @@ deployd没有把确实的container拉起来，可能是:
 - 开启 auth 的区域首先确认用户名密码正确
 - 可能 mfs 被 unmount 掉了，去宿主机上 `/var/lib/registry` 查看是否存在
 - 磁盘空间被占满，进入宿主机运行 `docker info` 查看磁盘空间，如果磁盘空间有问题，需要进行磁盘清理
-
-**输入用户名、密码正确，但 registry 一直报 unauthorized**，可能原因：
-
-- 一般是 prod 区可能出现此问题，一般是由于 sso 不能访问 prod 区的 console，首先确认 sso 所在宿主机能够访问到 console，不能访问则需要手动设置 hosts
-- 如果设置 hosts 不能解决问题，可以先将 registry auth 关闭，等调整后再进行恢复，关闭方法 TBD
 
 ### tinydns
 
