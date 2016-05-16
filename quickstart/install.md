@@ -12,11 +12,14 @@
 
 ### 初始化
 
-#### Clone 代码
+#### 获取代码
 
-```
-git clone https://github.com/laincloud/lain.git
-```
+你可以从 GitHub 上获取到已经发布的 LAIN 版本：
+
+https://github.com/laincloud/lain/releases
+
+下载源码后在目标机器上解压即可。
+
 
 #### 启动并进入第一个节点
 
