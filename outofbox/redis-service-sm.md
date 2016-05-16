@@ -59,13 +59,13 @@ redis sentinel是对redis主要是维护一组或多组redis主从信息，并�
 见[代码](https://github.com/laincloud/redis-service-sm)
 
 ### 4.1编写lain.yaml
-和lain service相关文档见[地址](http://docs.lain.bdp.cc/user/service/)
+和lain service相关文档见[地址](../usermanual/service.md)
 
 ```
 appname: redis-demo # app的名称
 
 build:
-  base: registry.lain.bdp.cc/centos-redis-cluster:1.0.0   
+  base: laincloud/centos-redis-python:redis3.0.7
   prepare: #构建基本docker镜像的时候会执行以下指令
     - pip install -r pip-req.txt #安装python的相关依赖
     - rm -rf /lain/app/*
