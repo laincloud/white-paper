@@ -111,7 +111,7 @@ lvault 状态查询：
 
 lvault 分为两个应用，lvault 和 vault. 已经在 lvault 中实现了一些简单的 vault 集群维护的 api.根据经验，lvault 出问题的情形主要是网络问题，大部分情况可以看标准输出的 log 解决。
 
-但是，当集群所有 container 重启时，比如断电，问题会比较严重，这时 lvault 丢掉了内存中的 token 和 key, 需要管理员操作，已经写了个脚本 unseal.sh, 以开发区为例，用法是 ./unseal.sh lain.bdp.cc.具体 TBD
+但是，当集群所有 container 重启时，比如断电，问题会比较严重，这时 lvault 丢掉了内存中的 token 和 key, 需要管理员操作，已经写了个脚本 unseal.sh, 以开发区为例，用法是 ./unseal.sh lain.local.具体 TBD
 
 ### webrouter
 
