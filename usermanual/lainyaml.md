@@ -29,6 +29,7 @@ test:                           # 描述如何构建应用 test image
     - {TEST_SCRIPT}
 
 proc.{PROC_NAME}:           # 定义一个 proc, 定义 web 时，可以只用 web 表示 web.web
+  user: root                # 默认为 root，还可以定义一些 release image 中存在的 user，比如 nobody 等
   type: worker              # 默认为 worker，还包括 web, portal
   image: {PROC_IMAGE}       # 默认为 app image，也可以进行自定义
   cmd: {PROC_CMD}           # 启动 proc 时定义的命令
@@ -94,6 +95,8 @@ use_resources:      # 指出需要使用 resource
 - relese 中的 copy 指定把 script 运行结束后的中间结果 image 的路径 src 拷贝到 dest_base 中的 dest 中, src 可以是绝对路径或者是相对于 /lain/app 的路径
 
 - 在编写 proc 时，支持几种简写形式：在定义 web 类型的 proc 时，可以直接用 web 代替 proc.{PROC_NAME}；定义 service 时，可以简单的将 portal 定义在 proc 下面，也可以单独定义一个 proctype 为 portal 的 proc
+
+- proc 中定义的 `user` 变量必须为 release image 中已经存在的 user（可以通过 `cat /etc/passwd` 查看），如果不存在，容器启动会出现问题
 
 - volumes 定义的文件默认位于 /data/lain/volume/{APP_NAME}/{APP_NAME}.{PROC_TYPE}.{PROC_NAME}/{INSTANCE_NO}/ 目录下
 
