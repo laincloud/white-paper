@@ -13,9 +13,9 @@
 ```
 
 # 加入 ( vip 模式 )
-192.168.77.201  registry.lain.local console.lain.local entry.lain.local ipaddr-client.lain.local ipaddr-service.lain.local ipaddr-client.ipaddr-resource.resource.lain.local
+192.168.77.201  registry.lain.local console.lain.local entry.lain.local lvault.lain.local ipaddr-client.lain.local ipaddr-service.lain.local ipaddr-client.ipaddr-resource.resource.lain.local
 # 或者 ( node 模式 )
-192.168.77.21  registry.lain.local console.lain.local entry.lain.local ipaddr-client.lain.local ipaddr-service.lain.local ipaddr-client.ipaddr-resource.resource.lain.local
+192.168.77.21  registry.lain.local console.lain.local entry.lain.local lvault.lain.local ipaddr-client.lain.local ipaddr-service.lain.local ipaddr-client.ipaddr-resource.resource.lain.local
 ```
 
 下面检查一下 lain config
