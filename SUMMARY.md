@@ -77,6 +77,7 @@
     * [lainlet](developmanual/lainlet.md)
     * [rebellion](developmanual/rebellion.md)
     * [networkd](developmanual/networkd.md)
+    * [lain-jenkins](developmanual/lain-jenkins.md)
 * [OutOfBox](outofbox/README.md)
     * [mysql-service](outofbox/mysql-service.md)
     * [mysql-resource](outofbox/mysql-resource.md)
