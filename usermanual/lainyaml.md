@@ -6,7 +6,7 @@
 
 在 LAIN 中创建一个 app 时，最重要的就是在应用的根目录下定义好一个正确的 lain.yaml。一个完整的 lain.yaml 可以包含以下内容：
 
-```
+```yaml
 appname: {APP_NAME}             # 全局唯一的应用名
 
 build:                          # 描述如何构建应用 build image 
@@ -53,9 +53,8 @@ proc.{PROC_NAME}:           # 定义一个 proc, 定义 web 时，可以只用 w
           expire: "10d"         # 过期时间,数字+单位, 如10d表示10天, 10h表示10小时, 3m表示3分钟
           pre_run: {PRE_HOOK}   # pre hook, 备份执行前调用
           post_run: {POST_HOOK} # post hook, 备份结束后调用
-  mountpoint:                   # 目前只支持 ProcType==web && ProcName==web 的 proc
+  mountpoint:                   # 只支持 ProcType==web 的 proc
     - a.external.domain1/b/c    # 响应 a.external.domain1 这个外网域名 b/c 段 location 的请求，转发到 lain 内网 upstream
-    - d.external.domain2/e      # 响应 d.external.domain2 这个外网域名 e 段 location 的请求，转发到 lain 内网 upstream
   secret_files:                 # 定义 secret file 作为配置文件
     - /secrets/hello            # 定义文件路径，为相对路径时前面会加上 `/lain/app/`
     - secret.dat 
@@ -83,7 +82,36 @@ use_resources:      # 指出需要使用 resource
 ![workflow](img/workflow.png)
 
 
-## 3. 注意事项
+## 3. mountpoint 选项说明
+
+LAIN 中默认使用域名 `lain.local` 进行内部访问，除此之外也可以通过设置 `extra_domain` 来支持其它域名，但是这些都应该是对内服务能够访问的域名。
+
+对于需要对外网提供服务的 web 类型的 proc，lain.yaml 可支持 `mountpoint` 这个属性，根据这个属性 LAIN 中的 webrouter 会将对应 server_name 的对应 location 代理到这个 proc，这个域名才应该是 proc 提供给外网访问的域名。
+
+- `procType==web && procName==web`
+
+```yaml
+web.web:
+  cmd: {PROC_CMD}   # 默认为 image 定义的 CMD
+  mountpoint:       # `可选项`，系统会对 web.web 这个特殊的 proc 自动追加 {APPNAME}.{DOMAIN} 的请求响应
+    - a.external.domain1/b/c   # 响应 a.external.domain1 这个外网域名 b/c 段 location 的请求，转发到 lain 内网这个 proc 对应 upstream
+    - d.external.domain2/e     # 响应 d.external.domain2 这个外网域名 e 段 location 的请求，转发到 lain 内网这个 proc 对应 upstream
+    - /m                       # 响应 {APPNAME}.{DOMAIN} 这个内部域名 `m` 段 localtion 的请求，转发到 lain 内网这个 proc 对应 upstream
+```
+
+- `procType==web && procName!=web`
+
+```yaml
+web.admin:
+  cmd: {PROC_CMD}  # 默认为 image 定义的 CMD
+  mountpoint:      # `必填项`，web 类型但是名字不是 web 的 proc 必须填写一个以上的 mountpoint
+    - a.external.domain1/b/c   # 响应 a.external.domain1 这个外网域名 b/c 段 location 的请求，转发到 lain 内网这个 proc 对应 upstream
+    - d.external.domain2/e     # 响应 d.external.domain2 这个外网域名 e 段 location 的请求，转发到 lain 内网这个 proc 对应 upstream
+    - /admin                   # 响应 {APPNAME}.{DOMAIN} 这个内部域名 `admin` 段 localtion 的请求，转发到 lain 内网这个 proc 对应 upstream
+```
+
+
+## 4. 注意事项
 在编写对应的 lain.yaml 时，有一些点需要注意：
 
 - 在编译 prepare image 时，如果 base, script 或者 keep 发生变化，请变更这个版本号，否则不用变动
