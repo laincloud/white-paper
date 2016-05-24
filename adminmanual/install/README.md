@@ -67,7 +67,30 @@ Lain 理论上可以运行在任何 Linux 发行版之上，只需要满足如�
         - dnat 外网访问内网 SLB 入口 ip 80/443 的流量到 webrouter node 的 80/443 端口，webrouter node 可按照 webrouter scale 的攻略横向扩展
 - 在 Aliyun LAIN 集群的同一个 VPC 建立一个 lain-box 节点，安装好 LAIN CLI，用来进行 LAIN 集群上应用的管理
 
-*沙盘演练*
+### 2 为 Docker 配置 devicemapper direct-lvm
+
+关于 devicemapper 的详细内容可参考 docker [官方文档](https://docs.docker.com/engine/userguide/storagedriver/device-mapper-driver/)。
+
+默认情况下，docker 底层使用的 devicemapper 以 loop-lvm 模式启动，这是官方**强烈不推荐**在生产环境使用的。所以，建议每个 lain-node 都为 docker 准备一个 100G+ 空间大小的磁盘，以供为 devicemapper 配置 direct-lvm 使用。
+
+*以 Aliyun 为例*
+
+1. 为服务器实例创建新磁盘，建议 100G 以上。
+2. bootstrap 时候设置 `--docker-device` 参数。
+   假设我们添加的新磁盘设备为 `/dev/vdb`，则 bootstrap 命令为：
+   ```bash
+   ./bootstrap -r registry.aliyuncs.com/laincloud --docker-device=/dev/vdb --ipip
+   ```
+3. bootstrap 成功后，`docker info` 查看配置。如果不是 `direct-lvm` 信息中会有类似下面的WARNING:
+   ```sh
+   WARNING: Usage of loopback devices is strongly discouraged for production use. Either use `--storage-opt dm.thinpooldev` or use `--storage-opt dm.no_warn_on_loop_devices=true` to suppress this warning.
+    ```
+
+增加节点同理，指定 `--docker-device` 参数，新节点的 docker 就会使用 direct-lvm。如：
+```bash
+lainctl node add -p playbooks --docker-device=/dev/vdb node2:192.168.77.22
+```
+## 沙盘演练
 
 - Preconditions:
     - PowerLain 公司打算做一个公司首页，域名和 SSL 证书都已买好
@@ -89,15 +112,13 @@ Lain 理论上可以运行在任何 Linux 发行版之上，只需要满足如�
 
 - Steps:
     - 搭建 LAIN 集群
-        - VPC 里使用 lain-node-tmpl 模板创建 ECS node：lain-01 ，资源需要 2U4G 以上，`/` 分区 20G （此配置仅用于演示）
-            - 正式的生产节点配置见 [生产节点配置](productionnode/)
+        - VPC 里使用 lain-node-tmpl 模板创建 ECS node：lain-01 ，资源需要 2U4G 以上，`/` 分区 20G，另有 100G 磁盘（设备名可在磁盘详情页看到，假设为 `/dev/vdb`）。
         - `@lain-01` 改好 hostname 等 `hostname -s lain-01` 之后 relogin
         - 假设 lain-01 的 node ip 是 192.168.77.21
-        - `@lain-01` `cd lain` 然后 `./bootstrap -r registry.aliyuncs.com/laincloud --ipip`
-            - 如果使用正式的 [生产节点配置](/productionnode) ，则使用 `./bootstrap -r registry.aliyuncs.com/laincloud --ipip --docker-device=BLAHBLAH` 来指定 lvm pv 给 docker daemon ，具体见生产节点配置的 REF
+        - `@lain-01` `cd lain` 然后 `./bootstrap -r registry.aliyuncs.com/laincloud --ipip --docker-device /dev/vdb`
         - 同样的配置创建 lain-02 lain-03 ，并加入集群，假设他们的 ip 是 192.168.77.22 192.168.77.23
-            - `@lain-01`: lainctl node add -p playbooks -q lain-02:192.168.77.22  # 正式生产也许也用上 `--docker-device` 选项
-            - `@lain-01`: lainctl node add -p playbooks -q lain-03:192.168.77.23  # 正式生产也许也用上 `--docker-device` 选项
+            - `@lain-01`: lainctl node add -p playbooks -q --docker-device /dev/vdb lain-02:192.168.77.22
+            - `@lain-01`: lainctl node add -p playbooks -q --docker-device /dev/vdb lain-03:192.168.77.23
     - 搭建 管理跳板机 lain-baseton
         - 使用 lain-node-tmpl 模板在 VPC 里创建跳板机
             - 参考 [lain-box 的构建方式](https://github.com/laincloud/lain-box/tree/master/builder) 安装各种依赖等
