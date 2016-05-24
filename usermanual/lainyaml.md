@@ -82,7 +82,7 @@ use_resources:      # 指出需要使用 resource
 ![workflow](img/workflow.png)
 
 
-## 3. mountpoint 选项说明
+## <a id="mountpoint"></a>3. mountpoint 选项说明
 
 LAIN 中默认使用域名 `lain.local` 进行内部访问，除此之外也可以通过设置 `extra_domain` 来支持其它域名，但是这些都应该是对内服务能够访问的域名。
 

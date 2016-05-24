@@ -6,7 +6,7 @@
 2. `LAIN 集群标准域名` ( lain cluster domain ) ，提供给内部应用开发者进行应用部署和管理，即提供给 `LAIN CLI` 使用。称之为 `集群标准域名` 。
     - bootstrap 时，LAIN 集群标准域名会使用默认值 `*.lain.local`
     - bootstrap 完成后，可以通过配置的方式（即下面的设置 `extra_domains` 的方式）使用自定制的 LAIN 集群标准域名
-3. 应用自己的外部服务域名。具体可见 [mountpoint](../usermanual/lainyaml/mountpoint/) 部分文档
+3. 应用自己的外部服务域名。具体可见 [mountpoint](../usermanual/lainyaml.md#mountpoint) 部分文档
     - 默认来说集群会给其上部署的应用的 web Proc 绑定一个默认的域名，
     - 应用一般有自己的特别的域名比如 `gmail.com` 虽然是 google 家的产品，虽然也有 `mail.google.com` 但是很显然用 `gmail.com` 这个域名更有意义，所以更建议通过 mountpoint 机制给应用的 web 服务绑定一个特别的外部域名进行外网服务
 
@@ -36,16 +36,18 @@
         - 这也可以加入精确匹配 `"blog.laincloud.com": "blog.laincloud.com"` 这样的配置，让 LAIN 集群单独对 `blog.laincloud.com` 一个域名使用 `blog.laincloud.com.crt` 和 `blog.laincloud.com.key` 这一对证书
     - 在 bootstrap 节点上执行 `docker-enter webrouter.worker.worker.v0-i1-d0` 进入 webrouter 容器，容器里执行 `supervisorctl restart watcher` 重新加载配置，然后 `exit` 退出容器
         - 让 webrouter 重新获取 ssl 配置，刷新 nginx 的配置文件
-- 在 lain-box 中触发 `registry` 和 `console` 的重新部署来让新的域名以及证书配置生效
+- 在 lain-box 中触发 `registry`、`console` 以及 `lvault` 的重新部署来让新的域名以及证书配置生效
     - git clone https://github.com/laincloud/console.git && cd console && lain deploy local && lain ps local   ## 需要等待几十秒生效
-    - git clone https://github.com/laincloud/registry.git && cd registry && lain deploy local && lain ps local ## 需要等待几十秒生效
+    - lain deploy local -t registry && lain ps local ## 需要等待几十秒生效
+    - lain deploy local -t lvault && lain ps local ## 需要等待几十秒生效
     - 其他想让域名和对应 SSL 证书生效的应用也一样需要触发一次重新部署
 - 在 lain-box 重新设定 LAIN 的集群标准域名
     - `lain config save example domain example.xyz`
     - `lain config save-global private_docker_registry registry.example.xyz`
 - 接下来 `lain-box` 里面的 lain CLI 操作，就可以用 example 这个集群 alias 代替 DEMO 里的 local 这个集群 alias 了
     - 例如 `lain tag example` `lain push example` `lain deploy example` 等
-- TODO 打开 auth
+- 打开 auth
+    - 打开 auth 基本与 [auth](auth.md) 中描述无异，但是有一点需要注意，即 `lainctl auth open` 中的 `realm` 参数需要设置为 `http://console.example.xyz/api/v1/authorize/registry/`，`domain` 参数使用默认设置 `lain.local` 即可。
 
 ## 给 mountpoint 中指定的公网域名配置对应的 SSL 证书
 
