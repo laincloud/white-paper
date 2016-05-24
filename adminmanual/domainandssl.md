@@ -6,7 +6,7 @@
 2. `LAIN 集群标准域名` ( lain cluster domain ) ，提供给内部应用开发者进行应用部署和管理，即提供给 `LAIN CLI` 使用。称之为 `集群标准域名` 。
     - bootstrap 时，LAIN 集群标准域名会使用默认值 `*.lain.local`
     - bootstrap 完成后，可以通过配置的方式（即下面的设置 `extra_domains` 的方式）使用自定制的 LAIN 集群标准域名
-3. 应用自己的外部服务域名。具体可见 [mountpoint](../usermanual/lainyaml.md#mountpoint) 部分文档
+3. 应用自己的外部服务域名。具体可见 [mountpoint](../usermanual/lainyaml.html#mountpoint) 部分文档
     - 默认来说集群会给其上部署的应用的 web Proc 绑定一个默认的域名，
     - 应用一般有自己的特别的域名比如 `gmail.com` 虽然是 google 家的产品，虽然也有 `mail.google.com` 但是很显然用 `gmail.com` 这个域名更有意义，所以更建议通过 mountpoint 机制给应用的 web 服务绑定一个特别的外部域名进行外网服务
 
