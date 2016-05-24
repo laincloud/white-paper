@@ -52,7 +52,7 @@
 >假设我们要给 `powerlain.com` 这个域名配置上已购买好的 `powerlain.key` 和 `powerlain.crt` 这套 SSL 证书
 
 - 将 `powerlain.key` 和 `powerlain.crt` 这套 SSL 证书放到 webrouter 所在的 LAIN 节点的容器 volumes 里面去，让 webrouter 里面的 nginx 能拿到这些证书
-    - volume 的位置以及 webrouter 的 scale 请参考 [这里](maintain/webrouter/)
+    - volume 的位置以及 webrouter 的 scale 请参考 [这里](maintain/webrouter.html)
     - 样例： 
         - `cp powerlain.crt /data/lain/volumes/webrouter/webrouter.worker.worker/1/etc/nginx/ssl/`
             - 这里面的数字 1 代表是 webrouter 的 Proc 的 1 号容器实例，同理在 webrouter N 号容器实例的服务器上要把 1 换成 N
