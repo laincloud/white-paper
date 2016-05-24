@@ -46,3 +46,19 @@
 - 接下来 `lain-box` 里面的 lain CLI 操作，就可以用 example 这个集群 alias 代替 DEMO 里的 local 这个集群 alias 了
     - 例如 `lain tag example` `lain push example` `lain deploy example` 等
 - TODO 打开 auth
+
+## 给 mountpoint 中指定的公网域名配置对应的 SSL 证书
+
+>假设我们要给 `powerlain.com` 这个域名配置上已购买好的 `powerlain.key` 和 `powerlain.crt` 这套 SSL 证书
+
+- 将 `powerlain.key` 和 `powerlain.crt` 这套 SSL 证书放到 webrouter 所在的 LAIN 节点的容器 volumes 里面去，让 webrouter 里面的 nginx 能拿到这些证书
+    - volume 的位置以及 webrouter 的 scale 请参考 [这里](maintain/webrouter/)
+    - 样例： 
+        - `cp powerlain.crt /data/lain/volumes/webrouter/webrouter.worker.worker/1/etc/nginx/ssl/`
+            - 这里面的数字 1 代表是 webrouter 的 Proc 的 1 号容器实例，同理在 webrouter N 号容器实例的服务器上要把 1 换成 N
+        - `cp powerlain.key /data/lain/volumes/webrouter/webrouter.worker.worker/1/etc/nginx/ssl/`
+- 在 LAIN 节点上执行 `etcdctl get /lain/config/ssl` ，假设看到返回 `{"*.lain":"web","*.lain.local":"web"}`
+- 在 LAIN 节点上执行 `etcdctl set /lain/config/ssl '{"*.lain":"web","*.lain.local":"web","powerlain.com":"powerlain"}'`
+    - `"powerlain.com":"powerlain.com"` 这个对应关系的含义是 对 key ( `powerlain.com` ) 匹配的 nginx servername ，使用 value ( `powerlain` ) 对应的 SSL 证书 ( `powerlain.key` 和 `powerlain.crt` )
+- 在 bootstrap 节点上执行 `docker-enter webrouter.worker.worker.v0-i1-d0` 进入 webrouter 容器，容器里执行 `supervisorctl restart watcher` 重新加载配置，然后 `exit` 退出容器
+    - 让 webrouter 重新获取 ssl 配置，刷新 nginx 的配置文件
