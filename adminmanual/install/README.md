@@ -16,9 +16,9 @@ Lain 理论上可以运行在任何 Linux 发行版之上，只需要满足如�
 
 >未列举不代表不支持，只是还没有验证
 
-- [aliyun](aliyun/)
-- [qingcloud](qingcloud/)
-- [aws](aws/)
+- [aliyun](aliyun.html)
+- [qingcloud](qingcloud.html)
+- [aws](aws.html)
 
 ## 生产环境的规划和配置
 
@@ -29,7 +29,7 @@ Lain 理论上可以运行在任何 Linux 发行版之上，只需要满足如�
 
 ### 1 规划 LAIN 集群的网络拓扑以及域名设定
 
->建议先阅读 [Domains And SSL](../domainandssl/) 一章了解 LAIN 集群里的几种类型的域名以及配置方法
+>建议先阅读 [Domains And SSL](../domainandssl.html) 一章了解 LAIN 集群里的几种类型的域名以及配置方法
 
 *以 Aliyun 部署为例*
 
@@ -105,12 +105,12 @@ Lain 理论上可以运行在任何 Linux 发行版之上，只需要满足如�
     - 设定内网 SLB
         - 将 webrouter 所在的节点作为其后端，in-SLB-ip 的 80/443 端口对应 webrouter 所在节点的 80/443 端口
         - 内网设定 *.lain.local 的 DNS 劫持到 in-SLB-ip
-    - 可选：在 `lain-baseton` 上 [webrouter scale](maintain/webrouter/)
+    - 可选：在 `lain-baseton` 上 [webrouter scale](../maintain/webrouter.html)
         - 将新增的 webrouter 所在节点加入到内网 SLB 后端中
     - 设定公网 SLB
         - 将 webrouter 所在的几个节点作为其后端，ex-SLB-ip 的 80/443 端口对应 webrouter 所在节点的 8080/8443 端口
         - 设定 powerlain.com 的 DNS 解析到 ex-SLB-ip
-    - 可选：打开 LAIN 集群的 auth 机制，参见 [auth](../auth/) 和 [sso](../sso/)
+    - 可选：打开 LAIN 集群的 auth 机制，参见 [auth](../auth.html) 和 [sso](../sso.html)
         - 打开 LAIN 集群的 auth 机制之后 lain-baseton 上进行操作时也需要进行 lain login 等操作
     - 在 `lain-baseton` 上进行 powerlain.com 网站的开发，通过 LAIN CLI 部署到 LAIN 集群
         - `lain.yaml` 的内容 DEMO
@@ -131,10 +131,10 @@ Lain 理论上可以运行在任何 Linux 发行版之上，只需要满足如�
                     - powerlain.com
             ```
         - 具体的构建和发布过程请参考
-            - [app-demo](../../quickstart/app-demo/)
-            - [IntoTheLAINStepbyStep](../../quickstart/stepbystep/)
-            - [LAIN Tour](../../usermanual/tour/)
-            - [SDK && CLI](../../usermanual/sdkandcli/)
+            - [app-demo](../../quickstart/app-demo.html)
+            - [IntoTheLAINStepbyStep](../../quickstart/stepbystep.html)
+            - [LAIN Tour](../../usermanual/tour.html)
+            - [SDK && CLI](../../usermanual/sdkandcli.html)
         - `lain ps local` 即可查看部署结果
         - 此时应可通过 `powerlain.lain.local` (前提是进行了 DNS 劫持，或者写了 `/etc/hosts`) 或者 `powerlain.com` 对部署好的网站进行访问
     - 可选：本地安装 `lain-box` ，并通过自己在 `lain-baseton` 上搭建 `openvpn` 的方式连入到 VPC 内网，处理好 DNS 解析之后即可在本地进行 LAIN 的应用开发管理
