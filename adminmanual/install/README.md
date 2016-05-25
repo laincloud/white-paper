@@ -65,6 +65,7 @@ Lain 理论上可以运行在任何 Linux 发行版之上，只需要满足如�
     - Aliyun 建立内网 SLB
         - 配置 DNS 解析，对 LAIN 集群标准域名的统配域名解析到内网 SLB 入口 ip
         - dnat 外网访问内网 SLB 入口 ip 80/443 的流量到 webrouter node 的 80/443 端口，webrouter node 可按照 webrouter scale 的攻略横向扩展
+        - *注意：Aliyun 中 SLB 的后端 server 不能反向访问 SLB，因此 LAIN 集群内部需要劫持集群标准域名到某个 webrouter 存在的节点 IP*
 - 在 Aliyun LAIN 集群的同一个 VPC 建立一个 lain-box 节点，安装好 LAIN CLI，用来进行 LAIN 集群上应用的管理
 
 ### 2 为 Docker 配置 devicemapper direct-lvm
@@ -132,7 +133,7 @@ lainctl node add -p playbooks --docker-device=/dev/vdb node2:192.168.77.22
             - `@lain-baseton` 执行 `lain config save local domain lain.local` 和 `lain config save-global private_docker_registry registry.lain.local`
     - 设定内网 SLB
         - 将 webrouter 所在的节点作为其后端，in-SLB-ip 的 80/443 端口对应 webrouter 所在节点的 80/443 端口
-        - 内网设定 *.lain.local 的 DNS 劫持到 in-SLB-ip
+        - 内网设定 `*.lain.local` 的 DNS 劫持到 in-SLB-ip （*注意：Aliyun 中 SLB 的后端 server 不能反向访问 SLB，因此 LAIN 集群内部需要劫持 lain.local 到某个 webrouter 存在的节点 IP*）
     - 可选：在 `lain-baseton` 上 [webrouter scale](../maintain/webrouter.html)
         - 将新增的 webrouter 所在节点加入到内网 SLB 后端中
     - 设定公网 SLB
