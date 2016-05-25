@@ -90,7 +90,10 @@ Lain 理论上可以运行在任何 Linux 发行版之上，只需要满足如�
 ```bash
 lainctl node add -p playbooks --docker-device=/dev/vdb node2:192.168.77.22
 ```
+
 ## 沙盘演练
+
+*依然延续上面的 Aliyun 的例子，拓扑图和预设*
 
 - Preconditions:
     - PowerLain 公司打算做一个公司首页，域名和 SSL 证书都已买好
@@ -113,12 +116,16 @@ lainctl node add -p playbooks --docker-device=/dev/vdb node2:192.168.77.22
 - Steps:
     - 搭建 LAIN 集群
         - VPC 里使用 lain-node-tmpl 模板创建 ECS node：lain-01 ，资源需要 2U4G 以上，`/` 分区 20G，另有 100G 磁盘（设备名可在磁盘详情页看到，假设为 `/dev/vdb`）。
+            - 相对更有可用性的配置是 `/` 分区 20G ， `/data` 分区 100G 放置一些可能落地的数据和日志 ， 另再有 100G 的磁盘提供给 docker 的 direct-lvm devicemapper storage
+            - 实际的磁盘大小看需求调整
+            - 如果要开启 moosefs 选项的话会有更多需要自主配置的内容
         - `@lain-01` 改好 hostname 等 `hostname -s lain-01` 之后 relogin
         - 假设 lain-01 的 node ip 是 192.168.77.21
         - `@lain-01` `cd lain` 然后 `./bootstrap -r registry.aliyuncs.com/laincloud --ipip --docker-device /dev/vdb`
         - 同样的配置创建 lain-02 lain-03 ，并加入集群，假设他们的 ip 是 192.168.77.22 192.168.77.23
             - `@lain-01`: lainctl node add -p playbooks -q --docker-device /dev/vdb lain-02:192.168.77.22
             - `@lain-01`: lainctl node add -p playbooks -q --docker-device /dev/vdb lain-03:192.168.77.23
+    - 可选：按照 [域名和 SSL 配置文档](../domainandssl.html) 给 `powerlain.com` 这个域名配置上 `powerlain.com.key && powerlain.com.crt` 这一组 SSL 证书
     - 搭建 管理跳板机 lain-baseton
         - 使用 lain-node-tmpl 模板在 VPC 里创建跳板机
             - 参考 [lain-box 的构建方式](https://github.com/laincloud/lain-box/tree/master/builder) 安装各种依赖等
@@ -159,3 +166,33 @@ lainctl node add -p playbooks --docker-device=/dev/vdb node2:192.168.77.22
         - `lain ps local` 即可查看部署结果
         - 此时应可通过 `powerlain.lain.local` (前提是进行了 DNS 劫持，或者写了 `/etc/hosts`) 或者 `powerlain.com` 对部署好的网站进行访问
     - 可选：本地安装 `lain-box` ，并通过自己在 `lain-baseton` 上搭建 `openvpn` 的方式连入到 VPC 内网，处理好 DNS 解析之后即可在本地进行 LAIN 的应用开发管理
+
+## 增补： QingCloud 上进行 LAIN 生产集群安装规划的不同点
+
+*QingCloud 和 Aliyun 上推荐的 LAIN 生产集群安装的不同点*
+
+### 1 网络拓扑图
+
+![LAIN QingCloud](img/LAIN-QingCloud-Topology.png)
+
+与 Aliyun 的部分不一样的地方：
+
+*可用性考量*
+
+- 最前端使用 QingCloud 提供的路由器
+- LAIN web 入口 HA 使用 LAIN 集群提供的 vip 模式实现
+- LAIN master HA
+- etc.
+
+*安全考量*
+
+- 利用 LAIN 集群的 webrouter 组件的内建机制，物理分隔用户服务的外网域名和内网服务的内网域名之间的入口，避免暴露内部服务到外网
+    - webrouter 内建机制，对 mountpoint 中指定的外网域名（判断标准是不在 `lain` `lain.local` 以及 `etcdctl get /lain/config/extra_domains` 结果列表内），建立 nginx 配置时额外响应 8080/8443 端口组，而内网域名只响应 80/443 端口组
+    - QingCloud 路由器和防火墙设定
+        - 配置 DNS 解析，对 mountpoint 中指定的外网域名解析到路由器公网 ip
+        - 配置路由器 dnat 外网访问公网 ip 80/443 的流量到 webrouter vip 的 8080/8443 端口，webrouter node 可按照 webrouter scale 的攻略横向扩展
+        - 配置防火墙允许 80/443 的 TCP 入流量
+    - 利用 QingCloud 提供的 openvpn 直接使用 vip 作为内网入口
+        - 配置 DNS 解析，对 LAIN 集群标准域名的统配域名解析到 LAIN vip
+- 在 lain-node-tmpl 建立一个 lain-box 节点，安装好 LAIN CLI，用来进行 LAIN 集群上应用的管理
+    - 或者本地直接建立 lain-box ，连上 openvpn 后可直接配置和使用 LAIN CLI
