@@ -5,7 +5,7 @@
 
 ## 准备
 - 首先需要部署一个本地集群，建议由两个节点组成。具体步骤见[LAIN 的快速安装](install.html).
-- 利用 lain-box 搭建本地的开发环境. 具体步骤见 [本地开发环境](../usermanual/tour.md#本地开发环境)
+- 利用 lain-box 搭建本地的开发环境. 具体步骤见 [本地开发环境](../usermanual/tour.html#本地开发环境)
 
 ### 检查 lain-box 的设置
 一般来说，在 lain-box 中是没有对 lain.local 域名劫持的，
