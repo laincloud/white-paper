@@ -5,3 +5,4 @@
 - mysql service
 - mysql resource （mysql service 的应用私有依赖版本
 - redis service sm （ sentinal 集群版本的 redis 3.x 集群
+- entry
