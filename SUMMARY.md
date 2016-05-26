@@ -82,3 +82,4 @@
     * [mysql-service](outofbox/mysql-service.md)
     * [mysql-resource](outofbox/mysql-resource.md)
     * [redis-service-sm](outofbox/redis-service-sm.md)
+    * [entry](outofbox/entry.md)
