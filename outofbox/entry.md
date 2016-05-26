@@ -80,7 +80,7 @@ Outbound rules:
 
 数据流程如下图所示
 
-[数据流](img/entry/entry_flow.png)
+![数据流](img/entry/entry_flow.png)
 
 ** Entry ** 通过 websocket 传递二进制格式的消息，消息的序列化与反序列化使用 protobuf3。
 
@@ -102,7 +102,7 @@ ResponseMessage 是指 Entry 返回给客户端的信息，主要有两类
 
 信息的协议栈如下图
 
-[协议栈](img/entry/entry_proto_stack.png)
+![协议栈](img/entry/entry_proto_stack.png)
 
 
 ### [Extension](#ext)
