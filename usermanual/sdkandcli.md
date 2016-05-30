@@ -115,6 +115,18 @@ CLI 的配置管理
   lain config save-global private_docker_registry registry.lain.local
   ```
 
+### dashboard
+
+`lain dashboard [-s {appname, apptype, metaversion, state}] PHASE`
+
+- `-s/--sort`, 指定列表的排序方式。
+   - `appname`: 按应用名称排序，默认。
+   - `apptype`: 按应用类型排序。
+   - `metaversion`: 按应用的版本排序。
+   - `state`: 按应用的状态排序。
+
+显示集群中可部署的应用列表，以及已部署的应用的名称、类型、版本和状态。
+
 ### debug
 
 `lain debug PROC`
