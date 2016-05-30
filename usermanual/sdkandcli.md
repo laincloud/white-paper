@@ -176,6 +176,29 @@ CLI 的配置管理
 
 退出登录。
 
+
+### maintainer
+
+`lain maintainer {show,add,delete} ...`
+
+`lain maintainer show [-u USERNAME] PHASE`
+
+显示当前应用对应 maintainer，在集群开启 auth 时才可用。
+
+- `-u` 指定 sso 中某个用户名；
+
+`lain maintainer add phase username {admin,normal}`
+
+为当前应用添加 maintainer，在集群开启 auth 时才可用.
+
+- username 为 sso 中某用户名；
+- {admin, normal} 为给用户添加的角色，admin 可以添加其它 maintainer，normal 则不行；
+
+`lain maintainer delete phase username`
+
+删除当前应用某个 maintainer，在集群开启 auth 时才可用.
+
+
 ### meta
 
 `lain meta`
