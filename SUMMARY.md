@@ -7,6 +7,7 @@
     * [特性列表](overview/features.md)
     * [系统架构](overview/arch.md)
     * [WorkFlow](overview/workflow.md)
+* [RoadMap](roadmap.md)
 * [QuickStart](quickstart/README.md)
     * [Demo Cluster](quickstart/demo.md)
     * [Install](quickstart/install.md)
