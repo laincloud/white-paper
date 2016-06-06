@@ -144,6 +144,7 @@ lain secret add -h
 ### 不打开认证
 
 需要保证 lvault 已经解锁，并且 lvault 没有丢失 root_token.
+lvault 的初始化和解锁参见这里[lvault 的初始化和解锁](../adminmanual/lvault.html).
 
 在 lain.yaml 所在目录，执行：
 1. lain reposit
@@ -159,7 +160,7 @@ lain secret add -h
 ### 打开认证
 
 打开认证时，集群必须部署 sso. 并且利用 lainctl 打开认证。
-童谣需要保证 lvault 已经解锁，并且 lvault 没有丢失 root_token.
+同时需要保证 lvault 已经解锁，并且 lvault 没有丢失 root_token.
 然后在 lain.yaml 所在目录，可以利用下述流程配置秘密文件。
 
 1. lain login

@@ -6,6 +6,42 @@ lvault 有两个重要的概念，分别是 key 和 root_token.
 
 lvault 的一个基本原则是 key 和 root_token 只存在集群的内存中，若是发生了集群重启等重大事故，lvault 不能自己恢复，则需要人为解锁.
 
+刚刚 bootstrap 的集群，lvault 并没有初始化，原因在于这一步骤需要管理员的参与，
+我们不建议将 key 和 root_token 落地到集群内部. 下面已域名为 lain.local 为例，
+简单说明一下初始化和解锁的工作流.
+
+## 初始化和解锁
+
+当集群刚刚 bootstrap 后，需要先初始化 lvault, 再解锁，步骤如下：
+1. 初始化
+	* 初始化操作一般来说对一个集群只需要一次，除非忘记 key，可以删除 etcd 的数据后再次初始化.
+	* curl -XPUT http://lvault.lain.local/v2/init -d '{}'
+	* 这里传入空值，是因为一般只需要用默认值即可
+	* 注意，一定要将反馈的 key 和 root_token 记下来，今后解锁等操作需要用到, 主要用于 /v2/reset 操作.
+1. 解锁
+	* 刚刚初始化后，可以直接执行 curl -XPUT http://lvault.lain.local/v2/unsealall -d '{}'
+	* 目前，为了减少误操作，unsealall 不需要传入参数，lvault 会用内存中记录的 key 进行解锁操作。 
+
+## 故障修复
+
+一般建议 lvault.web.lvault 应该 scale 为两个，这样丢失 key 和 root_token 的概率会大大降低. 下面给出目前一般的工作流, 前提是集群的网络问题已经解决。分为三步：
+
+1. 尝试 reset key 和 root_token, 请勿直接粘贴，需要用自己的 key 和 root_token
+```
+curl -v -X PUT http://lvault.lain.local/v2/reset -d '{"keys":["193e7e1452679fcec7d06e96438752f4be7434abdc0d8632ac79c6cdb6911792"],"root_token":"4408bbd6-bc3f-1cba-08aa-6c0a12ff4e3d"}'
+```
+2. 解锁
+```
+curl -XPUT http://lvault.lain.local/v2/unsealall -d '{}'
+```
+3. 再次 reset key
+```
+curl -v -X PUT http://lvault.lain.local/v2/reset -d '{"keys":["193e7e1452679fcec7d06e96438752f4be7434abdc0d8632ac79c6cdb6911792"],"root_token":"4408bbd6-bc3f-1cba-08aa-6c0a12ff4e3d"}'
+```
+
+之所以需要两次 reset key，是因为在没有 unseal 时，reset 其实并不会完全生效。
+
+
 # API
 以 /v1/ 为前缀会访问 vault 集群，只有需要更新密钥，锁某个节点等操作会用到。
 以 /v2/ 为前缀会访问 lvault，一般来说，我们都利用 lvault 来方便处理 vault 的初始化，集群解锁等功能。
