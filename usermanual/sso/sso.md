@@ -32,27 +32,37 @@ lain 上的应用是由 console 去自动帮用户注册的，所以下面的流
 sso 自动生成了 Client ID 和 Client Secret, 今后可以用 oauth2 标准协议，
 让用户利用 sso 登录自己的应用.
 
+顺便说一下，sso 自身也是也是 sso 的应用，默认必须用 https 登录.
+
 ## scope 
 用户登录第三方应用时，会跳到 sso，这时候会有一个授权的列表，其实是该页面 URL 
 中 scope 参数的值，表示授权被保护的资源. 当前已有的 scope 的列表如下：
 
+- openid
+- profile
+- email
+- phone
 - write:app
 - read:app
 - write:user
 - read:user
 - write:group
 - read:group
-- openid
 
-openid 的含义见 openid connect 协议，如果 scope 包含 openid, 则用授权码得到的结果除了 access_token 外还有 id_token.
+* openid 的含义见 openid connect 协议，如果 scope 包含 openid, 则用授权码得到的结果除了 access_token 外还有 id_token.
+* 若 scope 中包含 profile, 则在 id_token 的 claims 中包含 "name" 项.
+* 若 scope 中包含 email, 则在 id_token 中包含 "email", 暂不支持 "email_verified"
+* 若 scope 中包含 phone, 则在 id_token 中包含 "phone_number", 暂不支持 "phone_number_verified"
+
+更多信息请参考 /GET /.well-known/openid-configuration
 
 ##  openid-configuration
 
 ###GET /.well-known/openid-configuration
 
 通过这个请求可以方便地得到 OpenID Connect Server 的相关信息。
-然后通过标准的 openid connect 访问 sso 即可。
-
+然后通过标准的 openid connect 访问 sso 即可，
+当前支持 Authorization Code Flow 和 Implicit Flow.
 
 更多关于 OAUTH2 和 OpenID Connect 的知识可见 [oauth2](https://tools.ietf.org/html/rfc6749), [openid connect](http://openid.net/connect/)
 
@@ -62,13 +72,15 @@ openid 的含义见 openid connect 协议，如果 scope 包含 openid, 则用�
 
 ## Authentication code flow
 
+### OAuth2
+
 - 首先注册应用
 	- 可以在 sso 得网站上注册，也可以调用 api
 	- POST /apps
 - 客户端
 	- 首先使用申请到的 "client id", "redirect uri" 以及其他参数跳转到 SSO 登陆页面， url 构造的 python 代码如下所示：
         ```
-        url = 'https://sso.xyz/oauth2/auth' + '?' + urlencode({'client_id': client_id, 'response_type': 'code', 'scope': 'write:group', 'redirect_uri': redirect_uri, 'state': '*****',})
+        url = 'https://sso.xyz/oauth2/auth' + '?' + urlencode({'client_id': client_id, 'response_type': 'code', 'scope': 'profile', 'redirect_uri': redirect_uri, 'state': '*****',})
         ```
     - 用户在SSO登陆界面登陆后会跳转到 redirect uri 并在链接末尾附带一个 code 参数
     - 客户端需截取 code 参数后附带 "client id", "client secret", "redirect uri" 等其他参数向 sso 请求 access_token，相关 url 构造的 python 代码如下所示：
@@ -77,12 +89,25 @@ openid 的含义见 openid connect 协议，如果 scope 包含 openid, 则用�
         ```
     - SSO 验证成功后会返回一个 http Response，status 为 201 则表明登录成功，其中 JSON 串中会包含 access_token
 
+#### 注意事项
 
-### 注意事项
+如果应用包含前端与服务器端，则 client_secret 最好包含于服务器端，
+同时，服务器端在接到附带 access-token 的 http 请求时，
+应该先向 SSO 验证 access_token 的正确性（通过调用 https://sso.syz/api/me/，
+在header中加上  "{'Authorization' : 'Bearer ' + access_token"}），再执行相应权限操作。
 
-```
-如果应用包含前端与服务器端，则 client_secret 最好包含于服务器端，同时，服务器端在接到附带 access-token 的 http 请求时，应该先向 SSO 验证 access_token 的正确性（通过调用 https://sso.syz/api/me/，在header中加上  "{'Authorization' : 'Bearer ' + access_token"}），再执行相应权限操作。
-```
+### OpenID Connect
+
+利用 OpenID Connect 协议得到的 access_token 与 id_token 相关联，
+由于 id_token 经过 sso 的签名，而 id_token 中的 at_hash 将 access_token 与 id_token 相关联，
+所以更容易验证其真实性；
+又由于 id_token 的 claims 包含 aud,
+可以很容易知道 id_token 是为哪一个应用产生的，
+不易与其它第三方 client 申请的 access_token 混淆.
+
+认证/授权请求的构造也很容易，与 oauth2 流程相比，仅仅是 scope 中包含 openid.
+下面重点说一下，对于 access_token 和 id_token 的使用（验证）。
+
 
 ## Implicit flow
 这里仅给出一种基于浏览器的前端实现的 demo.

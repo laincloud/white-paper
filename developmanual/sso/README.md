@@ -33,6 +33,12 @@ lain 的应用同时兼任 RP(Resource Provider). sso 也是作为 AS 的 sso �
 在 oauth2 的基础上，为了向业界的协议靠拢，sso 实现了部分的 openid connect 协议.
 从 oidc 的角度看，sso 也承担了 Identity Providers 的功能.
 
+但是，目前 Lain 上的登录授权系统有一些额外的复杂性，
+主要体现在如下方面：
+- sso 的 client 有可能同时担任资源服务器，而 sso 仅提供用户系统，比如 lvault，lvault 提供秘密文件的存储，同时又是 sso 的 client.
+- console 不仅仅作为一个资源服务器(RP), console 还承担了很多授权的功能，主要体现在对应用管理者的授权，而授权的基础为 sso 中 console 建立的组。
+- sso 的 client 可能既是资源服务器，又依赖其它 lain 上的作为 sso client 的应用, 如 console 在管理用户的秘密文件时依赖 lvault.
+
 UserInfo endpoint: 
 
 ### sso 权限
