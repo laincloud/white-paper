@@ -31,6 +31,30 @@ sso 启动时，可以利用 LAIN 的秘密文件配置方法配置敏感信息�
 如果要用已有的 sso 的数据库，即 sso 涉及域名变化时，由于 sso 本身作为自己的一个 client, 所以需要手动去数据库里面更改 app 表中相关 sso 的几个 app 的 redirect_uri, 主要包括
 SSO，SSO-Site，以及可能的关于 swagger-ui client.
 
+#### 下面给出一个 sso 部署的样例
+
+需要首先下面几个前置条件
+1. 初始化并解锁 lvault.
+1. 新建一个 mysql 数据库，目前版本的 sso 没有使用 mysql-service.
+
+然后进入 lain-box, 执行
+```
+git clone https://github.com/laincloud/sso
+cd sso
+lain reposit local
+lain build
+lain tag local
+lain push local
+lain secret add local web /lain/app/secrets 'MYSQL="sso:password@tcp(rm-2ze.mysql.rds.aliyuncs.com:3306)/sso"'
+lain deploy local
+```
+
+在 lain secert add 时，可以直接指定文件，同时也可以指定更多的启动参数，建议配置 smtp 服务。
+注意到 [run.sh](https://github.com/laincloud/sso/blob/master/run.sh) 中并没有用到所有的启动参数，
+所以可以修改这个文件，加上一些其它参数，以满足进一步的需求，比如对 admin 邮箱和密码的初始化。
+
+然后，即可测试：修改本地 /etc/hosts, 打开浏览器访问 https://sso.lain.local
+
 ### sso 的 swagger-ui 的 auth server 配置
 sso 网站上的 API 文档的链接指向一个 swagger-ui，
 这个 swagger-ui 的使用需要一个 oauth2 的认证，即 swagger-ui 本身作为 sso 的一个 client，sso 的管理员根据自己 sso 的域名，需要修改如下项的默认值.
