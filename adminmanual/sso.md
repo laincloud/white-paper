@@ -10,7 +10,7 @@ sso 依赖一个 mysql 数据库，和一个 smtp 服务。虽然 SMTP 是可选
 
 ### sso 启动时的一些重要参数
 
-- domain: 指接受的注册用户的邮箱后缀
+- domain: 指接受的注册用户的邮箱后缀, 为空或者使用默认值表示不进行检查。
 - from: 激活、修改密码邮件等 sso 发送的邮件的发件人
 - mysql: 存储所用的 mysql 数据库的 DSN
 - site: sso 的网址
