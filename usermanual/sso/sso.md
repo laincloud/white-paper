@@ -8,9 +8,9 @@ sso 的用户分为两个层次，需要利用 sso 登录的用户(end user)，�
 ## sso 启动依赖及在 Lain 上的部署
 sso 启动需要一个 MYSQL 数据库和一个 SMTP 服务器，由于前者涉及到密码。所以 sso 的配置推荐使用 LAIN 上的 secret files 机制。
 
-要部署 sso，首先需要了解 sso 启动依赖的参数, 见 adminmanual.
+要部署 sso，首先需要了解 sso 启动依赖的参数, 见 [adminmanual](../../adminmanual/sso.html).
 
-写入 secret files 的详细方法见 LAIN 的秘密文件配置系统。
+写入 secret files 的详细方法见 LAIN 的[秘密文件配置系统](../secret.html).
 
 ## 用户注册
 提供用户名、邮箱、自定义的密码即可.

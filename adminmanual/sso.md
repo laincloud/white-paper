@@ -5,12 +5,13 @@ sso 支持 HA，由于每个 sso 的 container 是无状态的，
 
 ## sso 的依赖
 
-sso 依赖一个 mysql 数据库，和一个 smtp 服务。虽然 SMTP 是可选的，但是若没有 SMTP，
+sso 依赖一个 mysql 数据库，程序会自动创建 schema, 所以只需要一个空库；
+另外，还需要一个 smtp 服务。虽然 SMTP 是可选的，但是若没有 SMTP，
 每一个新注册的用户都需要 DBA 帮忙才能激活用户。
 
 ### sso 启动时的一些重要参数
 
-- domain: 指接受的注册用户的邮箱后缀
+- domain: 指接受的注册用户的邮箱后缀, 为空或者使用默认值表示不进行检查。
 - from: 激活、修改密码邮件等 sso 发送的邮件的发件人
 - mysql: 存储所用的 mysql 数据库的 DSN
 - site: sso 的网址
@@ -30,6 +31,41 @@ sso 启动时，可以利用 LAIN 的秘密文件配置方法配置敏感信息�
 在 sso 部署之前，需要创建一个空的 mysql 数据库，然后将其 DSN 作为启动参数传入。
 如果要用已有的 sso 的数据库，即 sso 涉及域名变化时，由于 sso 本身作为自己的一个 client, 所以需要手动去数据库里面更改 app 表中相关 sso 的几个 app 的 redirect_uri, 主要包括
 SSO，SSO-Site，以及可能的关于 swagger-ui client.
+
+#### 下面给出一个 sso 部署的样例
+
+需要首先下面几个前置条件
+1. [初始化并解锁 lvault](lvault.html#初始化和解锁).
+1. 新建一个 mysql 数据库，目前版本的 sso 没有使用 mysql-service.
+
+然后进入 lain-box, 执行
+```
+git clone https://github.com/laincloud/sso
+cd sso
+lain reposit local
+lain build
+lain tag local
+lain push local
+lain secret add local web /lain/app/secrets 'MYSQL="sso:password@tcp(rm-2ze.mysql.rds.aliyuncs.com:3306)/sso"'
+lain deploy local
+```
+
+在 lain secret add 时，也可以直接指定文件，见 lain [命令行](../usermanual/sdkandcli.md#secret), 
+同时也可以指定更多的启动参数，建议配置 smtp 服务。
+一个 secrets 文件样例如下：
+
+```
+EMAIL="example.com"
+DEBUG="false"
+SMTP="mail.example.com:25"
+MYSQL="sso:password@tcp(127.0.0.1:3307)/sso"
+SENTRY="http://97:06@sentry.lain.local/3"
+```
+
+注意到 [run.sh](https://github.com/laincloud/sso/blob/master/run.sh) 中并没有用到所有的启动参数，
+所以可以修改这个文件，加上一些其它参数，以满足进一步的需求，比如对 admin 邮箱和密码的初始化。
+
+然后，即可测试：修改本地 /etc/hosts, 打开浏览器访问 https://sso.lain.local
 
 ### sso 的 swagger-ui 的 auth server 配置
 sso 网站上的 API 文档的链接指向一个 swagger-ui，
