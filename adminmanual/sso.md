@@ -5,7 +5,8 @@ sso 支持 HA，由于每个 sso 的 container 是无状态的，
 
 ## sso 的依赖
 
-sso 依赖一个 mysql 数据库，和一个 smtp 服务。虽然 SMTP 是可选的，但是若没有 SMTP，
+sso 依赖一个 mysql 数据库，程序会自动创建 schema, 所以只需要一个空库；
+另外，还需要一个 smtp 服务。虽然 SMTP 是可选的，但是若没有 SMTP，
 每一个新注册的用户都需要 DBA 帮忙才能激活用户。
 
 ### sso 启动时的一些重要参数
