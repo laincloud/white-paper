@@ -31,7 +31,7 @@ sso 初始时已经创建了一个默认的应用：`client id: 3，secret：lai
 
 开启 app 维护相关 auth 之后，不会允许用户随意对 app 进行 deploy 及相关操作，开启的步骤如下所示：
 
-1. 使用 `lainctl auth init -a` 命令为已经存在于集群中但未在 sso 中创建组的 app 创建组。在命令执行过程中，需要先登录(可以使用 admin 账户，也可以使用新注册的用户)，然后以登录者的名义在 sso 中创建组，登录者则成为了相关 app 的 admin；
+1. 使用 `lainctl auth init -a True` 命令为已经存在于集群中但未在 sso 中创建组的 app 创建组。在命令执行过程中，需要先登录(可以使用 admin 账户，也可以使用新注册的用户)，然后以登录者的名义在 sso 中创建组，登录者则成为了相关 app 的 admin；
 
 1. 在 sso 中将集群所有管理员添加进上文所提到的 lain 组中，然后将 lain 组作为子组依次添加进相应 app 对应的 sso 组中。开启 auth 后，在 app 部署时，console 组件会将 lain 用户组自动作添加为每个 app 组的管理员；
 
