@@ -34,7 +34,7 @@ SSO，SSO-Site，以及可能的关于 swagger-ui client.
 #### 下面给出一个 sso 部署的样例
 
 需要首先下面几个前置条件
-1. 初始化并解锁 lvault.
+1. [初始化并解锁 lvault](lvault.html#初始化和解锁).
 1. 新建一个 mysql 数据库，目前版本的 sso 没有使用 mysql-service.
 
 然后进入 lain-box, 执行
@@ -49,7 +49,8 @@ lain secret add local web /lain/app/secrets 'MYSQL="sso:password@tcp(rm-2ze.mysq
 lain deploy local
 ```
 
-在 lain secret add 时，可以直接指定文件，同时也可以指定更多的启动参数，建议配置 smtp 服务。
+在 lain secret add 时，也可以直接指定文件，见 lain [命令行](../usermanual/sdkandcli.md#secret), 
+同时也可以指定更多的启动参数，建议配置 smtp 服务。
 一个 secrets 文件样例如下：
 
 ```
