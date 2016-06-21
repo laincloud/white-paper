@@ -49,7 +49,17 @@ lain secret add local web /lain/app/secrets 'MYSQL="sso:password@tcp(rm-2ze.mysq
 lain deploy local
 ```
 
-在 lain secert add 时，可以直接指定文件，同时也可以指定更多的启动参数，建议配置 smtp 服务。
+在 lain secret add 时，可以直接指定文件，同时也可以指定更多的启动参数，建议配置 smtp 服务。
+一个 secrets 文件样例如下：
+
+```
+EMAIL="example.com"
+DEBUG="false"
+SMTP="mail.example.com:25"
+MYSQL="sso:password@tcp(127.0.0.1:3307)/sso"
+SENTRY="http://97:06@sentry.lain.local/3"
+```
+
 注意到 [run.sh](https://github.com/laincloud/sso/blob/master/run.sh) 中并没有用到所有的启动参数，
 所以可以修改这个文件，加上一些其它参数，以满足进一步的需求，比如对 admin 邮箱和密码的初始化。
 
