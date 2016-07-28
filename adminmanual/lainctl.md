@@ -38,7 +38,7 @@ python setup.py install
 
   `lainctl node add -p PLAYBOOKS [-P SSH_PORT] [-d DOCKER_DEVICE] [-c CID] [-s SECRET] [-r REDIRECT_URI] [-u SSO_URL] [-q] NDOE_NAME:NODE_IP [NODE_NAME:NODE_IP ...]`
 
-  - `--p/--playbooks`: ansible playbooks 目录路径
+  - `-p/--playbooks`: ansible playbooks 目录路径
   - `-d/--docker-device`: 初始化 `devicemapper` 的磁盘。若不指定，docker 使用 loopback device 作为存储启动。
   - `-q/--quiet`: 安静模式，不需要登录。
   - `-c/--cid`: 参考 [sso 手册](../usermanual/sso.html#应用注册)， 下同。
@@ -63,7 +63,7 @@ python setup.py install
   `lainctl node remove [-t TARGET] -p PLAYBOOKS NODE_NAME`
 
   - `-t/--target`: 如果节点上有swarm-manager，则 `--target` 需要被指定。
-  - `--p/--playbooks`: ansible playbooks 目录路径
+  - `-p/--playbooks`: ansible playbooks 目录路径
   - `NODE_NAME`: 节点名
 
   将一个节点从集群中移除。需要确保要移除的 node 上没有业务的 container，否则操作会被拒绝。业务的 container 可通过 `lainctl drift` 命令将其移到其他节点上。
@@ -74,7 +74,7 @@ python setup.py install
 
   `lainctl node clean -p PLAYBOOKS nodes [nodes ...]`
 
-  - `--p/--playbooks`: ansible playbooks 目录路径
+  - `-p/--playbooks`: ansible playbooks 目录路径
 
   清理一个节点上没用的image，释放磁盘空间。
 
@@ -89,15 +89,26 @@ python setup.py install
 
 ### cluster
 
-  `lain cluster health`
+  `lainctl cluster health`
 
   检查集群的基础组件是否正常，包括 `etcd`, `swarm`, `deployd`, `console`。
+
+### network
+
+  `lainctl network recover -p PLAYBOOKS -n NODE -t TARGET_APPs -c PROC_NAME -i INSTANCE_NO`
+
+  - `-p/--playbooks`: ansible playbooks 目录路径
+  - `-t/--target_app`: 要恢复的 appname
+  - `-c/--proc_name`: 要恢复的 app 的 proc name
+  - `-i/--instance_number`: 要恢复的 proc 的 instance number
+
+  当集群节点意外宕机时，可能会出现 docker 退出时没有回收相应容器的 endpoint 和 IP 的情况，当 Deployd 试图在其他正常节点恢复这些容器时，swarm 中会出现类似 `endpoint already exists` 的错误信息，这时可以使用此命令将 endpoint 及 IP 信息进行恢复。
 
 ### drift
 
   `lain drift [--with-volume] [--ignore-volume] -p PLAYBOOKS [-t TARGET] CONTAINER [CONTAINER ...]`
 
-  - `--p/--playbooks`: ansible playbooks 目录路径
+  - `-p/--playbooks`: ansible playbooks 目录路径
   - `--with-volume`: 是否迁移 volume 数据。如果设置，则在迁移 container 之前会把数据 rsync 到指定节点。
   - `--ignore-volume`: 是否忽略 volume 数据。如果设置，则 container 的 volume 会直接被忽略掉，直接迁移 container。
   - `-t/--target`: 要迁移到的节点。如果不设置，container 会随机迁移到一个节点上。当 container 存在 volume 且需要迁移，则 `--target` 不能被省略。
@@ -110,7 +121,7 @@ python setup.py install
 
 ### auth
 
-  `lain auth {open,close}`
+  `lainctl auth {open,close}`
 
   - `open`: 打开 auth
   - `close`: 关闭 auth
