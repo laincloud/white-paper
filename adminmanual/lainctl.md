@@ -46,13 +46,7 @@ python setup.py install
   - `-r/--redirect-uri`:
   - `-u/--sso-url`:
 
-  为集群增加一个节点。在这之前需要确保当前机器到新 node 的 ssh 自动认证是通过的，可通过下面命令完成:
-
-  ```sh
-  ssh-copy-id -i /root/.ssh/lain.pub root@NODE_IP
-  ```
-
-  假设新增 node 节点的 IP 地址是 `192.168.77.22`，我们将其命名为 node2。则增加节点的命令为:
+  为集群增加一个节点，假设新增 node 节点的 IP 地址是 `192.168.77.22`，我们将其命名为 node2。则增加节点的命令为:
 
   ```sh
   lainctl node add node2:192.168.77.22
@@ -106,7 +100,7 @@ python setup.py install
 
 ### drift
 
-  `lain drift [--with-volume] [--ignore-volume] -p PLAYBOOKS [-t TARGET] CONTAINER [CONTAINER ...]`
+  `lainctl drift [--with-volume] [--ignore-volume] -p PLAYBOOKS [-t TARGET] CONTAINER [CONTAINER ...]`
 
   - `-p/--playbooks`: ansible playbooks 目录路径
   - `--with-volume`: 是否迁移 volume 数据。如果设置，则在迁移 container 之前会把数据 rsync 到指定节点。
