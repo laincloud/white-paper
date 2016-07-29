@@ -35,7 +35,7 @@ vagrant ssh node1
 ```
 [vagrant@node1 ~]$ sudo su -
 [vagrant@node1 ~]$ cd /vagrant
-[vagrant@node1 vagrant]$ ./bootstrap -r registry.aliyuncs.com/laincloud --vip=192.168.77.201 --node-ip=192.168.77.21
+[vagrant@node1 vagrant]# ./bootstrap -r registry.aliyuncs.com/laincloud --vip=192.168.77.201 --node-ip=192.168.77.21
 ```
 
 初始化需要至少 20 分钟，取决于网络速度
@@ -121,7 +121,6 @@ sudo lainctl node add -p playbooks -q {{ hostname }}:{{ hostname }}
 如果出现 `wait for etcd to be healthy` 失败，很有可能是新节点无法访问老节点。
 出现这种情况的原因是 `CentOS 7` 采用了 [predictable network interface
 name](https://www.freedesktop.org/wiki/Software/systemd/PredictableNetworkInterfaceNames/)
-，而 `bootstrap` 时默认寻找 `eth1`，在新命名规则下没有 `eth1`，`LAIN` 就会使用
-默认 `ip` 作为 `node-ip`，但有时，默认 `ip` 不一定能从外部访问。所以请在
-`bootstrap` 时加上 `--node-ip={{ node_ip }}` 参数，明确指定一个能被其他节点访
-问到的 `node-ip`。
+，不再使用 `eth0`、`eth1` 等命名网卡；而 `bootstrap` 时默认寻找 `eth1`，找不到时就会使用
+默认 `ip` 作为 `node-ip`，但有时候默认 `ip` 不一定能从外部访问。所以请在
+`bootstrap` 时加上 `--node-ip={{ node_ip }}` 参数，明确指定一个能被其他节点访问到的 `node-ip`。
