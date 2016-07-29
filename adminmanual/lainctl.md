@@ -129,3 +129,29 @@ python setup.py install
 
   显示 lainctl 版本信息
 
+
+ ### registry
+ 
+ - **list**
+ 
+   `lainctl registry list [-t target]`
+ 
+   列出registry中所有的repo
+   
+   -t target 列出指定repo的所有tags
+   
+ - **clean**
+ 
+   `lainctl registry clean [-t target] [-n num]`
+ 
+   对registry 本地仓库进行清理，删除不用的images
+   - `-t --target` 指定要被清理的repo(默认 all)
+   - `-n --num`    指定repo需要保留的个数(默认 10)
+   
+   registry清理的基本操作：
+ 	1. 在主节点执行lainctl registry clean 标记要删除的镜像(保留最新的n份tag)
+ 	2. 将registry暂停服务或者设为read-only，然后在registry节点执行：registry garbage-collect config.yaml 进行文件实际删除
+ 	
+    注意： 
+  
+     - 开了auth的registry，需要将主node节点ip 加入白名单:etcdctl set '/lain/config/registry_ip_whitelist' '${node1ip}'
