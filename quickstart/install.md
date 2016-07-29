@@ -122,5 +122,5 @@ sudo lainctl node add -p playbooks -q {{ hostname }}:{{ hostname }}
 出现这种情况的原因是 `CentOS 7` 采用了 [predictable network interface
 name](https://www.freedesktop.org/wiki/Software/systemd/PredictableNetworkInterfaceNames/)
 ，不再使用 `eth0`、`eth1` 等命名网卡；而 `bootstrap` 时默认寻找 `eth1`，找不到时就会使用
-默认 `ip` 作为 `node-ip`，但有时候默认 `ip` 不一定能从外部访问。所以请在
-`bootstrap` 时加上 `--node-ip={{ node_ip }}` 参数，明确指定一个能被其他节点访问到的 `node-ip`。
+默认网卡，但有时候默认网卡不一定能从外部访问。所以请在
+`bootstrap` 时加上 `--net-interface={{ net_interface }}` 参数，明确指定一个能被其他节点访问到的 `{{ net_interface }}`。
