@@ -35,6 +35,22 @@ MySQL Service不适用的场景：
 > - sso（可选，身份验证依赖）
 > - lvault（可选，数据库初始化时root/repl/dba密码配置依赖）
 
+### 一个基于 lvault 和 sso 的生产环境下配置样例
+一般在生产环境下，需要打开 auth. 所以，首先需要去集群的 sso 注册一个应用，
+然后便可以从 sso 的网站上看到 client ID 和 client secret. 下面可以对 mysql-service 进行配置。
+mysql-service.web.web 和 mysql-service.worker.mysql-server 配置可以相同，
+均为如下位于 /lain/app/conf/secret.conf 的文件:
+```
+dba_passwd=dba
+repl_passwd=repl
+root_passwd=root
+sso_url=http://sso.lain.example
+client_id=10
+secret=ShjveL9AQfuQdasf
+redirect_uri=http://mysql-service.lain.example
+```
+
+
 ## 2 模块功能说明
 
 ### 2.1 系统架构图
