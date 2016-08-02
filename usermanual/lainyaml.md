@@ -42,7 +42,6 @@ proc.{PROC_NAME}:           # 定义一个 proc, 定义 web 时，可以只用 w
                             # - cmd: ["executable","param1","param2"] (exec form)
                             # - cmd: ["param1","param2"] (as default parameters to entrypoint)
                             # - cmd: command param1 param2 (shell form)
-
   num_instances: 1          # 部署时 proc 的个数，默认为 1
   https_only: true          # 针对 web 类型，默认为false, 是否只允许 https 访问
   healthcheck: '/url'       # 针对 web 类型，提供该 url 给 tengine 进行健康检查
