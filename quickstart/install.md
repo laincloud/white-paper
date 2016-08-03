@@ -35,7 +35,7 @@ vagrant ssh node1
 ```
 [vagrant@node1 ~]$ sudo su -
 [vagrant@node1 ~]$ cd /vagrant
-[vagrant@node1 ~]$ sudo ./bootstrap -r registry.aliyuncs.com/laincloud --vip=192.168.77.201
+[vagrant@node1 vagrant]# ./bootstrap -r registry.aliyuncs.com/laincloud --vip=192.168.77.201
 ```
 
 初始化需要至少 20 分钟，取决于网络速度
