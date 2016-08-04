@@ -32,16 +32,17 @@ proc.{PROC_NAME}:           # 定义一个 proc, 定义 web 时，可以只用 w
   user: root                # 默认为 root，还可以定义一些 release image 中存在的 user，比如 nobody 等
   type: worker              # 默认为 worker，还包括 web, portal
   image: {PROC_IMAGE}       # 默认为 app image，也可以进行自定义
-  entrypoint: {PROC_ENTRYPOINT}   # 启动 proc 时的入口点，默认为 /bin/sh -c，支
-                                  # 持类似于 Dockerfile 中的 ENTRYPOINT 的两种
-                                  # 格式：
+  entrypoint: {PROC_ENTRYPOINT}   # 启动 proc 时的入口点，支持类似于 Dockerfile
+                                  # 中 ENTRYPOINT 的两种格式：
                                   # - entrypoint: ["executable","param1","param2"] (exec form)
                                   # - entrypoint: command param1 param2 (shell form)
-  cmd: {PROC_CMD}           # 启动 proc 时定义的命令，entrypoint 与 cmd 必须至
-                            # 少写一个，支持类似于 Dockerfile 中的 CMD 的三种格式：
+                                  # **注意**：默认值为 []
+  cmd: {PROC_CMD}           # 启动 proc 时定义的命令，支持类似于 Dockerfile 中
+                            # CMD 的三种格式：
                             # - cmd: ["executable","param1","param2"] (exec form)
                             # - cmd: ["param1","param2"] (as default parameters to entrypoint)
                             # - cmd: command param1 param2 (shell form)
+                            # **注意**：cmd 与 entrypoint 必须至少定义一个
   num_instances: 1          # 部署时 proc 的个数，默认为 1
   https_only: true          # 针对 web 类型，默认为false, 是否只允许 https 访问
   healthcheck: '/url'       # 针对 web 类型，提供该 url 给 tengine 进行健康检查
