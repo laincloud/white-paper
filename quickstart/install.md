@@ -34,7 +34,7 @@ vagrant ssh node1
 
 ```
 [vagrant@node1 ~]$ sudo su -
-[vagrant@node1 ~]$ cd /vagrant
+[vagrant@node1 ~]# cd /vagrant
 [vagrant@node1 vagrant]# ./bootstrap -r registry.aliyuncs.com/laincloud --vip=192.168.77.201
 ```
 
