@@ -54,6 +54,7 @@
 	* [sso](adminmanual/sso.md)
 	* [lvault](adminmanual/lvault.md)
 	* [auth](adminmanual/auth.md)
+	* [hedwig](adminmanual/hedwig.md)
 * [DevelopManual](developmanual/README.md)
     * [concepts](developmanual/concepts/README.md)
         * [Proc](developmanual/concepts/proc.md)
