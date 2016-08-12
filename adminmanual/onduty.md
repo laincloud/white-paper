@@ -17,4 +17,4 @@
 	- 如果实在紧张则做紧急处理，一般不用
 	    - ansible -i playbooks/cluster all -m shell -a "echo > /var/log/messages"
 - 定期清理历史数据
-    - 在 master 控制节点的 lain 代码目录  `clean-node <node_name>:<node_ip>`
+    - 在 master 控制节点的 lain 代码目录  `lainctl node clean -p playbooks <node_name>`

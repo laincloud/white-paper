@@ -39,10 +39,9 @@ lain 节点清理脚本可以将 `/var/log/messages` 多余的备份文件清除
 Image清理过程会首先查看该节点目前运行了哪些app，然后会将该app在该节点上保留最多3个版本的image，其余的都将被删除。可以使用如下脚本清理node1节点：
 
 ```bash
-sudo ./clean-node node1:192.168.77.21
+lainctl node clean -p playbooks node1
 ```
 
-clean-node 脚本支持同时清理多个节点， 使用 `--all` 参数可以同时清理所有节点；
 **注意:** 在脚本运行过程中会需要管理员交互的地方，需要管理员check存在的app
 
 
