@@ -16,9 +16,9 @@ etcdctl set /lain/config/vips/*.*.*.* '{"app":"hedwig","proc":"icinga","ports":[
 ```
 ansible -i playbooks/cluster all -m shell -a 'systemctl restart networkd'
 ```
-1. 安装 collectd, 如果当前的 yum 源 collectd 版本号有问题，需要显式在 ansible 中指定 collectd, collectd-ping, collect-disk 的版本号 
+1. 安装 collectd, 如果当前的 yum 源 collectd 版本号有问题，需要显式在 ansible 中指定 collectd, collectd-ping, collect-disk 的版本号, 指定domain(区分同一graphite中的不同lain cluster).
 ```
-ansible-playbook -i playbooks/cluster -e role=collectd playbooks/role.yaml
+ansible-playbook -i playbooks/cluster -e role=collectd -e domain={domain} playbooks/role.yaml
 ```
 1. 打开 http://hedwig-grafana.lain.local 配置报警项, 默认的管理员用户和密码为`admin admin`, 配置结束后最好保存配置。
 
