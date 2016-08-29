@@ -89,12 +89,13 @@ python setup.py install
 
 ### network
 
-  `lainctl network recover -p PLAYBOOKS -n NODE -t TARGET_APPs -c PROC_NAME -i INSTANCE_NO`
+  `lainctl network recover -p PLAYBOOKS -n NODE -t TARGET_APP -P PROC_NAME [-i INSTANCE_NO] [-c CLIENT_APP]`
 
   - `-p/--playbooks`: ansible playbooks 目录路径
   - `-t/--target_app`: 要恢复的 appname
-  - `-c/--proc_name`: 要恢复的 app 的 proc name
-  - `-i/--instance_number`: 要恢复的 proc 的 instance number
+  - `-P/--proc_name`: 要恢复的 app 的 proc name，如果是 portal 类型的 proc，名字一般为 portal-{service_name}
+  - `-i/--instance_number`: 要恢复的 proc 的 instance number，要恢复的 proc 不是 portal 类型时必须设置
+  - `-c/--clint_app`: 要恢复的 service app 的 client appname，当需要恢复的 proc 是 portal 类型时必须设置
 
   当集群节点意外宕机时，可能会出现 docker 退出时没有回收相应容器的 endpoint 和 IP 的情况，当 Deployd 试图在其他正常节点恢复这些容器时，swarm 中会出现类似 `endpoint already exists` 的错误信息，这时可以使用此命令将 endpoint 及 IP 信息进行恢复。
 
