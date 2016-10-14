@@ -15,6 +15,14 @@ etcdctl set /lain/config/auth/console '{"type": "lain-sso", "url": "https://sso.
 
 **注意：** 此后可通过 `etcdctl rm /lain/config/auth/console` 将 auth 关闭
 
+此外，如果 console 使用了 archon 并且想要打开 auth，可以采用如下步骤：
+
+- 在 sso 中注册一个新的 client，设置回调 url 为 `http://console.<domain>/api/v1/authorize/` 
+
+- 为 lain.yaml 中所有 proc 配置 secret_files 为 config 文件
+
+- 使用 lvault 添加 secret file，主要包括 client_id，client_secret 以及 redirect_uri 选项，文件内容参考代码库中的 config 文件
+
 
 ### registry auth
 

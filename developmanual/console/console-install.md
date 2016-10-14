@@ -4,7 +4,10 @@
 
 ## Precondition
 
-- 准备 lain.yaml 和 entry.sh 文件
+### 准备 lain.yaml 
+
+- 默认使用的 lain.yaml 中包含 console UI [Archon](https://github.com/laincloud/archon)，如果不想使用 UI 可以使用 lain-without-ui.yaml 替换 lain.yaml 文件
+- 如果 console 使用了 archon 并且想要打开 auth，需要在 lain.yaml 中为所有的 proc 配置 secret_files 为 config 文件，并使用 lvault 添加相应配置文件
 
 ## Usage
 
