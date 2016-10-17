@@ -121,6 +121,8 @@ python setup.py install
   - `open`: 打开 auth
   - `close`: 关闭 auth
 
+  注意：如果集群用了 'extra_domain', 并且 lain.local 在集群外不可访问时，打开 registry auth 时要指定其 realm 参数，如默认的 'http://console.lain.local/api/v1/authorize/registry/' 改为 'http://console.lain.cloud/api/v1/authorize/registry/'
+
 
   集群认证功能的开关设置。
 
