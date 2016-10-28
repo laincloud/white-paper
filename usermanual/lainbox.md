@@ -14,3 +14,4 @@ apps:
     foo-project: ~/Projects/foo
     bar-project: ~/Projects/bar
 ```
+> 请使用不高于1.7.4版本的vagrant，vagrant 1.8.x 版本会在虚拟机启动时因网络原因卡住。
