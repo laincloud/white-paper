@@ -1,6 +1,6 @@
 # [Entry](#entry)
 
-**Entry** 是 LAIN 的 layer2 的一个特殊应用，允许开发者通过 `lain enter` 命令远程登录到具有本人管理权限的容器中。
+**Entry** 是 LAIN 的 layer2 的一个特殊应用，允许开发者通过 `lain enter` 命令或者 console 的 web 界面远程登录到具有本人管理权限的容器中。
 
 该效果等同于在 LAIN 的节点上执行 `docker exec -it $container_id /bin/bash`。
 
@@ -56,7 +56,7 @@ Outbound rules:
 
 ## [User Guide](#user-guide)
 
-当 **Entry** 安装并配置好后，直接在 LAIN-box 中通过 `lain enter` 命令即可进入自己具有管理员权限的应用的容器。
+当 **Entry** 安装并配置好后，直接在 LAIN-box 中通过 `lain enter` 命令或者在 console 的 web 界面中的容器信息页中点击*进入容器*即可进入自己具有管理员权限的应用的容器。
 
 > `lain enter` 命令详见 [lain enter 命令文档](https://laincloud.gitbooks.io/white-paper/content/usermanual/sdkandcli.html#enter)
 >
@@ -99,6 +99,7 @@ ResponseMessage 是指 Entry 返回给客户端的信息，主要有两类
 - STDOUT: 容器终端的标准输出。
 - STDERR: 容器终端的标准错误输出。
 - CLOSE: **Entry** 发送的关闭连接的信息。
+- PING: **Entry** 发送的检测 websocket 连接存活的信息，每 10 秒发送 1 次。
 
 信息的协议栈如下图
 
