@@ -47,7 +47,7 @@ vagrant up node2
 
 # 待 node2 启动后
 [vagrant@node1 ~]$ cd /vagrant
-[vagrant@node1 ~]$ sudo lainctl node add -p playbooks -q node2:192.168.77.22
+[vagrant@node1 ~]$ sudo lainctl node add -p playbooks node2:192.168.77.22
 # root 密码为 vagrant
 ```
 
@@ -76,7 +76,7 @@ sudo ./bootstrap -r registry.aliyuncs.com/laincloud --vip={{ vip }}
 #### 添加更多节点
 ```
 # 需要输入 root 密码
-sudo lainctl node add -p playbooks -q {{ hostname }}:{{ hostname }} 
+sudo lainctl node add -p playbooks {{ hostname }}:{{ hostname }} 
 ```
 
 ## 云服务器
@@ -108,7 +108,7 @@ sudo ./bootstrap -r registry.aliyuncs.com/laincloud --ipip
 
 ```
 # 需要输入 root 密码
-sudo lainctl node add -p playbooks -q {{ hostname }}:{{ hostname }} 
+sudo lainctl node add -p playbooks {{ hostname }}:{{ hostname }} 
 ```
 
 ## FAQ

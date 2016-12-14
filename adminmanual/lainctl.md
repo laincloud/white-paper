@@ -36,15 +36,11 @@ python setup.py install
 
 - **add**
 
-  `lainctl node add -p PLAYBOOKS [-P SSH_PORT] [-d DOCKER_DEVICE] [-c CID] [-s SECRET] [-r REDIRECT_URI] [-u SSO_URL] [-q] NDOE_NAME:NODE_IP [NODE_NAME:NODE_IP ...]`
+  `lainctl node add -p PLAYBOOKS [-P SSH_PORT] [-d DOCKER_DEVICE] NDOE_NAME:NODE_IP [NODE_NAME:NODE_IP ...]`
 
   - `-p/--playbooks`: ansible playbooks 目录路径
+  - `-P/--ssh-port`: 待添加节点的 ssh 端口，默认为 22
   - `-d/--docker-device`: 初始化 `devicemapper` 的磁盘。若不指定，docker 使用 loopback device 作为存储启动。
-  - `-q/--quiet`: 安静模式，不需要登录。
-  - `-c/--cid`: 参考 [sso 手册](../usermanual/sso.html#应用注册)， 下同。
-  - `-s/--secret`:
-  - `-r/--redirect-uri`:
-  - `-u/--sso-url`:
 
   为集群增加一个节点，假设新增 node 节点的 IP 地址是 `192.168.77.22`，我们将其命名为 node2。则增加节点的命令为:
 
