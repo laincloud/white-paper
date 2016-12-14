@@ -124,8 +124,8 @@ lainctl node add -p playbooks --docker-device=/dev/vdb node2:192.168.77.22
         - 假设 lain-01 的 node ip 是 192.168.77.21
         - `@lain-01` `cd lain` 然后 `./bootstrap -r registry.aliyuncs.com/laincloud --ipip --docker-device /dev/vdb`
         - 同样的配置创建 lain-02 lain-03 ，并加入集群，假设他们的 ip 是 192.168.77.22 192.168.77.23
-            - `@lain-01`: lainctl node add -p playbooks -q --docker-device /dev/vdb lain-02:192.168.77.22
-            - `@lain-01`: lainctl node add -p playbooks -q --docker-device /dev/vdb lain-03:192.168.77.23
+            - `@lain-01`: lainctl node add -p playbooks --docker-device /dev/vdb lain-02:192.168.77.22
+            - `@lain-01`: lainctl node add -p playbooks --docker-device /dev/vdb lain-03:192.168.77.23
     - 可选：按照 [域名和 SSL 配置文档](../domainandssl.html) 给 `powerlain.com` 这个域名配置上 `powerlain.com.key && powerlain.com.crt` 这一组 SSL 证书
     - 搭建 管理跳板机 lain-baseton
         - 使用 lain-node-tmpl 模板在 VPC 里创建跳板机
