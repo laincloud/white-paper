@@ -44,10 +44,23 @@ proc.{PROC_NAME}:           # 定义一个 proc, 定义 web 时，可以只用 w
                             # - cmd: command param1 param2 (shell form)
                             # **注意**：cmd 与 entrypoint 两者至少需要定义一个
   port: {PROC_PORT}         # proc 中服务所监听的端口
+  ports:                    # 集群端口与(tcp/udp)应用的映射关系，由于以后可能扩展healthcheck，所以保留map结构,源端口范围:[9500:10000]
+    9506:8000/tcp:          # 源端口:目的端口(不填与源端口一致)/协议类型(默认tcp)
+    9504:                   # 
+  labels:                   # 给容器打标签
+    - proctype:router
+  filters:                  # 容器部署规则过滤
+    - affinity:proctype!=~router  #不与proctype为router的容器部署在同一节点
   memory: {PROC_MEMORY}     # 容器所用内存，默认为 32M
   num_instances: 1          # 部署时 proc 的个数，默认为 1
   https_only: true          # 针对 web 类型，默认为false, 是否只允许 https 访问
-  healthcheck: '/url'       # 针对 web 类型，提供该 url 给 tengine 进行健康检查
+  container_healthcheck:    # docker1.12.1 or later 容器状态监测，容器滚动升级时等到上一个容器health后才升级下一个
+    cmd: curl http://localhost/ # required 监测容器状态的命令
+    options:                    # optional
+      timeout: 5                # 超时时间
+      interval: 30              # 检查间隔时间
+      retries: 3                # 重试次数
+  healthcheck: '/url'       # 针对 web 类型，提供该 url 给 tengine 进行健康检查，如果没有设置container_healthcheck，则该属性会继承container_healthcheck cmd为curl http://localhost/url,超时时间及间隔为10s，重试次数为3
   portal:                   # 如果 app 作为 service，提供服务的 proc 需要定义 portal
     allow_clients: "**"     # portal 允许的 client，默认提供给所有
     cmd: ./proxy            # 启动 portal 时的命令
@@ -75,7 +88,7 @@ proc.{PROC_NAME}:           # 定义一个 proc, 定义 web 时，可以只用 w
     - /secrets/hello            # 定义文件路径，为相对路径时前面会加上 `/lain/app/`
     - secret.dat 
   stateful: true                # 默认为 false, 表示 proc 挂掉时，并不会在另外一个节点重新启动容器
-  setup_time: 0                 # 单位为秒，proc 多 instance 升级时，设置升级前一个 proc 后隔多少秒升级后一个应用，用于保障服务不中断
+  setup_time: 0                 # 单位为秒，proc 多 instance 升级时，设置升级前一个 proc 后隔多少秒升级后一个应用，用于保障服务不中断(healthcheck以及container_healthcheck未设置时有效)
   kill_timeout:  10             # 单位为秒，下线 proc 容器时强制删除的时间，即 docker stop timeout 时间\
 
 use_services:       # 指出需要使用 service

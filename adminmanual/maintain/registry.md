@@ -84,7 +84,7 @@ curl -X GET /v2/{repo}/tags/list
 
 2. 通过repositories中获取对应repo的所有的tag信息: curl -X GET /v2/{repo}/tags/list
 
-3. 软删除指定repo:tag的image: curl -X DELETE /v2/{repo}/manifests/{digses of tag}
+3. 软删除指定repo:tag的image: curl -X DELETE /v2/{repo}/manifests/{digest of tag}
 
 4. registry节点的image blob文件删除: registry garbage-collect config.yaml
 
