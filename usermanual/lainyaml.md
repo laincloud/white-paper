@@ -43,6 +43,8 @@ proc.{PROC_NAME}:           # 定义一个 proc, 定义 web 时，可以只用 w
                             # - cmd: ["param1","param2"] (as default parameters to entrypoint)
                             # - cmd: command param1 param2 (shell form)
                             # **注意**：cmd 与 entrypoint 两者至少需要定义一个
+  port: {PROC_PORT}         # proc 中服务所监听的端口
+  memory: {PROC_MEMORY}     # 容器所用内存，默认为 32M
   num_instances: 1          # 部署时 proc 的个数，默认为 1
   https_only: true          # 针对 web 类型，默认为false, 是否只允许 https 访问
   healthcheck: '/url'       # 针对 web 类型，提供该 url 给 tengine 进行健康检查
@@ -55,6 +57,10 @@ proc.{PROC_NAME}:           # 定义一个 proc, 定义 web 时，可以只用 w
     - ENVB=b
   logs:                     # 声明应用需要落地的日志文件，被强制位于 /lain/logs 目录之下
     - {LOG_FILENAME}        # 对应 /lain/logs/{LOG_FILENAME}
+  cloud_volumes:
+    type: {CLOUDVOLUME-TYPE}    # 支持 single, multi 两种类型，默认为 multi 类型
+    dirs:                       # 容器中需要进行写入的目录
+      - /cloud
   volumes:                  # volume 文件，proc 被删时数据也不会移出，和 persistent_dirs 等效
     - /var/log
     - /etc/nginx/nginx.conf:
@@ -69,7 +75,7 @@ proc.{PROC_NAME}:           # 定义一个 proc, 定义 web 时，可以只用 w
     - /secrets/hello            # 定义文件路径，为相对路径时前面会加上 `/lain/app/`
     - secret.dat 
   stateful: true                # 默认为 false, 表示 proc 挂掉时，并不会在另外一个节点重新启动容器
-  setup_time: 0              # 单位为秒，proc 多 instance 升级时，设置升级前一个 proc 后隔多少秒升级后一个应用，用于保障服务不中断
+  setup_time: 0                 # 单位为秒，proc 多 instance 升级时，设置升级前一个 proc 后隔多少秒升级后一个应用，用于保障服务不中断
   kill_timeout:  10             # 单位为秒，下线 proc 容器时强制删除的时间，即 docker stop timeout 时间\
 
 use_services:       # 指出需要使用 service
@@ -92,7 +98,9 @@ use_resources:      # 指出需要使用 resource
 ![workflow](img/workflow.png)
 
 
-## <a id="mountpoint"></a>3. mountpoint 选项说明
+## 3. 特别选项说明
+
+### <a id="mountpoint"></a>3.1 mountpoint
 
 LAIN 中默认使用域名 `lain.local` 进行内部访问，除此之外也可以通过设置 `extra_domain` 来支持其它域名，但是这些都应该是对内服务能够访问的域名。
 
@@ -119,6 +127,16 @@ web.admin:
     - d.external.domain2/e     # 响应 d.external.domain2 这个外网域名 e 段 location 的请求，转发到 lain 内网这个 proc 对应 upstream
     - /admin                   # 响应 {APPNAME}.{DOMAIN} 这个内部域名 `admin` 段 localtion 的请求，转发到 lain 内网这个 proc 对应 upstream
 ```
+
+### 3.2 cloud_volumes
+
+使用 cloud_volumes 之前需要跟管理员确认 LAIN 中已经在相关目录挂载了提供 POSIX 兼容接口的分布式文件系统，如 MooseFS、CephFS 等。
+
+如果集群中某些应用需要占用大量的磁盘空间，使用 volume 机制挂载宿主机的磁盘可能会出现空间不够的情况，这个时候可以考虑使用 cloud-volumes。此时在往 cloud_volumes 配置的文件夹中写入数据时会相应的存储到分布式文件系统中。
+
+如果需要 proc 的多个 instance 同时共享一个目录，可以配置 cloud-volume 为 single 属性，此时所有 instance 在宿主机中对应的文件夹均默认位于 /data/lain/cloud-volumes/{APP_NAME}/{APP_NAME}.{PROC_TYPE}.{PROC_NAME}/ 目录下。
+
+配置为 multi 属性则表示每个 instance 有个单独的文件夹可供写入，默认位于 /data/lain/cloud-volumes/{APP_NAME}/{APP_NAME}.{PROC_TYPE}.{PROC_NAME}/{INSTANCE_NO}/ 目录下。
 
 
 ## 4. 注意事项
