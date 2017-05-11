@@ -6,8 +6,8 @@
 
 * Linux / MacOS
 * 能够连接到互联网
-* VirtualBox
-* Vagrant
+* VirtualBox 5.1.22 r115126 (Qt5.6.2)
+* Vagrant 1.9.4
 * 最少 2G 剩余内存（如果需要拉起多个节点，最少 3G）
 
 ### 初始化
@@ -29,6 +29,32 @@ vagrant ssh node1
 ```
 
 耗时取决于 vagrant box 下载时间
+
+> 如果出现以下错误：
+>
+> ```
+> Vagrant was unable to mount VirtualBox shared folders. This is usually
+> because the filesystem "vboxsf" is not available. This filesystem is
+> made available via the VirtualBox Guest Additions and kernel module.
+> Please verify that these guest additions are properly installed in the
+> guest. This is not a bug in Vagrant and is usually caused by a faulty
+> Vagrant box. For context, the command attempted was:
+>
+> mount -t vboxsf -o uid=1000,gid=1000 vagrant /vagrant
+>
+> The error output from the command was:
+>
+> /sbin/mount.vboxsf: mounting failed with the error: No such device
+> ```
+>
+> 这个错误是因为宿主机的 Virtual Box 的 Guest Additions 与 `laincloud/centos-lain`
+> box 已安装的 Guest Additions 版本不一致引起的，导致无法创建 `/vagrant` 这个同步
+> 目录。请修改工程根目录下的 Vagrantfile，禁止宿主机强行安装新版本的 Guest Additions，
+> 即添加如下配置：
+>
+> ```
+> config.vbguest.auto_update = false
+> ```
 
 #### 初始化第一个节点
 
