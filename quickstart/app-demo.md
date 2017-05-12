@@ -1,36 +1,57 @@
 # LAIN 上应用构建部署示例
 
 >在建立了 Lain 上的 App 和 Proc 概念后，
-本节将一步步演示如何在 lain-box 利用 laincli 构建、部署应用.
+本节将一步步演示如何在 lain-box 利用 laincli 构建、部署应用。
 
 ## 准备
-- 首先需要部署一个本地集群，建议由两个节点组成。具体步骤见[LAIN 的快速安装](install.html).
-- 利用 lain-box 搭建本地的开发环境. 具体步骤见 [本地开发环境](../usermanual/tour.html#本地开发环境)
+
+- 首先需要部署一个本地集群，建议由两个节点组成。具体步骤见 [LAIN 的快速安装](install.html)
+- 利用 lain-box 搭建本地的开发环境。具体步骤见[本地开发环境](../usermanual/tour.html#本地开发环境)
 
 ### 检查 lain-box 的设置
+
+#### 使 lain-box 能访问 `registry.lain.local` 等 LAIN 组件域名
+
 一般来说，在 lain-box 中是没有对 lain.local 域名劫持的，
 所以需要修改 /etc/hosts.
+
+如果启动本地集群时，使用了 `vip` 模式，即使用了
+`/vagrant/bootstrap -r registry.aliyuncs.com/laincloud --vip=192.168.77.201`
+启动，请执行：
+
+```
+echo "192.168.77.201  registry.lain.local console.lain.local entry.lain.local lvault.lain.local ipaddr-client.lain.local ipaddr-service.lain.local ipaddr-client.ipaddr-resource.resource.lain.local" >> /etc/hosts
 ```
 
-# 加入 ( vip 模式 )
-192.168.77.201  registry.lain.local console.lain.local entry.lain.local lvault.lain.local ipaddr-client.lain.local ipaddr-service.lain.local ipaddr-client.ipaddr-resource.resource.lain.local
-# 或者 ( node 模式 )
-192.168.77.21  registry.lain.local console.lain.local entry.lain.local lvault.lain.local ipaddr-client.lain.local ipaddr-service.lain.local ipaddr-client.ipaddr-resource.resource.lain.local
+如果启动本地集群时，没有使用 `vip` 模式，即使用了
+`/vagrant/bootstrap -r registry.aliyuncs.com/laincloud`
+启动，请执行：
+
+```
+echo "192.168.77.21  registry.lain.local console.lain.local entry.lain.local lvault.lain.local ipaddr-client.lain.local ipaddr-service.lain.local ipaddr-client.ipaddr-resource.resource.lain.local" >> /etc/hosts
 ```
 
-下面检查一下 lain config
+#### 配置 lain-cli
+
 ```
-lain config show
+lain config show  # 显示当前配置
+lain config save-global private_docker_registry registry.lain.local # 配置 docker 私有仓库
 lain config save local domain lain.local
 ```
 
-
-
 ## 部署 demo 应用
-这里，我们将部署三个示例应用，由于 client 依赖 resource 和 service，
-这一点可以在 client 的 [lain.yaml](https://github.com/laincloud/demo-ipaddr-client/blob/master/lain.yaml) 中看到,
-所以需要在 resouce 和 service 部署之后，最后部署. 
-更多背景知识可见 [service](../usermanual/service.html), [resource](../usermanual/resource.html), 两者的主要作用是进行访问控制，即保证资源的安全性.
+
+这里，我们将部署三个示例应用：
+- [demo-ipaddr-service](https://github.com/laincloud/demo-ipaddr-service)：返回程序所在容器的 IP 列表
+- [demo-ipaddr-resource](https://github.com/laincloud/demo-ipaddr-resource)：返回程序所在容器的 IP 列表
+- [demo-ipaddr-client](https://github.com/laincloud/demo-ipaddr-client)：返回程序所在容器、
+  `demo-ipaddr-service` 和 `demo-ipaddr-resource` 的 IP 列表
+
+由于 client 依赖 resource 和 service，这一点可以在 client 的
+[lain.yaml](https://github.com/laincloud/demo-ipaddr-client/blob/master/lain.yaml) 中看到,
+所以需要在 resource 和 service 部署之后，最后部署。
+更多背景知识可见 [service](../usermanual/service.html), [resource](../usermanual/resource.html), 
+两者的主要作用是进行访问控制，即保证资源的安全性。
 
 ### 下载示例代码
 
@@ -89,7 +110,7 @@ lain scale -n 2 local web # 等待上一步部署结束，就可以扩容
 lain ps local
 ```
 
-这时可以看到一个叫做 resource.ipaddr-resource.ipaddr-client 的应用部署起来了.
+这时可以看到一个叫做 resource.ipaddr-resource.ipaddr-client 的应用部署起来了。
 执行 `curl ipaddr-client.lain.local` 可以看到，返回 resource / service / client 三个 calico ip.
 
 这时，执行 `lain dashboard local`, 可以看到 lain 的 layer1 应用和刚刚部署的几个 demo 应用.
@@ -111,6 +132,7 @@ ipaddr-resource                 resource              1462784153-944220ca13e9aae
 ```
 
 可以按照如下方式，进一步测试部署是否成功和集群的功能是否正常.
+
 ```
 curl ipaddr-client.ipaddr-resource.resource.lain.local  # 期望返回 resource calico ip
 curl ipaddr-service.lain.local  # 期望返回  service calico ip
@@ -119,4 +141,3 @@ lain scale -t resource.ipaddr-resource.ipaddr-client -n 2 local web  # 给 resou
 
 这时，我们将 client, service, resource 都扩容了，
 可以 `curl ipaddr-client.lain.local`, 多次请求既可以看到 resource / service / client 的 ip 轮流变化的情况.
-
