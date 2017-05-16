@@ -14,7 +14,7 @@
     * [LAIN App Demo](quickstart/app-demo.md)
     * [Into the LAIN Step By Step](quickstart/stepbystep.md)
 * [UserManual](usermanual/README.md)
-    * [Lain Box](usermanual/lainbox.md)
+    * [安装 LAIN 客户端](usermanual/install-lain-client.md)
     * [Lain Tour](usermanual/tour.md)
     * [SDK/CLI](usermanual/sdkandcli.md)
     * [lain.yaml](usermanual/lainyaml.md)
