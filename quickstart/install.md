@@ -141,3 +141,11 @@ sudo lainctl node add -p playbooks {{ hostname }}:{{ hostname }}
 
 ### add-node ssh-copy-id 失败
 如果出现 ssh-copy-id  失败，可能需要把 `node1:/root/.ssh/lain.pub` 内容放到 `node2:/root/.ssh/authorized_keys`里，新增一行。当然原因可能是多样的，最有可能就是 lain-02 的 `/root/.ssh` 目录或者目录中的文件权限不对
+
+## 视频演示
+
+本视频展示了集群的初始化、扩容过程。
+
+视频地址：http://www.bilibili.com/video/av4671059/
+
+> 详细的集群管理请见LAIN白皮书第四章：[集群管理员手册](../adminmanual/index.html)。
