@@ -141,3 +141,11 @@ lain scale -t resource.ipaddr-resource.ipaddr-client -n 2 local web  # 给 resou
 
 这时，我们将 client, service, resource 都扩容了，
 可以 `curl ipaddr-client.lain.local`, 多次请求既可以看到 resource / service / client 的 ip 轮流变化的情况.
+
+## 视频演示
+
+本视频通过上述应用展示了如何通过lain-cli实现应用的构建、部署、升级、测试和管理。
+
+视频地址：http://www.bilibili.com/video/av4673273/
+
+> 完整的lain-cli说明文档请见LAIN-白皮书3.3节：[lain-cli使用手册](../usermanual/sdkandcli.html)。
