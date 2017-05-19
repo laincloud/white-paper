@@ -30,7 +30,7 @@ test:                           # 描述如何构建应用 test image
 
 proc.{PROC_NAME}:           # 定义一个 proc, 定义 web 时，可以只用 web 表示 web.web
   user: root                # 默认为 root，还可以定义一些 release image 中存在的 user，比如 nobody 等
-  type: worker              # 默认为 worker，还包括 web, portal
+  type: worker              # 默认为 worker，还包括 web, portal(web 类型的 proc 会由 webrouter 导入 HTTP 流量)
   image: {PROC_IMAGE}       # 默认为 app image，也可以进行自定义
   entrypoint: {PROC_ENTRYPOINT}   # 启动 proc 时的入口点，支持类似于 Dockerfile
                                   # 中 ENTRYPOINT 的两种格式：
@@ -82,7 +82,7 @@ proc.{PROC_NAME}:           # 定义一个 proc, 定义 web 时，可以只用 w
           expire: "10d"         # 过期时间,数字+单位, 如10d表示10天, 10h表示10小时, 3m表示3分钟
           pre_run: {PRE_HOOK}   # pre hook, 备份执行前调用
           post_run: {POST_HOOK} # post hook, 备份结束后调用
-  mountpoint:                   # 只支持 ProcType==web 的 proc
+  mountpoint:                   # 只支持 ProcType==web 的 proc(默认已分配 ${appname}.${LAIN-domain} 的域名)
     - a.external.domain1/b/c    # 响应 a.external.domain1 这个外网域名 b/c 段 location 的请求，转发到 lain 内网 upstream
   secret_files:                 # 定义 secret file 作为配置文件
     - /secrets/hello            # 定义文件路径，为相对路径时前面会加上 `/lain/app/`
