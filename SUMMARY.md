@@ -55,6 +55,7 @@
 	* [lvault](adminmanual/lvault.md)
 	* [auth](adminmanual/auth.md)
 	* [hedwig](adminmanual/hedwig.md)
+	* [streamrouter](adminmanual/streamrouter.md)
 * [DevelopManual](developmanual/README.md)
     * [concepts](developmanual/concepts/README.md)
         * [Proc](developmanual/concepts/proc.md)
