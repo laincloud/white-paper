@@ -102,7 +102,7 @@ sudo ./bootstrap -r registry.aliyuncs.com/laincloud --vip={{ vip }}
 #### 添加更多节点
 ```
 # 需要输入 root 密码
-sudo lainctl node add -p playbooks {{ hostname }}:{{ hostname }} 
+sudo lainctl node add -p playbooks {{ hostname }}:{{ ip }} 
 ```
 
 ## 云服务器
@@ -134,7 +134,7 @@ sudo ./bootstrap -r registry.aliyuncs.com/laincloud --ipip
 
 ```
 # 需要输入 root 密码
-sudo lainctl node add -p playbooks {{ hostname }}:{{ hostname }} 
+sudo lainctl node add -p playbooks {{ hostname }}:{{ ip }} 
 ```
 
 ## FAQ
