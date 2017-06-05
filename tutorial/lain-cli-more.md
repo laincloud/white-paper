@@ -91,7 +91,7 @@ Hello, LAIN.
 如果 `lain.yaml` 里有 `build.prepare` 字段的话，需要先 `prepare`：
 
 ```
-[vagrant@lain hello-world]$ lain prepare local
+[vagrant@lain hello-world]$ lain prepare
 ```
 
 > 如果 `lain.yaml` 里有 `build.prepare` 字段且没有执行 `lain prepare`，`lain build` 的时候会先 `prepare`，再 `build`。
