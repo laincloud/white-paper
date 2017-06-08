@@ -5,8 +5,8 @@
 
 ## 准备
 
-- 首先需要部署一个本地集群，建议由两个节点组成。具体步骤见 [LAIN 的快速安装](install.html)
-- 其次需要本地的开发环境。具体步骤见[安装 LAIN 客户端](../usermanual/install-lain-client.html)
+- 首先需要部署一个本地集群，建议由两个节点组成。具体步骤见 [安装 LAIN 集群](../install/cluster.html)
+- 其次需要本地的开发环境。具体步骤见[安装 LAIN 客户端](../install/lain-client.html)
 
 ## 部署 demo 应用
 
