@@ -16,6 +16,7 @@
     * [lain-cli 的更多操作](tutorial/lain-cli-more.md)
     * [Service 示例](tutorial/service-demo.md)
     * [lain.yaml 的更多配置](tutorial/lain-yaml-more.md)
+    * [一个显示容器 IP 地址的示例](tutorial/app-demo.md)
 * [UserManual](usermanual/README.md)
     * [SDK/CLI](usermanual/sdkandcli.md)
     * [lain.yaml](usermanual/lainyaml.md)
