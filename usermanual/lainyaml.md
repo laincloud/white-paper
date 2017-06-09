@@ -75,6 +75,7 @@ proc.{PROC_NAME}:           # 定义一个 proc, 定义 web 时，可以只用 w
     dirs:                       # 容器中需要进行写入的目录
       - /cloud
   volumes:                  # volume 文件，proc 被删时数据也不会移出，和 persistent_dirs 等效
+                            # lain run的时候，在/tmp/lain/run/；lain deploy时，在/data/lain/volumes/
     - /var/log
     - /etc/nginx/nginx.conf:
         backup:                 # 定义备份策略
