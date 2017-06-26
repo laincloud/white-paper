@@ -5,39 +5,8 @@
 
 ## 准备
 
-- 首先需要部署一个本地集群，建议由两个节点组成。具体步骤见 [LAIN 的快速安装](install.html)
-- 利用 lain-box 搭建本地的开发环境。具体步骤见[本地开发环境](../usermanual/tour.html#本地开发环境)
-
-### 检查 lain-box 的设置
-
-#### 使 lain-box 能访问 `registry.lain.local` 等 LAIN 组件域名
-
-一般来说，在 lain-box 中是没有对 lain.local 域名劫持的，
-所以需要修改 /etc/hosts.
-
-如果启动本地集群时，使用了 `vip` 模式，即使用了
-`/vagrant/bootstrap -r registry.aliyuncs.com/laincloud --vip=192.168.77.201`
-启动，请执行：
-
-```
-echo "192.168.77.201  registry.lain.local console.lain.local entry.lain.local lvault.lain.local ipaddr-client.lain.local ipaddr-service.lain.local ipaddr-client.ipaddr-resource.resource.lain.local" >> /etc/hosts
-```
-
-如果启动本地集群时，没有使用 `vip` 模式，即使用了
-`/vagrant/bootstrap -r registry.aliyuncs.com/laincloud`
-启动，请执行：
-
-```
-echo "192.168.77.21  registry.lain.local console.lain.local entry.lain.local lvault.lain.local ipaddr-client.lain.local ipaddr-service.lain.local ipaddr-client.ipaddr-resource.resource.lain.local" >> /etc/hosts
-```
-
-#### 配置 lain-cli
-
-```
-lain config show  # 显示当前配置
-lain config save-global private_docker_registry registry.lain.local # 配置 docker 私有仓库
-lain config save local domain lain.local
-```
+- 首先需要部署一个本地集群，建议由两个节点组成。具体步骤见 [安装 LAIN 集群](../install/cluster.html)
+- 其次需要本地的开发环境。具体步骤见[安装 LAIN 客户端](../install/lain-client.html)
 
 ## 部署 demo 应用
 
