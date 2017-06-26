@@ -61,7 +61,7 @@ vagrant ssh node1
 ```
 [vagrant@node1 ~]$ sudo su -
 [vagrant@node1 ~]# cd /vagrant
-[vagrant@node1 vagrant]# ./bootstrap -r registry.aliyuncs.com/laincloud --vip=192.168.77.201
+[vagrant@node1 vagrant]# ./bootstrap -r docker.io/laincloud --vip=192.168.77.201
 ```
 
 初始化需要至少 20 分钟，取决于网络速度
@@ -96,7 +96,7 @@ vagrant up node2
 git clone https://github.com/laincloud/lain.git
 cd lain
 # 选择一个同网段的未被使用的 IP 地址作为 VIP
-sudo ./bootstrap -r registry.aliyuncs.com/laincloud --vip={{ vip }}
+sudo ./bootstrap -r docker.io/laincloud --vip={{ vip }}
 ```
 
 #### 添加更多节点
@@ -125,10 +125,10 @@ git clone https://github.com/laincloud/lain.git
 cd lain
 
 # 如果 VPC 不对数据包进行来源 IP 限制（如青云）
-sudo ./bootstrap -r registry.aliyuncs.com/laincloud
+sudo ./bootstrap -r docker.io/laincloud
 
 # 如果 VPC 限制了数据包的来源 IP（如阿里云）
-sudo ./bootstrap -r registry.aliyuncs.com/laincloud --ipip
+sudo ./bootstrap -r docker.io/laincloud --ipip
 
 ```
 
