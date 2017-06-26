@@ -84,7 +84,7 @@ lain config save local domain lain.local  # 保存 lain.local 集群，并取名
 如果 LAIN 集群不能在公网上解析（比如本地启动的集群），请配置 /etc/hosts。
 
 如果启动集群时，使用了 `vip` 模式，即使用了
-`/vagrant/bootstrap -r registry.aliyuncs.com/laincloud --vip=192.168.77.201`
+`/vagrant/bootstrap -r docker.io/laincloud --vip=192.168.77.201`
 启动，请执行：
 
 ```
@@ -94,7 +94,7 @@ echo "192.168.77.201  registry.lain.local console.lain.local entry.lain.local lv
 > `192.168.77.201` 是启动集群时的 vip 参数
 
 如果启动集群时，没有使用 `vip` 模式，即使用了
-`/vagrant/bootstrap -r registry.aliyuncs.com/laincloud`
+`/vagrant/bootstrap -r docker.io/laincloud`
 启动，请执行：
 
 ```

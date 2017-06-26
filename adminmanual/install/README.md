@@ -80,7 +80,7 @@ Lain 理论上可以运行在任何 Linux 发行版之上，只需要满足如�
 2. bootstrap 时候设置 `--docker-device` 参数。
    假设我们添加的新磁盘设备为 `/dev/vdb`，则 bootstrap 命令为：
    ```bash
-   ./bootstrap -r registry.aliyuncs.com/laincloud --docker-device=/dev/vdb --ipip
+   ./bootstrap -r docker.io/laincloud --docker-device=/dev/vdb --ipip
    ```
 3. bootstrap 成功后，`docker info` 查看配置。如果不是 `direct-lvm` 信息中会有类似下面的WARNING:
    ```sh
@@ -122,7 +122,7 @@ lainctl node add -p playbooks --docker-device=/dev/vdb node2:192.168.77.22
             - 如果要开启 moosefs 选项的话会有更多需要自主配置的内容
         - `@lain-01` 改好 hostname 等 `hostname -s lain-01` 之后 relogin
         - 假设 lain-01 的 node ip 是 192.168.77.21
-        - `@lain-01` `cd lain` 然后 `./bootstrap -r registry.aliyuncs.com/laincloud --ipip --docker-device /dev/vdb`
+        - `@lain-01` `cd lain` 然后 `./bootstrap -r docker.io/laincloud --ipip --docker-device /dev/vdb`
         - 同样的配置创建 lain-02 lain-03 ，并加入集群，假设他们的 ip 是 192.168.77.22 192.168.77.23
             - `@lain-01`: lainctl node add -p playbooks --docker-device /dev/vdb lain-02:192.168.77.22
             - `@lain-01`: lainctl node add -p playbooks --docker-device /dev/vdb lain-03:192.168.77.23
