@@ -79,6 +79,7 @@
     * [registry](developmanual/registry.md)
     * [kibana-elk](developmanual/elk.md)
     * [webrouter](developmanual/webrouter.md)
+    * [streamrouter](developmanual/streamrouter.md)
     * [lainlet](developmanual/lainlet.md)
     * [rebellion](developmanual/rebellion.md)
     * [networkd](developmanual/networkd.md)
