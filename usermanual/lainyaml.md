@@ -8,6 +8,7 @@
 
 ```yaml
 appname: {APP_NAME}             # 全局唯一的应用名
+giturl: {GIT_URL}               # 将app绑定到一个具体的远程giturl，防止appname命名冲突，代码版本比较
 
 build:                          # 描述如何构建应用 build image 
   base: {BASE_IMAGE}            # 一个已存在的 docker image ，包含编译环境和默认的配置     
@@ -89,7 +90,7 @@ proc.{PROC_NAME}:           # 定义一个 proc, 定义 web 时，可以只用 w
     - /secrets/hello            # 定义文件路径，为相对路径时前面会加上 `/lain/app/`
     - secret.dat 
   stateful: true                # 默认为 false, 表示 proc 挂掉时，并不会在另外一个节点重新启动容器
-  setup_time: 0                 # 单位为秒，proc 多 instance 升级时，设置升级前一个 proc 后隔多少秒升级后一个应用，用于保障服务不中断(healthcheck以及container_healthcheck未设置时有效)
+  setup_time: 0                 # 单位为秒，proc 多 instance 滚动升级时，设置升级前一个 proc 后隔多少秒升级后一个应用，用于保障服务不中断(当设置了healthcheck或者container_healthcheck时，则该参数可作为滚动升级时健康检查间隔时间)
   kill_timeout:  10             # 单位为秒，下线 proc 容器时强制删除的时间，即 docker stop timeout 时间\
 
 use_services:       # 指出需要使用 service
