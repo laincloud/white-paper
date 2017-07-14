@@ -18,6 +18,8 @@ build:                          # 描述如何构建应用 build image
         - {PREPARE_SCRIPT}
   script:                         # 定义构建 build image 时需要的 script
     - {BUILD_SCRIPT}
+  build_arg:                    # 为 docker build 添加参数
+    - ARG1=arg1
 
 release:                        # 描述如何构建应用 release image，可选
   dest_base: {DEST_BASE_IMAGE}  # release image 基于的 base image
@@ -89,6 +91,7 @@ proc.{PROC_NAME}:           # 定义一个 proc, 定义 web 时，可以只用 w
   secret_files:                 # 定义 secret file 作为配置文件
     - /secrets/hello            # 定义文件路径，为相对路径时前面会加上 `/lain/app/`
     - secret.dat 
+  secret_files_bypass: True     # 若为 True, 则当 console 拿不到 secret files 时会忽略该错误，默认为 False, 除了 layer1 应用不建议使用
   stateful: true                # 默认为 false, 表示 proc 挂掉时，并不会在另外一个节点重新启动容器
   setup_time: 0                 # 单位为秒，proc 多 instance 滚动升级时，设置升级前一个 proc 后隔多少秒升级后一个应用，用于保障服务不中断(当设置了healthcheck或者container_healthcheck时，则该参数可作为滚动升级时健康检查间隔时间)
   kill_timeout:  10             # 单位为秒，下线 proc 容器时强制删除的时间，即 docker stop timeout 时间\
