@@ -24,8 +24,8 @@ https://github.com/laincloud/lain/releases
 #### 启动并进入第一个节点
 
 ```
-vagrant up node1
-vagrant ssh node1
+vagrant up
+vagrant ssh
 ```
 
 耗时取决于 vagrant box 下载时间
