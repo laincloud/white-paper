@@ -56,7 +56,7 @@ lain tag local
 lain push local
 lain deploy local
 lain ps local #查看应用当前的部署信息
-lain scale -n 2 local webc # 将 web proc 扩容为 2 个
+lain scale -n 3 local web # 将 web 扩容为 3 个 instance
 lain ps local
 ```
 
