@@ -31,15 +31,19 @@ lain scale -m 512M PHASE web
 
 ## CPU
 
-> **建议不要使用这个设置，除非你很清楚这操作的影响。若服务出现性能问题，可通过增加实例的方式解决。**
-
-> 因为目前 lain 还没有提供一个比较直观的法则来决定这个值设为多少才算合适。所以如果一定要设置这个值，需要与集群管理员商议，根据集群的实际资源使用情况来决定。
-
+ > 启用这个参数时需要确认 配置了节点资源 通过修改 /lain/config/resources 的配置
+ ```sh
+ etcdctl set /lain/config/resources {"cpu":8, "memory":"16G"}'
+ ```
+ 
 ```sh
-# 设置 CPU 占比
+# 设置 CPU 最大占比上限
 lain scale -c 1 PHASE web
 ```
 
-这里设置的 CPU 值，并不是说让实例独占一个 CPU，或是最多可让实例占用 100% 的CPU。而是一个相对值，相对于同台机器上的其他实例，在 CPU 分配上的一个权重值，默认为0。
+这里设置的 CPU 值，并不是说让实例独占一个 CPU，或是最多可让实例占用 100% 的CPU，而是一个相对值。
+每个应用能占用的CPU上限为节点CPU的一半，比如8核节点，容器最大CPU上限为400%。
+CPU配置分为8个档，超过8的设置当被看做8，实际CPU上限为 ($配置档 / 8) * 节点CPU数 /2, 比如设置为4的8核节点的容器的CPU上限为 (4/8)*8/2 = 200%，
+默认为0，对应2档。
 
-详细内容请参考 [CPU share constraint](https://docs.docker.com/engine/reference/run/#cpu-share-constraint)
+详细内容请参考 [CPU Period Constraint](https://docs.docker.com/engine/reference/run/#cpu-period-constraint)
