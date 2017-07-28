@@ -1,6 +1,21 @@
 # 安装 LAIN 集群
 
-## Vagrant
+### 本节包含三种场景下安装LAIN集群
+* [本地启动虚拟机安装LAIN集群，可供本地测试开发](#1)
+* [物理服务器/虚拟机安装LAIN集群](#2)
+* [云服务器安装LAIN集群](#3)
+
+三者都需要从 GitHub 获取已经发布的 LAIN 版本源代码:
+
+https://github.com/laincloud/lain/releases
+
+下载源码后在目标机器上解压即可。
+```
+tar xf lain-VERSION.tar.gz
+```
+-----------------------------
+
+<h2 id="1">本地安装LAIN集群</h2>
 
 ### 环境依赖
 
@@ -12,18 +27,10 @@
 
 ### 初始化
 
-#### 获取代码
-
-你可以从 GitHub 上获取到已经发布的 LAIN 版本：
-
-https://github.com/laincloud/lain/releases
-
-下载源码后在目标机器上解压即可。
-
-
 #### 启动并进入第一个节点
 
 ```
+cd lain-VERSION
 vagrant up
 vagrant ssh
 ```
@@ -57,7 +64,6 @@ vagrant ssh
 > ```
 
 #### 初始化第一个节点
-
 ```
 [vagrant@node1 ~]# cd /vagrant && sudo ./bootstrap -r docker.io/laincloud --vip=192.168.77.201
 ```
@@ -81,9 +87,11 @@ vagrant up node2
 # root 密码为 vagrant
 ```
 
-同理可以如此添加 `node3`
+#### 同理可以如此添加 `node3`
+---------------
 
-## 物理服务器 / 虚拟机
+<h2 id="2">物理服务器/虚拟机安装LAIN集群</h2>
+
 ### 环境依赖
 * CentOS 7.2
 * NTP 服务保证节点间时间一致
@@ -94,11 +102,11 @@ vagrant up node2
 * 各个节点位于同一个路由器之内
 
 ### 初始化
+
 #### 第一个节点
 
 ```
-git clone https://github.com/laincloud/lain.git
-cd lain
+cd lain-VERSION
 # 选择一个同网段的未被使用的 IP 地址作为 VIP
 sudo ./bootstrap -r docker.io/laincloud --vip={{ vip }}
 ```
@@ -108,8 +116,9 @@ sudo ./bootstrap -r docker.io/laincloud --vip={{ vip }}
 # 需要输入 root 密码
 sudo lainctl node add -p playbooks {{ hostname }}:{{ ip }} 
 ```
+----------------------
 
-## 云服务器
+<h2 id="3">云服务器安装LAIN集群</h2>
 
 ### 环境依赖
 
@@ -125,15 +134,13 @@ sudo lainctl node add -p playbooks {{ hostname }}:{{ ip }}
 
 #### 第一个节点
 ```
-git clone https://github.com/laincloud/lain.git
-cd lain
+cd lain-VERSION
 
 # 如果 VPC 不对数据包进行来源 IP 限制（如青云）
 sudo ./bootstrap -r docker.io/laincloud
 
 # 如果 VPC 限制了数据包的来源 IP（如阿里云）
 sudo ./bootstrap -r docker.io/laincloud --ipip
-
 ```
 
 #### 添加更多节点
@@ -142,7 +149,7 @@ sudo ./bootstrap -r docker.io/laincloud --ipip
 # 需要输入 root 密码
 sudo lainctl node add -p playbooks {{ hostname }}:{{ ip }} 
 ```
-
+------------------------
 ## FAQ
 
 ### add-node ssh-copy-id 失败
