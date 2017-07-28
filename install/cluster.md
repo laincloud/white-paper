@@ -4,6 +4,15 @@
 * [本地启动虚拟机安装LAIN集群，可供本地测试开发](#1)
 * [物理服务器/虚拟机安装LAIN集群](#2)
 * [云服务器安装LAIN集群](#3)
+
+三者都需要从 GitHub 获取已经发布的 LAIN 版本源代码:
+
+https://github.com/laincloud/lain/releases
+
+下载源码后在目标机器上解压即可。
+```
+tar xf lain-VERSION.tar.gz
+```
 -----------------------------
 
 <h2 id="1">本地安装LAIN集群</h2>
@@ -17,17 +26,6 @@
 * 最少 2G 剩余内存（如果需要拉起多个节点，最少 3G）
 
 ### 初始化
-
-#### 获取代码
-
-你可以从 GitHub 上获取到已经发布的 LAIN 版本源码压缩包lain-VERSION.tar.gz：
-
-https://github.com/laincloud/lain/releases
-
-下载源码后在目标机器上解压即可。
-```
-tar zxvf lain-VERSION.tar.gz
-```
 
 #### 启动并进入第一个节点
 
@@ -67,17 +65,16 @@ vagrant ssh
 
 #### 初始化第一个节点
 ```
-[vagrant@node1 ~]$ sudo su
-[vagrant@node1 ~]# cd /vagrant
-[vagrant@node1 vagrant]# ./bootstrap -r docker.io/laincloud --vip=192.168.77.201
+[vagrant@node1 ~]# cd /vagrant && sudo ./bootstrap -r docker.io/laincloud --vip=192.168.77.201
 ```
 
 初始化需要至少 20 分钟，取决于网络速度
 
 > 国内用户建议通过 -m 参数使用 aliyun 的加速器下载镜像，使用方式为
-> ```
-> [vagrant@node1 vagrant]# ./bootstrap -m https://l2ohopf9.mirror.aliyuncs.com -r >docker.io/laincloud --vip=192.168.77.201
-> ```
+
+```
+[vagrant@node1 vagrant]# sudo ./bootstrap -m https://l2ohopf9.mirror.aliyuncs.com -r docker.io/laincloud --vip=192.168.77.201
+```
 
 #### 添加更多节点
 
@@ -105,16 +102,6 @@ vagrant up node2
 * 各个节点位于同一个路由器之内
 
 ### 初始化
-#### 获取代码
-
-你可以从 GitHub 上获取到已经发布的 LAIN 版本源码压缩包lain-VERSION.tar.gz：
-
-https://github.com/laincloud/lain/releases
-
-下载源码后在目标机器上解压即可。
-```
-tar zxvf lain-VERSION.tar.gz
-```
 
 #### 第一个节点
 
@@ -144,17 +131,6 @@ sudo lainctl node add -p playbooks {{ hostname }}:{{ ip }}
 * 各个节点位于同一个 VPC （或虚拟路由器）之内
 
 ### 初始化
-
-#### 获取代码
-
-你可以从 GitHub 上获取到已经发布的 LAIN 版本源码压缩包lain-VERSION.tar.gz：
-
-https://github.com/laincloud/lain/releases
-
-下载源码后在目标机器上解压即可。
-```
-tar zxvf lain-VERSION.tar.gz
-```
 
 #### 第一个节点
 ```
