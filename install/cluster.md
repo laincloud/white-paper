@@ -27,15 +27,17 @@ tar xf lain-VERSION.tar.gz
 
 ### 初始化
 
-#### 启动并进入第一个节点
+#### 启动并初始化第一个节点
 
 ```
 cd lain-VERSION
 vagrant up
-vagrant ssh
 ```
 
-耗时取决于 vagrant box 下载时间
+启动耗时取决于 vagrant box 下载时间, 启动完成后 vagrant 会自动
+执行`bootstrap`进行初始化, 初始化需要至少20分钟，取决于网络速度。
+初始化过程为集群默认配置`vip=192.168.77.201`
+
 
 > 如果出现以下错误：
 >
@@ -63,18 +65,6 @@ vagrant ssh
 > config.vbguest.auto_update = false
 > ```
 
-#### 初始化第一个节点
-```
-[vagrant@node1 ~]# cd /vagrant && sudo ./bootstrap -r docker.io/laincloud --vip=192.168.77.201
-```
-
-初始化需要至少 20 分钟，取决于网络速度
-
-> 国内用户建议通过 -m 参数使用 aliyun 的加速器下载镜像，使用方式为
-
-```
-[vagrant@node1 vagrant]# sudo ./bootstrap -m https://l2ohopf9.mirror.aliyuncs.com -r docker.io/laincloud --vip=192.168.77.201
-```
 
 #### 添加更多节点
 
@@ -109,6 +99,13 @@ vagrant up node2
 cd lain-VERSION
 # 选择一个同网段的未被使用的 IP 地址作为 VIP
 sudo ./bootstrap -r docker.io/laincloud --vip={{ vip }}
+```
+
+> 国内用户建议通过 -m 参数使用 aliyun 的加速器下载镜像，使用方式为
+
+```
+sudo ./bootstrap -m https://l2ohopf9.mirror.aliyuncs.com \
+-r docker.io/laincloud --vip=192.168.77.201
 ```
 
 #### 添加更多节点
@@ -150,6 +147,15 @@ sudo ./bootstrap -r docker.io/laincloud --ipip
 sudo lainctl node add -p playbooks {{ hostname }}:{{ ip }} 
 ```
 ------------------------
+## 配置LAIN Console 的域名解析
+LAIN Console 组件是 LAIN 集群的控制台，配置域名解析后即可在浏览器访问
+`http://console.lain.local`
+
+```
+echo "IP/VIP  console.lain.local" >> /etc/hosts
+```
+
+-----------------------
 ## FAQ
 
 ### add-node ssh-copy-id 失败
