@@ -107,7 +107,7 @@ func main() {
   [laincloud/redis-service-sm/lain.yaml](https://github.com/laincloud/redis-service-sm/blob/master/lain.yaml)
   中的 portal.portal-redis.port 所示
 
-[laincloud/hello-world@v2.0.0](https://github.com/laincloud/hello-world/tree/v2.0.0) 的完整代码在这里。
+[laincloud/hello-world@service](https://github.com/laincloud/hello-world/tree/service) 的完整代码在这里。
 
 ## 验证
 
