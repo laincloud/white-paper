@@ -55,7 +55,7 @@ proc.web:  # 定义一个 proc，名字为 web（当 proc.type 为 web 时，pro
 
 > proc.type 为 `web` 时，其名字也必须为 web，即一个 app 只能有一个 web 类型的 proc，且其名字为 web。
 
-[laincloud/hello-world@v1.0.0](https://github.com/laincloud/hello-world/tree/v1.0.0) 的完整代码在这里。
+[laincloud/hello-world@basic](https://github.com/laincloud/hello-world/tree/basic) 的完整代码在这里。
 
 ## 本地运行
 

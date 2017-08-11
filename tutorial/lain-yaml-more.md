@@ -4,7 +4,7 @@ lain.yaml 提供了一些选项来优化构建过程。
 
 ## `build.prepare`
 
-[laincloud/hello-world/lain.yaml@v2.0.0](https://github.com/laincloud/hello-world/blob/v2.0.0/lain.yaml)
+[laincloud/hello-world/lain.yaml@service](https://github.com/laincloud/hello-world/blob/service/lain.yaml)
 中需要下载 `github.com/go-redis/redis`，如果网络较慢的话会拖慢 `lain build` 时间，这时我们可以添加
 `build.prepare`，来缓存下载结果。
 
@@ -32,7 +32,7 @@ release:  # 运行容器时使用的镜像，不写时默认为 hello-world:buil
       dest: /hello-world  # release 镜像里的路径
 ```
 
-[laincloud/hello-world@v2.1.0](https://github.com/laincloud/hello-world/tree/v2.1.0) 的完整代码在这里。
+[laincloud/hello-world@master](https://github.com/laincloud/hello-world/tree/master) 的完整代码在这里。
 试着多次运行 `lain build`，速度是不是加快了？
 
 ## 不同环境中的 `lain.yaml`
