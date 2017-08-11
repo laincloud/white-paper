@@ -36,16 +36,6 @@ macOS 上的 insecure registries 配置如下图所示：
 
 > 配置 `insecure-registries` 是因为 LAIN 集群的镜像仓库只提供了 HTTP 服务，没有提供 HTTPS 服务。
 
-#### File Sharing（macOS 用户需要配置）
-
-另外，在 macOS 上，请将 `/var/folders` 加入 `File Sharing` 配置，如下图所示：
-
-![macOS 上的 File Sharing 配置示意图](img/lain-client/file-sharing-on-macOS.png)
-
-> - 配置 `File Sharing` 是因为在 macOS 上，lain-cli 会在 /var/folders 下创建临时文件，
->   而 docker daemon 可能没有权限访问这个文件夹。
-> - `lain-cli` 会在 `/var/folders` 下创建文件是因为这个目录是 macOS 系统的临时文件目录。
-
 ## 安装与配置 lain-cli
 
 ```
