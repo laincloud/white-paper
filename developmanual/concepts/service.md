@@ -8,7 +8,7 @@
 
 - resource 部署之后并不会创建相应的容器，只会在 LAIN 中进行记录，当有使用 resource 的 client app 被部署后，才会根据 resource 的配置生成相应的 resource instance； 
 
-- client app 部署时依赖某些 service 与 resource，如果 resource 不存在，client app 会部署失败，并且不会创建相应的容器；但是如果只是 service 不存在，client app 会被部署起来，等待部署相应的 service；
+- client app 部署时依赖某些 service 与 resource，如果 service 不存在，client app 会部署失败，并且不会创建相应的容器；但是如果只是 resource 不存在，client app 会被部署起来，等待部署相应的 resource；
 
 - service 之间允许循环依赖， 也就是说 Service A 可以使用 Service B，而 Service B 也可以使用 Service A，两者的部署顺序并不会影响 app 被部署起来。但是 LAIN 并不推荐这种相互依赖的设计；
 
