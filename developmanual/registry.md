@@ -1,7 +1,7 @@
 # LAIN Registry
 
 ## 组件描述
-LAIN Registry 组件在 LAIN 中主要用于 Image 存储，集群中所以的 Image 都由 LAIN Registry 组件提供及存储。组件目前使用的 Registry 的版本为 V2.4.0，关于 Registry 的官方具体描述可以参见[这里](https://github.com/docker/distribution)。
+LAIN Registry 组件在 LAIN 中主要用于 Image 存储，集群中所有的 Image 都由 LAIN Registry 组件提供及存储。组件目前使用的 Registry 的版本为 V2.4.0，关于 Registry 的官方具体描述可以参见[这里](https://github.com/docker/distribution)。
 
 LAIN Registry 组件在 Docker Registry 版本的基础上进行了 LAIN 化。SA 可以在 etcd 中进行一些配置，以更新 Registry 相应的设置，包括后段存储、Auth设置等。LAIN Registry 组件默认使用本地磁盘作为存储后端，默认不使用 Auth。
 

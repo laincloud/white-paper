@@ -131,7 +131,7 @@ root
 
 ### 所有的API的通用规则:
 1. 默认情况下，api都是非watch的，就像很普通的Get请求。
-   如果需要需要watch功能, 可在相应api后添加`watch=1`或`watch=true`参数. (`watch=0`或`watch=false`表示非watch)
+   如果需要watch功能, 可在相应api后添加`watch=1`或`watch=true`参数. (`watch=0`或`watch=false`表示非watch)
 
 2. 所有的watch请求, 都可设置heartbeat参数,表示心跳事件. 如`?heartbeat=5`表示每5秒发送一个心跳事件. 不设置或设置成0表示不使用心跳,就不会有心跳event返回
 
