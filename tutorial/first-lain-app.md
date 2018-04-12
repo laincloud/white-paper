@@ -45,7 +45,7 @@ build:  # 描述如何构建 hello-world:build-${git-committer-date}-${git-commi
   script:
     - go build -o hello-world  # 编译指令，类似于 Dockerfile 里的 RUN，WORKDIR 为 /lain/app
 
-proc.web:  # 定义一个 proc，名字为 web（当 proc.type 为 web 时，proc 的名字也必须为 web，即一个 app 只能有一个 web 类型的 proc，且其名字为 web）
+proc.web:  # 定义一个 proc，名字为 web
   type: web  # proc 类型为 web（LAIN 会为 web 类型的 proc 配置 ${appname}.${LAIN-domain} 的域名，对外提供 HTTP 服务）
   cmd: /lain/app/hello-world  # 因为 WORKDIR 为 /lain/app，所以编译好的程序在 /lain/app 目录下
   port: 8080  # hello-world 监听的端口
