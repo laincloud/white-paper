@@ -13,13 +13,14 @@ giturl: {GIT_URL}               # 将app绑定到一个具体的远程giturl，�
 build:                          # 描述如何构建应用 build image 
   base: {BASE_IMAGE}            # 一个已存在的 docker image ，包含编译环境和默认的配置     
   prepare:                      # 描述如何构建应用 prepare image
-    version: {PREPARE_VERSION}    # prepare 版本号，字符串类型
     script:                       # 定义构建 prepare image 时需要的 script
         - {PREPARE_SCRIPT}
   script:                         # 定义构建 build image 时需要的 script
     - {BUILD_SCRIPT}
-  build_arg:                    # 为 docker build 添加参数
-    - ARG1=arg1
+  build_arg:                    # 可选，docker build --build-arg
+    - {ARG}={VALUE}
+  volumes:                      # 可选
+    - {ABSOLUTE_PATH}           # lain build by docker run -v `pwd`/.lain-cache/{ABSOLUTE_PATH}:{ABSOLUTE_PATH}
 
 release:                        # 描述如何构建应用 release image，可选
   dest_base: {DEST_BASE_IMAGE}  # release image 基于的 base image
