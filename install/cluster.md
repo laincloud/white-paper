@@ -31,7 +31,7 @@ tar xf lain-VERSION.tar.gz
 
 ```
 cd lain-VERSION
-vagrant up
+vagrant up --provision
 ```
 
 启动耗时取决于 vagrant box 下载时间, 启动完成后 vagrant 会自动
