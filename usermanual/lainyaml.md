@@ -55,6 +55,7 @@ proc.{PROC_NAME}:           # 定义一个 proc, 定义 web 时，可以只用 w
     - proctype:router
   filters:                  # 容器部署规则过滤
     - affinity:proctype!=~router  #不与proctype为router的容器部署在同一节点
+    - constraint:group==group1  # 部署到带有 group==group1 标签的节点
   memory: {PROC_MEMORY}     # 容器所用内存，默认为 32M
   num_instances: 1          # 部署时 proc 的个数，默认为 1
   https_only: true          # 针对 web 类型，默认为false, 是否只允许 https 访问
