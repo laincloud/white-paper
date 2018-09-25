@@ -15,6 +15,9 @@ build:                          # 描述如何构建应用 build image
   prepare:                      # 描述如何构建应用 prepare image
     script:                       # 定义构建 prepare image 时需要的 script
         - {PREPARE_SCRIPT}
+    keep:
+        - {RELATIVE_PATH}       # 默认会 rm -rf /lain/app，如果有不能删除的目录，比如 node_modules，请写在这里
+                                # 为相对于 /lain/app 的路径
   script:                         # 定义构建 build image 时需要的 script
     - {BUILD_SCRIPT}
   build_arg:                    # 可选，docker build --build-arg
